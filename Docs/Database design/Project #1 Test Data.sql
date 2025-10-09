@@ -1189,14 +1189,12 @@ INSERT INTO food_place (foodp_id, foodp_name, foodp_address, foodp_min_price, fo
 (249, 'Curitiba Food Truck', 'Praça Osório, Curitiba, Brazil', 80, 200, 'Wraps, Snacks, Fries', 5, 4, 50),
 (250, 'Confeitaria das Famílias', 'Rua 24 de Maio 65, Curitiba, Brazil', 60, 200, 'Pastries, Bread, Cakes', 5, 5, 50);
 
------------------ Add attractions here
-
 INSERT INTO user (user_id, user_name, user_surname, user_email, user_password, user_created_date) VALUES
-(1, 'John', 'Doe', 'john.doe@gmail.com', 'password123', '2025-10-04'),
-(2, 'Suzzane', 'Smith', 'suzzane.smith@gmail.com', 'password123', '2025-10-04'),
-(3, 'Michael', 'Brown', 'michael.brown@gmail.com', 'password123', '2025-10-04'),
-(4, 'Emma', 'Johnson', 'emma.johnson@gmail.com', 'password123', '2025-10-04'),
-(5, 'David', 'Williams', 'david.williams@gmail.com', 'password123', '2025-10-04');
+(1, 'John', 'Doe', 'john.doe@gmail.com', 'AQAAAAIAAYagAAAAENSCnr/j1Qq9//e7nU1QcaglsolbX2+tXWmxAiNI7tEwl70Bi00+OU647nPd+ZLeNg==', '2025-10-04'),
+(2, 'Suzzane', 'Smith', 'suzzane.smith@gmail.com', 'AQAAAAIAAYagAAAAELDsgeDzTS0YTpbrYgTHfs3jsiAbzzASRX1JfPk4JZc6lz904Y66EKWZqYvqUY+LiA==', '2025-10-04'),
+(3, 'Michael', 'Brown', 'michael.brown@gmail.com', 'AQAAAAIAAYagAAAAEDngUIuaQLkVw4zjAGv8TqPPbpp6SPid0ZfWRl3modn2MtIVWz/SwWsqdCFmyHMtvA==', '2025-10-04'),
+(4, 'Emma', 'Johnson', 'emma.johnson@gmail.com', 'AQAAAAIAAYagAAAAEA2CghGZBaYX8RQ2S5AQY52/LHQABOiJ2A9WjCVeBl4R9s0bgphyCgJfaY6WPFNkHA==', '2025-10-04'),
+(5, 'David', 'Williams', 'david.williams@gmail.com', 'AQAAAAIAAYagAAAAEHRdNktfsv5pbkG5mgCHwkgsgQilLwy+ksnXjefLMzAu1OuC/ZhwhflzokVkj76Rpg==', '2025-10-04');
 
 INSERT INTO spender_type (spender_type_id, spender_type_name, spender_type_level) VALUES
 (1, 'Very Low Spender', 1),
@@ -1206,11 +1204,11 @@ INSERT INTO spender_type (spender_type_id, spender_type_name, spender_type_level
 (5, 'Very High Spender', 5);
 
 INSERT INTO admin (admin_id, admin_name, admin_surname, admin_email, admin_password) VALUES
-(1, 'Alice', 'Taylor', 'alice.taylor@work.com', 'admin123'),
-(2, 'Brian', 'Clark', 'brian.clark@work.com', 'admin123'),
-(3, 'Catherine', 'Lewis', 'catherine.lewis@work.com', 'admin123'),
-(4, 'Daniel', 'Walker', 'daniel.walker@work.com', 'admin123'),
-(5, 'Fiona', 'Hall', 'fiona.hall@work.com', 'admin123');
+(1, 'Alice', 'Taylor', 'alice.taylor@work.com', 'AQAAAAIAAYagAAAAEJ6xO75Hry9BroOZYKY5KTn3ngiDV2QTXszuCketPdmrGIPp5zHe+mhds+icMgPSYg=='),
+(2, 'Brian', 'Clark', 'brian.clark@work.com', 'AQAAAAIAAYagAAAAEFGqOsatIMLPzJRc9/Ub3h+g9q+gquOQ/Gppk4IWl9ICGbWIOgPS+kNnZ5XCcIiBUA=='),
+(3, 'Catherine', 'Lewis', 'catherine.lewis@work.com', 'AQAAAAIAAYagAAAAEKPMP4YO6ACgeUeA6SQGFH53HsEUdtKlzhUW8pXqbKYNihBK90XdPr83Ri1ym5WQ9g=='),
+(4, 'Daniel', 'Walker', 'daniel.walker@work.com', 'AQAAAAIAAYagAAAAENoKml13+H56SdXmAWQhfZRMayRGtlQgJzz6fCqU5yoECs4DtxEcevt3DBq0u4n5Fw=='),
+(5, 'Fiona', 'Hall', 'fiona.hall@work.com', 'AQAAAAIAAYagAAAAEATAzZ5L0R0/dylh8KQk9zjkWfLfbuYh/Yj8Y5BD9eLt3Eg4OrwVTahVcRosLPQhZQ==');
 
 INSERT INTO error_type (err_type_id, err_type_name, err_type_level) VALUES
 (1, 'Login/Authentication Error', 4),

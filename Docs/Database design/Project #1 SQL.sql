@@ -88,7 +88,7 @@ create table vacation(
 	vac_end_date DATETIME NOT NULL
 );
 
-create table attraction_selected(
+create table selected_attraction(
 	attr_id int NOT NULL,
 	vac_id int NOT NULL,
 	estimated_activity_price DOUBLE NOT NULL,
@@ -97,7 +97,7 @@ create table attraction_selected(
 	FOREIGN KEY (vac_id) REFERENCES vacation(vac_id)
 );
 
-create table accomodation_selected(
+create table selected_accomodation(
 	acc_id int NOT NULL,
 	vac_id int NOT NULL,
 	num_of_nights_in_acc int NOT NULL,
@@ -107,7 +107,7 @@ create table accomodation_selected(
 	FOREIGN KEY (vac_id) REFERENCES vacation(vac_id)
 );
 
-create table food_place_selected(
+create table selected_food_place(
 	foodp_id int NOT NULL,
 	vac_id int NOT NULL,
 	num_meals_a_day int NOT NULL,
@@ -117,7 +117,7 @@ create table food_place_selected(
 	FOREIGN KEY (vac_id) REFERENCES vacation(vac_id)
 );
 
-create table transportation_selected(
+create table selected_transportation(
 	transp_id int NOT NULL,
 	vac_id int NOT NULL,
 	estimated_transp_price DOUBLE NOT NULL,
@@ -141,7 +141,7 @@ create table spender_type(
 	spender_type_level int NOT NULL
 );
 
-create table vacation_plan_created(
+create table created_vacation_plan(
 	vac_id int NOT NULL,
 	user_id int NOT NULL,
 	plan_created_date DATETIME NOT NULL,
@@ -162,7 +162,7 @@ create table notification(
 	noti_is_read BIT NOT NULL,
 	vac_id int NOT NULL,
 	user_id int NOT NULL,
-    FOREIGN KEY (vac_id, user_id) REFERENCES vacation_plan_created(vac_id, user_id)
+    FOREIGN KEY (vac_id, user_id) REFERENCES created_vacation_plan(vac_id, user_id)
 );
 
 create table added_to_vacation(
