@@ -28,18 +28,19 @@ namespace Project_1_API.Controllers
                 return BadRequest("This email is already in use.");
             }
 
+            user.UserId = users.Last().UserId + 1;
             user.UserPassword = _passwordHasher.HashPassword(user, user.UserPassword);
             await _context.Users.AddAsync(user);
             await _context.SaveChangesAsync();
-            return Ok("Sign in succesful");
+            return Created();
         }
 
-        [HttpPost]
+        [HttpGet]
         [Route("login")]
-        public async Task<Object> login(String email, String password)
+        public async Task<Object> Login(String email, String password)
         {
-            int idxAtSymbol = email.IndexOf("@");
-            int idxFullStop = email.IndexOf(".", idxAtSymbol);
+            int idxAtSymbol = email.IndexOf('@');
+            int idxFullStop = email.IndexOf('.', idxAtSymbol);
             String emailUsed = email.Substring(idxAtSymbol + 1, idxFullStop - idxAtSymbol - 1 );
 
             if (emailUsed.Equals("work"))
@@ -96,12 +97,24 @@ namespace Project_1_API.Controllers
         }
 
         //[Authorize]
-        //[HttpGet]
-        //[Route("users")]
-        //public async Task<Object> getUsers()
-        //{
-        //    return await _context.Users.ToListAsync();
-        //}
+        [HttpGet]
+        [Route("users")]
+        public async Task<Object> GetUsers()
+        {
+            return Ok(await _context.Users.ToListAsync());
+        }
+
+        [HttpGet]
+        [Route("{id}")]
+        public async Task<Object> DeleteUser(int id)
+        {
+            var users = await _context.Users.ToListAsync();
+            var user = users.Find(u => u.UserId == id);
+            _context.Users.Remove(user);
+            await _context.SaveChangesAsync();
+
+            return NoContent();
+        }
 
     }
 }

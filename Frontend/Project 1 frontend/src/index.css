@@ -1,0 +1,101 @@
+:root{
+    --blue: #259bd4;
+    --brown: #d0694f;
+    --green: #ced04f;
+    --white: #ffffff;
+    --background-brown: #cfb499;
+    --header-height: 60px;
+    --footer-height: 60px;
+}
+
+body{
+    background-image: url("\src\assets\brown travel themed background.jpg");
+    height: 100vh; 
+    margin: 0px;   
+}
+
+header{
+    padding: 0.5%;
+    color: var(--brown);
+    height: var(--header-height);
+}
+
+header h1{
+    margin-left: 2%;
+    height: var(--footer-height);
+}
+
+footer{
+    background-color: var(--brown);
+    text-align: center;
+    padding: 2%;
+}
+
+.form-container{
+    height: calc(100vh - (var(--header-height) + var(--footer-height)));
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.form{
+    background-color: var(--blue);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+    gap: 10px;
+    padding: 8%;
+    height: 275px;
+    width: 275px;
+    border-radius: 30px;
+}
+
+.form div{
+    width: 100%;
+    height: auto;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.form div h2{
+    color: var(--white)
+}
+
+.form div input{
+    width: 95%;
+    margin: 1%;
+    padding: 2%;
+    border-style: none;
+    border-radius: 10px;
+}
+
+.form div button{
+    width: 50%;
+    padding: 2%;
+    border-style: none;
+    border-radius: 10px;
+    background-color: var(--brown);
+    transition: background-color 1s ease;
+    color: var(--white);
+}
+
+.form div button:hover{
+    background-color: var(--green);
+    transition: background-color 1s ease;
+}
+
+.error-msg{
+    color: red;
+}
+
+.home-container{
+    height: calc(100vh - (var(--header-height) + var(--footer-height)));
+    /* background-color: red; */
+    margin-right: 3%;
+    margin-left: 3%;
+    padding: 0.5%;
+}

@@ -37,7 +37,7 @@
       }
     },
     "/api/LoginSignup/login": {
-      "post": {
+      "get": {
         "tags": [
           "LoginSignup"
         ],
@@ -68,6 +68,29 @@
       "get": {
         "tags": [
           "LoginSignup"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/LoginSignup/{id}": {
+      "get": {
+        "tags": [
+          "LoginSignup"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
         ],
         "responses": {
           "200": {

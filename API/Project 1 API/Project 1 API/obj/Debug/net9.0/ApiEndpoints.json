@@ -1,9 +1,25 @@
 [
   {
     "ContainingType": "Project_1_API.Controllers.LoginSignupController",
-    "Method": "login",
+    "Method": "DeleteUser",
+    "RelativePath": "api/LoginSignup/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Project_1_API.Controllers.LoginSignupController",
+    "Method": "Login",
     "RelativePath": "api/LoginSignup/login",
-    "HttpMethod": "POST",
+    "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
     "Parameters": [
@@ -38,7 +54,7 @@
   },
   {
     "ContainingType": "Project_1_API.Controllers.LoginSignupController",
-    "Method": "getUsers",
+    "Method": "GetUsers",
     "RelativePath": "api/LoginSignup/users",
     "HttpMethod": "GET",
     "IsController": true,
