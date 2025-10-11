@@ -3,6 +3,7 @@
     --brown: #d0694f;
     --green: #ced04f;
     --white: #ffffff;
+    --dark-brown: #5c4135;
     --background-brown: #cfb499;
     --header-height: 60px;
     --footer-height: 60px;
@@ -18,11 +19,22 @@ header{
     padding: 0.5%;
     color: var(--brown);
     height: var(--header-height);
+    display: flex;
+    justify-content: space-between;
 }
 
 header h1{
     margin-left: 2%;
     height: var(--footer-height);
+}
+
+header div{
+    background-color: var(--brown);
+    height: 50px;
+    width: 100px;
+    margin-right: 2%;
+    margin-top: 1%;
+    border-radius: 25px;
 }
 
 footer{
@@ -76,6 +88,7 @@ footer{
 .form div button{
     width: 50%;
     padding: 2%;
+    margin-bottom: 3%;
     border-style: none;
     border-radius: 10px;
     background-color: var(--brown);
@@ -88,14 +101,194 @@ footer{
     transition: background-color 1s ease;
 }
 
+.form div p{
+    margin: 0%;
+    margin-bottom: 3%;
+}
+
 .error-msg{
     color: red;
 }
 
 .home-container{
     height: calc(100vh - (var(--header-height) + var(--footer-height)));
-    /* background-color: red; */
+    /* backdrop-filter: blur(5px); */
     margin-right: 3%;
     margin-left: 3%;
     padding: 0.5%;
+}
+
+.home-container h2, h3{
+    background-color: var(--background-brown);
+    color: var(--dark-brown);
+    width: 250px;
+    padding: 1%;
+    margin: 0.5%;
+}
+
+.home-container button{
+    background-color: white;
+    color: #d0694f;
+    transition: background-color 1s ease;
+    border-style: none;
+    padding: 1.7%;
+    border-radius: 25px;
+    float: right ;
+    position: relative;
+}
+
+.home-container button:hover{
+    background-color: #f8b7a7;
+    color: var(--dark-brown);
+    transition: background-color 1s ease;
+}
+
+.home-content{
+    height: 75%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.no-plans-container{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.no-plans-container img{
+    width: 255px;
+}
+
+.plans-container div{
+    background-color: var(--blue);
+    transition: background-color 1s ease;
+    color: white;
+    padding: 0.7%;
+    padding-left: 1.7%;
+    padding-right: 1.7%;
+    margin-bottom: 0.5%;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: row;
+    justify-content:space-between ;
+}
+
+.plans-container div:hover{
+    background-color: #47b4eb;
+    transition: background-color 1s ease;
+}
+
+.plans-container div p{
+    width: fit-content;
+    /* padding: 0px; */
+    margin: 0px;
+}
+
+.left-p{
+    background-color: var(--green);
+    padding: 2px;
+    padding-left: 1%;
+    padding-right: 1%;
+    border-radius: 15px;
+}
+
+.add-plan-container{
+    height: calc(90vh - (var(--header-height) + var(--footer-height)));
+    /* background-color: purple; */
+    padding-left: 5%;
+    padding-right: 5%;
+    padding-top: 5%;
+}
+
+.plan-form{
+    /* background-color: blue; */
+    background-color: var(--white);
+    height: 90%; 
+    display: flex;
+    flex-direction: row;
+    border-radius: 30px;
+}
+
+.plan-form-left{
+    /* background-color: orange; */
+    flex-basis: 30%;
+    border-radius: 30px;
+    padding: 5%;
+}
+
+.plan-form-left h2{
+    margin: 0%;
+    margin-bottom: 2%;
+    color: var(--brown);
+}
+
+.plan-form-left img{
+    width: 250px;
+    height: 250px;
+    overflow: hidden; 
+}
+
+.plan-form-right{
+   /* background-color: red; */
+   background-color: var(--blue);
+   flex-basis: 60%;
+   border-radius: 30px;
+   padding: 5%;
+   display: flex;
+   flex-direction: column;
+   justify-content: space-between;
+   overflow-y: auto;
+}
+
+.plan-form-right input{
+    width: 100%;
+    padding: 1%; 
+    border-style: none;
+    border-radius: 15px;
+    margin-bottom: 1.5%;
+}
+
+.plan-form-right select{
+    width: 100%;
+    padding: 1%; 
+    border-style: none;
+    border-radius: 15px;
+    margin-bottom: 1.5%;
+}
+
+.dest-selected{
+    height: fit-content;
+    width: 30%;
+    padding: 2%;
+    margin-bottom: 3%;
+    border-style: none;
+    border-radius: 20px;
+    background-color: var(--brown);
+    transition: background-color 1s ease;
+    color: var(--white);
+}
+
+.dest-selected:hover{
+    background-color:#f7542b ;
+    transition: background-color 1s ease;
+    color: var(--white);
+}
+
+.plan-form-button{
+    height: fit-content;
+    width: 30%;
+    padding: 2%;
+    margin-bottom: 3%;
+    border-style: none;
+    border-radius: 20px;
+    background-color: var(--brown);
+    transition: background-color 1s ease;
+    color: var(--white);
+    float: right;
+}
+
+.plan-form-button:hover{
+    background-color: var(--green);
+    transition: background-color 1s ease;
 }

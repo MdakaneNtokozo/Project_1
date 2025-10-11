@@ -1,7 +1,8 @@
-import { useRef, useState } from "react"
+import { useContext, useRef, useState } from "react"
 import Header from "../Header"
 import Footer from "../Footer"
 import { useNavigate } from "react-router-dom"
+import { MyContext } from "../MyProvider"
 
 function SignUp() {
     const nameRef = useRef(null)
@@ -10,10 +11,11 @@ function SignUp() {
     const passwordRef = useRef(null)
     const confirmRef = useRef(null)
     const [error, setError] = useState("")
-    const api_call = "https://localhost:44353/api/LoginSignup/signUp"
     const navigate = useNavigate();
+    const { api } = useContext(MyContext)
     
     const SignUp = async () => {
+        const api_call = api + "LoginSignup/signUp"
         if (nameRef.current.value != "" &&
             surnameRef.current.value != "" &&
             emailRef.current.value != "" &&
@@ -39,7 +41,7 @@ function SignUp() {
 
                     if (res.status == 201) {
                         //Sign in is successful
-                        navigate("/login")
+                        navigate("/")
                     } else if(res.status == 400){
                         //Email is already in use
                         setError(await res.text())
@@ -52,6 +54,7 @@ function SignUp() {
             } else {
                 setError("Passwords don't match")
             }
+            //navigate('/')
         }
     }
 

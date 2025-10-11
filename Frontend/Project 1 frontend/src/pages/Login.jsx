@@ -1,19 +1,22 @@
-import { useRef, useState } from "react"
+import { useContext, useEffect, useRef, useState } from "react"
 import Header from "../Header"
 import Footer from "../Footer"
-import { useNavigate } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
+import { MyContext } from "../MyProvider"
 
 function Login() {
     const emailRef = useRef(null)
     const passwordRef = useRef(null)
     const [error, setError] = useState("")
     const navigate = useNavigate()
+    const { api, role, token, setRole, setToken } = useContext(MyContext)
 
     const Login = async () => {
         if (emailRef.current.value != "" && passwordRef.current.value != "") {
             var email = emailRef.current.value
             var password = passwordRef.current.value
-            var api_call = "https://localhost:44353/api/LoginSignup/login?email=" + email + "&password=" + password
+            var api_call = api + "LoginSignup/login?email=" + email + "&password=" + password
+
             try {
                 const res = await fetch(api_call, {
                     method: "GET",
@@ -24,15 +27,18 @@ function Login() {
                     var role_and_token = await res.text()
                     console.log("Status test: " + role_and_token)
                     var l = role_and_token.split(' ')
-                    var role = l[0]
-                    var token = l[1]
-                    console.log("Role: " + role)
-                    console.log("Role: " + token)
 
-                    if (role == "1") {
+                    setRole(l[0])
+                    setToken(l[1])
+                    console.log("Role: " + role)
+                    console.log("token: " + token)
+
+                    if (role == 1) {
                         navigate("/home")
-                    } else {
+                    } else if(role == 2){
                         console.log("admin home page coming soon")
+                    } else {
+                        console.log("no role assigned yet")
                     }
                 } else if(res.status == 400){
                     //incorrect details entered
@@ -45,6 +51,8 @@ function Login() {
             } catch (err) {
                 console.error(err)
             }
+
+            //navigate('/home')
         }
 
     }
@@ -71,7 +79,8 @@ function Login() {
 
                     <div>
                         {error != "" ? <p className="error-msg">{error}</p> : <></>}
-                        <button onClick={Login}>Login</button><br />
+                        <button onClick={Login}>Login</button>
+                        <p>Don't have an account? <Link to="/signup">Sign up</Link></p>
                         <a href="/">Forgot password</a>
                     </div>
 

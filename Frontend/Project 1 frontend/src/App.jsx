@@ -1,19 +1,28 @@
 import { BrowserRouter, Route, Router, Routes } from "react-router-dom"
-import Home from "./pages/Home"
-import Login from "./pages/Login"
-import SignUp from "./pages/Signup"
+import { MyProvider } from "./MyProvider"
+import { lazy, Suspense } from "react"
+
+const Home = lazy(() => import("./pages/Home"))
+const Login = lazy(() => import("./pages/Login"))
+const SignUp = lazy(() => import("./pages/Signup"))
+const AddPlan = lazy(() => import("./pages/AddPlan"))
 
 function App() {
   return (
     <>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<SignUp />}></Route>
-          <Route path="/login" element={<Login />}></Route>
-          <Route path="/home" element={<Home />}></Route>
+      <MyProvider>
+        <BrowserRouter>
+          <Suspense fallback={<p>Loading</p>}>
+            <Routes>
+              <Route path="/" element={<Login />}></Route>
+              <Route path="/signup" element={<SignUp />}></Route>
+              <Route path="/home" element={<Home />}></Route>
+              <Route path="/addPlan" element={<AddPlan />}></Route>
+            </Routes>
+          </Suspense>
+        </BrowserRouter>
+      </MyProvider>
 
-        </Routes>
-      </BrowserRouter>
     </>
   )
 }
