@@ -227,6 +227,7 @@ footer{
     width: 250px;
     height: 250px;
     overflow: hidden; 
+    border-radius: 30px;
 }
 
 .plan-form-right{
@@ -291,4 +292,118 @@ footer{
 .plan-form-button:hover{
     background-color: var(--green);
     transition: background-color 1s ease;
+}
+
+.preview-upper{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+
+.preview-upper-left{
+    flex-basis: 50%;
+}
+
+.preview-upper-left h3{
+    background-color: transparent;
+}
+
+.preview-upper-left img{
+    width: 225px;
+    height: 225px;
+    overflow: hidden; 
+    border-radius: 20px;
+} 
+
+.preview-upper-right{
+    flex-basis: 50%;
+    color: var(--dark-brown);
+    font-weight: bold;
+    overflow-y: auto;
+}
+
+.preview-upper-right p{
+    margin: 10px;
+}
+
+.preview-lower{
+    margin-top: 5%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.preview-lower h3{
+    background-color: transparent;
+}
+
+.preview-lower button{
+    background-color: var(--brown);
+    transition: background-color 1s ease;
+    padding: 10px;
+    width: 20%;
+    color: white;
+    font-weight: bold;
+    border-style: none;
+    border-radius: 15px;
+    float: right;
+}
+
+.preview-lower button:hover{
+    background-color: var(--blue);
+    transition: background-color 1s ease;
+}
+
+.nav-upper div{
+    padding: 10px;
+    margin-bottom: 3px;
+    color: white;
+    font-weight: bold;
+    transition: background-color 1s ease;
+}
+
+.nav-upper div:hover{
+    background-color: var(--green);
+    transition: background-color 1s ease;
+}
+
+.nav-lower button{
+    background-color: var(--brown);
+    transition: background-color 1s ease;
+    padding: 10px;
+    width: 50%;
+    color: white;
+    font-weight: bold;
+    border-style: none;
+    border-radius: 15px;
+    float: right;
+}
+
+.nav-lower button:hover{
+    background-color: var(--green);
+    transition: background-color 1s ease;
+}
+
+.cards-view h3{
+    background-color: transparent;
+    width: fit-content;
+    color: var(--dark-brown);
+    padding: 0%;
+}
+
+.cards-selection{
+    width: 100%;
+    height: 270px;
+    display: flex;
+    flex-wrap: wrap;
+    overflow-y: auto;
+}
+
+.cards-selection div{
+    background-color: var(--background-brown);
+    height: auto;
+    width: 44%;
+    padding: 2%;
+    min-width: 130px;
+    margin: 3px;
+    border-radius: 15px;
 }

@@ -33,13 +33,7 @@ function Login() {
                     console.log("Role: " + role)
                     console.log("token: " + token)
 
-                    if (role == 1) {
-                        navigate("/home")
-                    } else if(role == 2){
-                        console.log("admin home page coming soon")
-                    } else {
-                        console.log("no role assigned yet")
-                    }
+                    navigate("/home")
                 } else if(res.status == 400){
                     //incorrect details entered
                     setError(await res.text())
@@ -51,10 +45,7 @@ function Login() {
             } catch (err) {
                 console.error(err)
             }
-
-            //navigate('/home')
         }
-
     }
 
     const stopReload = (event) => {
