@@ -9,7 +9,7 @@ function Login() {
     const passwordRef = useRef(null)
     const [error, setError] = useState("")
     const navigate = useNavigate()
-    const { api, role, token, setRole, setToken } = useContext(MyContext)
+    const { api, role, token, user, setRole, setToken, setUser } = useContext(MyContext)
 
     const Login = async () => {
         if (emailRef.current.value != "" && passwordRef.current.value != "") {

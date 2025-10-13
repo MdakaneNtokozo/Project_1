@@ -11,10 +11,12 @@ function Header(){
             <header>
                 <h1><span onClick={() => navigate('/home')}>VacayPay</span></h1>
 
-                {role == "1"? 
-                    <div>
-                        <p style={{color:"white"}}>nav here</p>
-                    </div>:<></>
+                {role == 1 ? 
+                    <nav className="nav-bar">
+                        <img src="\src\assets\notification bell.png" alt="notification bell" className="icon"></img>
+                        <img src="\src\assets\profile icon.png" alt="profile picture" className="icon" onClick={() => navigate('/profile')}></img>
+                    </nav>:
+                    <></>
                 }
                     
             </header>
