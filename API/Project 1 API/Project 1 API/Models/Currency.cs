@@ -12,4 +12,6 @@ public partial class Currency
     public string CurrSymbol { get; set; } = null!;
 
     
+
+    
 }

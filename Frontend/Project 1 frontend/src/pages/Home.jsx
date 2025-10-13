@@ -8,10 +8,10 @@ function Home() {
     const [name, setName] = useState("Ntokozo")
     const [plans, setPlans] = useState(["Vacation plan 1", "Vacation plan 2", "Vacation plan 3"])
     //const [plans, setPlans] = useState([])
-    const { role } = useContext(MyContext)
+    const { role, user } = useContext(MyContext)
     const navigate = useNavigate()
 
-    console.log(role)
+    console.log(user)
 
     const viewPlan = (idx) => {
         console.log(idx)
@@ -27,7 +27,7 @@ function Home() {
 
             {role == 1 ?
                 <div className="home-container">
-                    <h2>Welcome {name}</h2>
+                    <h2>Welcome {user.userName}</h2>
                     <h3>Upcoming vacations</h3>
 
                     <div className="home-content">

@@ -1,13 +1,12 @@
 import { useContext, useEffect, useState } from "react"
 import Footer from "../Footer"
 import Header from "../Header"
-import { useNavigate } from "react-router-dom"
 import { MyContext } from "../MyProvider"
 
 function Profile() {
-    const { api, user } = useContext(MyContext)
-    const navigate = useNavigate()
+    const { api, token, user } = useContext(MyContext)
     const [edit, setEdit] = useState("")
+    const [currency, setCurrency] = useState("")
 
     return (
         <>
@@ -20,17 +19,17 @@ function Profile() {
                         <img src="\src\assets\profile icon.png" alt="profile picture" ></img>
 
                         <div>
-                            <p>Name: </p>
-                            <p>Surname: </p>
-                            <p>Bio: </p>
+                            <p>Name: {user.userName} </p>
+                            <p>Surname: {user.userSurname}</p>
+                            <p>Bio: {user.userBio}</p>
                         </div>
                     </div>
                     <button onClick={() => setEdit("Profile")}>Edit profile</button>
-                    <p>Email: </p>
+                    <p>Email: {user.userEmail}</p>
                     <button onClick={() => setEdit("Email")}>Edit email</button>
-                    <p>Password: </p>
+                    <p>Password: ******</p>
                     <button onClick={() => setEdit("Password")}>Edit password</button>
-                    <p>Currency preference: </p>
+                    <p>Currency preference: {currency.currName} ({currency.currSymbol}) </p>
                     <button >Set preference</button>
                     <p>Notifications: </p>
                     <button >Turn on/off</button>
@@ -44,11 +43,11 @@ function Profile() {
 
                         <div className="edit-profile-form-info">
                             <p>Name: </p>
-                            <input placeholder="name"></input>
+                            <input placeholder="name" value={user.userName}></input>
                             <p>Surname: </p>
-                            <input placeholder="surname"></input>
+                            <input placeholder="surname" value={user.userSurname}></input>
                             <p>Bio: </p>
-                            <textarea placeholder="bio"></textarea>
+                            <textarea placeholder="bio" value={user.userBio}></textarea>
                         </div>
                         
                         <div className="edit-profile-form-buttons">
@@ -67,7 +66,7 @@ function Profile() {
 
                         <div className="edit-profile-form-info">
                             <p>Previous email: </p>
-                            <input placeholder="previous password"></input>
+                            <input placeholder="previous password" value={user.userEmail}></input>
                             <p>New email: </p>
                             <input placeholder="new password"></input>
                             

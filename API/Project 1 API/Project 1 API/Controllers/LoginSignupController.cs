@@ -64,7 +64,7 @@ namespace Project_1_API.Controllers
                 if (result == PasswordVerificationResult.Success)
                 {
                     //1 means they are an admin
-                    return Ok($"1 {jwts.GenerateToken(user.UserEmail)}");
+                    return Ok($"1 {jwts.GenerateToken(user.UserEmail)} {user.UserId}");
                 }
                 else
                 {
@@ -73,6 +73,17 @@ namespace Project_1_API.Controllers
             }
             
             return NotFound("This email does not exist.");
+        }
+
+        [Authorize]
+        [HttpGet]
+        [Route("getUserById/{id}")]
+        public async Task<Object> getUserById(int id)
+        {
+            var users = await _context.Users.ToListAsync();
+            var user = users.Find(u => u.UserId == id);
+
+            return Ok(user);
         }
 
         private Object IsAdmin(List<Admin> admins, String email, String password)
@@ -104,7 +115,7 @@ namespace Project_1_API.Controllers
             return Ok(await _context.Users.ToListAsync());
         }
 
-        [HttpGet]
+        [HttpDelete]
         [Route("{id}")]
         public async Task<Object> DeleteUser(int id)
         {

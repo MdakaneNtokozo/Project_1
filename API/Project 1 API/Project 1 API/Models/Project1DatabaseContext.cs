@@ -589,9 +589,19 @@ public partial class Project1DatabaseContext : DbContext
 
             entity.ToTable("user");
 
+            entity.HasIndex(e => e.CurrId, "curr_id");
+
             entity.Property(e => e.UserId)
                 .ValueGeneratedNever()
                 .HasColumnName("user_id");
+            entity.Property(e => e.CurrId).HasColumnName("curr_id");
+            entity.Property(e => e.NotificationOn)
+                .HasColumnType("bit(1)")
+                .HasColumnName("notification_on");
+            entity.Property(e => e.UserBio)
+                .HasMaxLength(100)
+                .IsFixedLength()
+                .HasColumnName("user_bio");
             entity.Property(e => e.UserCreatedDate)
                 .HasColumnType("datetime")
                 .HasColumnName("user_created_date");
@@ -610,6 +620,8 @@ public partial class Project1DatabaseContext : DbContext
                 .HasMaxLength(100)
                 .IsFixedLength()
                 .HasColumnName("user_surname");
+
+            
         });
 
         modelBuilder.Entity<Vacation>(entity =>

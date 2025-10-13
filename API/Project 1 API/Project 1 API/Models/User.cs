@@ -11,13 +11,21 @@ public partial class User
 
     public string UserSurname { get; set; } = null!;
 
+    public string UserBio { get; set; } = null!;
+
     public string UserEmail { get; set; } = null!;
 
     public string UserPassword { get; set; } = null!;
 
     public DateTime UserCreatedDate { get; set; }
 
+    public ulong NotificationOn { get; set; }
+
+    public int CurrId { get; set; }
+
     
+
+    public virtual Currency Curr { get; set; } = null!;
 
     
 

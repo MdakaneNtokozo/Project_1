@@ -5,6 +5,29 @@
     "version": "1.0"
   },
   "paths": {
+    "/api/Destinations/getCurrencyByID/{id}": {
+      "get": {
+        "tags": [
+          "Destinations"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/LoginSignup/signUp": {
       "post": {
         "tags": [
@@ -64,6 +87,29 @@
         }
       }
     },
+    "/api/LoginSignup/getUserById/{id}": {
+      "get": {
+        "tags": [
+          "LoginSignup"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/LoginSignup/users": {
       "get": {
         "tags": [
@@ -77,7 +123,7 @@
       }
     },
     "/api/LoginSignup/{id}": {
-      "get": {
+      "delete": {
         "tags": [
           "LoginSignup"
         ],
@@ -102,6 +148,24 @@
   },
   "components": {
     "schemas": {
+      "Currency": {
+        "type": "object",
+        "properties": {
+          "currId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "currName": {
+            "type": "string",
+            "nullable": true
+          },
+          "currSymbol": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "User": {
         "type": "object",
         "properties": {
@@ -117,6 +181,10 @@
             "type": "string",
             "nullable": true
           },
+          "userBio": {
+            "type": "string",
+            "nullable": true
+          },
           "userEmail": {
             "type": "string",
             "nullable": true
@@ -128,6 +196,17 @@
           "userCreatedDate": {
             "type": "string",
             "format": "date-time"
+          },
+          "notificationOn": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "currId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "curr": {
+            "$ref": "#/components/schemas/Currency"
           }
         },
         "additionalProperties": false

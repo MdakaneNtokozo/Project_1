@@ -1,8 +1,40 @@
 [
   {
+    "ContainingType": "Project_1_API.Controllers.DestinationsController",
+    "Method": "getUserById",
+    "RelativePath": "api/Destinations/getCurrencyByID/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "Project_1_API.Controllers.LoginSignupController",
     "Method": "DeleteUser",
     "RelativePath": "api/LoginSignup/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Project_1_API.Controllers.LoginSignupController",
+    "Method": "getUserById",
+    "RelativePath": "api/LoginSignup/getUserById/{id}",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,

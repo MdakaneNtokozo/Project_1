@@ -18,7 +18,7 @@ function Login() {
             var api_call = api + "LoginSignup/login?email=" + email + "&password=" + password
 
             try {
-                const res = await fetch(api_call, {
+                var res = await fetch(api_call, {
                     method: "GET",
                     headers: { "Content-Type": "application/json" },
                 })
@@ -33,7 +33,23 @@ function Login() {
                     console.log("Role: " + role)
                     console.log("token: " + token)
 
-                    navigate("/home")
+                    var id = l[2]
+                    console.log("user id: " + id)
+                    api_call = api + "LoginSignup/getUserById/" + id
+                    res = await fetch(api_call, {
+                        method: "GET",
+                        headers: { 
+                            "Authorization": "Bearer " + l[1],
+                            "Content-Type": "application/json"
+                        },
+                    })
+
+                    if(res.status == 200){
+                        var loggedInUser = await res.json()
+                        setUser(loggedInUser)
+                        navigate("/home")
+                    }
+                    
                 } else if(res.status == 400){
                     //incorrect details entered
                     setError(await res.text())

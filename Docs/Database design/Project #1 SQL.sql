@@ -130,9 +130,13 @@ create table user(
 	user_id int PRIMARY KEY,
 	user_name char(100) NOT NULL,
 	user_surname char(100) NOT NULL,
+	user_bio char(100) NOT NULL,
 	user_email char(100) NOT NULL,
 	user_password TEXT NOT NULL,
-	user_created_date DATETIME NOT NULL
+	user_created_date DATETIME NOT NULL,
+	notification_on BIT NOT NULL,
+	curr_id int NOT NULL,
+	FOREIGN KEY(curr_id) REFERENCES currency(curr_id)
 );
 
 create table spender_type(

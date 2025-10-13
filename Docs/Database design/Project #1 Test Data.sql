@@ -1189,12 +1189,12 @@ INSERT INTO food_place (foodp_id, foodp_name, foodp_address, foodp_min_price, fo
 (249, 'Curitiba Food Truck', 'Praça Osório, Curitiba, Brazil', 80, 200, 'Wraps, Snacks, Fries', 5, 4, 50),
 (250, 'Confeitaria das Famílias', 'Rua 24 de Maio 65, Curitiba, Brazil', 60, 200, 'Pastries, Bread, Cakes', 5, 5, 50);
 
-INSERT INTO user (user_id, user_name, user_surname, user_email, user_password, user_created_date) VALUES
-(1, 'John', 'Doe', 'john.doe@gmail.com', 'AQAAAAIAAYagAAAAENSCnr/j1Qq9//e7nU1QcaglsolbX2+tXWmxAiNI7tEwl70Bi00+OU647nPd+ZLeNg==', '2025-10-04'),
-(2, 'Suzzane', 'Smith', 'suzzane.smith@gmail.com', 'AQAAAAIAAYagAAAAELDsgeDzTS0YTpbrYgTHfs3jsiAbzzASRX1JfPk4JZc6lz904Y66EKWZqYvqUY+LiA==', '2025-10-04'),
-(3, 'Michael', 'Brown', 'michael.brown@gmail.com', 'AQAAAAIAAYagAAAAEDngUIuaQLkVw4zjAGv8TqPPbpp6SPid0ZfWRl3modn2MtIVWz/SwWsqdCFmyHMtvA==', '2025-10-04'),
-(4, 'Emma', 'Johnson', 'emma.johnson@gmail.com', 'AQAAAAIAAYagAAAAEA2CghGZBaYX8RQ2S5AQY52/LHQABOiJ2A9WjCVeBl4R9s0bgphyCgJfaY6WPFNkHA==', '2025-10-04'),
-(5, 'David', 'Williams', 'david.williams@gmail.com', 'AQAAAAIAAYagAAAAEHRdNktfsv5pbkG5mgCHwkgsgQilLwy+ksnXjefLMzAu1OuC/ZhwhflzokVkj76Rpg==', '2025-10-04');
+INSERT INTO user (user_id, user_name, user_surname, user_email, user_bio, user_password, user_created_date, notification_on, curr_id) VALUES
+(1, 'John', 'Doe', 'john.doe@gmail.com', 'Coffee in one hand, ideas in the other. Always two steps ahead—or at least trying to be. ☕💡', 'AQAAAAIAAYagAAAAENSCnr/j1Qq9//e7nU1QcaglsolbX2+tXWmxAiNI7tEwl70Bi00+OU647nPd+ZLeNg==', '2025-10-04', 1, 1),
+(2, 'Suzzane', 'Smith', 'suzzane.smith@gmail.com', 'Sunshine mixed with a bit of storm. Loves art, laughter, and late-night deep talks. 🌦️🎨',  'AQAAAAIAAYagAAAAELDsgeDzTS0YTpbrYgTHfs3jsiAbzzASRX1JfPk4JZc6lz904Y66EKWZqYvqUY+LiA==', '2025-10-04', 1, 1),
+(3, 'Michael', 'Brown', 'michael.brown@gmail.com', 'Tech geek by day, pizza critic by night. Forever chasing the next big adventure. 🍕💻',  'AQAAAAIAAYagAAAAEDngUIuaQLkVw4zjAGv8TqPPbpp6SPid0ZfWRl3modn2MtIVWz/SwWsqdCFmyHMtvA==', '2025-10-04', 1, 1),
+(4, 'Emma', 'Johnson', 'emma.johnson@gmail.com', 'Book lover, dog cuddler, and unstoppable optimist. Making chaos look cute since day one. 📚🐾✨',  'AQAAAAIAAYagAAAAEA2CghGZBaYX8RQ2S5AQY52/LHQABOiJ2A9WjCVeBl4R9s0bgphyCgJfaY6WPFNkHA==', '2025-10-04', 1, 1),
+(5, 'David', 'Williams', 'david.williams@gmail.com', 'Gym, gadgets, and good vibes only. Known to drop random fun facts mid-conversation. 💪🔋🧠', 'AQAAAAIAAYagAAAAEHRdNktfsv5pbkG5mgCHwkgsgQilLwy+ksnXjefLMzAu1OuC/ZhwhflzokVkj76Rpg==', '2025-10-04', 1, 1);
 
 INSERT INTO spender_type (spender_type_id, spender_type_name, spender_type_level) VALUES
 (1, 'Very Low Spender', 1),
