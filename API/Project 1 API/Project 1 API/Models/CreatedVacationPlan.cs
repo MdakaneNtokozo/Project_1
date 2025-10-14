@@ -19,9 +19,9 @@ public partial class CreatedVacationPlan
 
     
 
-    public virtual SpenderType SpenderType { get; set; } = null!;
+    
 
-    public virtual User User { get; set; } = null!;
+    
 
-    public virtual Vacation Vac { get; set; } = null!;
+    
 }

@@ -28,6 +28,114 @@
         }
       }
     },
+    "/api/Destinations/getCurrencies": {
+      "get": {
+        "tags": [
+          "Destinations"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Destinations/getDestinations": {
+      "get": {
+        "tags": [
+          "Destinations"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Destinations/getTransportations": {
+      "get": {
+        "tags": [
+          "Destinations"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Destinations/getTransportationTypes": {
+      "get": {
+        "tags": [
+          "Destinations"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Destinations/getAccommodations": {
+      "get": {
+        "tags": [
+          "Destinations"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Destinations/getAccommodationTypes": {
+      "get": {
+        "tags": [
+          "Destinations"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Destinations/getFoodPlaces": {
+      "get": {
+        "tags": [
+          "Destinations"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Destinations/getFoodPlaceTypes": {
+      "get": {
+        "tags": [
+          "Destinations"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Destinations/getAttractions": {
+      "get": {
+        "tags": [
+          "Destinations"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/LoginSignup/signUp": {
       "post": {
         "tags": [
@@ -122,6 +230,18 @@
         }
       }
     },
+    "/api/LoginSignup/getSpenderTypes": {
+      "get": {
+        "tags": [
+          "LoginSignup"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/LoginSignup/{id}": {
       "delete": {
         "tags": [
@@ -148,24 +268,6 @@
   },
   "components": {
     "schemas": {
-      "Currency": {
-        "type": "object",
-        "properties": {
-          "currId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "currName": {
-            "type": "string",
-            "nullable": true
-          },
-          "currSymbol": {
-            "type": "string",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
       "User": {
         "type": "object",
         "properties": {
@@ -204,9 +306,6 @@
           "currId": {
             "type": "integer",
             "format": "int32"
-          },
-          "curr": {
-            "$ref": "#/components/schemas/Currency"
           }
         },
         "additionalProperties": false

@@ -38,6 +38,8 @@ public partial class Project1DatabaseContext : DbContext
 
     public virtual DbSet<ErrorType> ErrorTypes { get; set; }
 
+    public virtual DbSet<ExchangeRate> ExchangeRates { get; set; }
+
     public virtual DbSet<FoodPlace> FoodPlaces { get; set; }
 
     public virtual DbSet<FoodPlaceType> FoodPlaceTypes { get; set; }
@@ -336,6 +338,25 @@ public partial class Project1DatabaseContext : DbContext
                 .HasMaxLength(50)
                 .IsFixedLength()
                 .HasColumnName("err_type_name");
+        });
+
+        modelBuilder.Entity<ExchangeRate>(entity =>
+        {
+            entity.HasKey(e => new { e.CurrentId, e.TargetId })
+                .HasName("PRIMARY")
+                .HasAnnotation("MySql:IndexPrefixLength", new[] { 0, 0 });
+
+            entity.ToTable("exchange_rate");
+
+            entity.HasIndex(e => e.TargetId, "target_id");
+
+            entity.Property(e => e.CurrentId).HasColumnName("current_id");
+            entity.Property(e => e.TargetId).HasColumnName("target_id");
+            entity.Property(e => e.ExchangeRate1).HasColumnName("exchange_rate");
+
+            
+
+            
         });
 
         modelBuilder.Entity<FoodPlace>(entity =>

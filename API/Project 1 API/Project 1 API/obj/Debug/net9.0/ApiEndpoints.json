@@ -1,7 +1,47 @@
 [
   {
     "ContainingType": "Project_1_API.Controllers.DestinationsController",
-    "Method": "getUserById",
+    "Method": "GetAccommodations",
+    "RelativePath": "api/Destinations/getAccommodations",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Project_1_API.Controllers.DestinationsController",
+    "Method": "GetAccommodationTypes",
+    "RelativePath": "api/Destinations/getAccommodationTypes",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Project_1_API.Controllers.DestinationsController",
+    "Method": "GetAttractions",
+    "RelativePath": "api/Destinations/getAttractions",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Project_1_API.Controllers.DestinationsController",
+    "Method": "GetCurrencies",
+    "RelativePath": "api/Destinations/getCurrencies",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Project_1_API.Controllers.DestinationsController",
+    "Method": "GetUserById",
     "RelativePath": "api/Destinations/getCurrencyByID/{id}",
     "HttpMethod": "GET",
     "IsController": true,
@@ -13,6 +53,56 @@
         "IsRequired": true
       }
     ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Project_1_API.Controllers.DestinationsController",
+    "Method": "GetDestinations",
+    "RelativePath": "api/Destinations/getDestinations",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Project_1_API.Controllers.DestinationsController",
+    "Method": "GetFoodPlaces",
+    "RelativePath": "api/Destinations/getFoodPlaces",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Project_1_API.Controllers.DestinationsController",
+    "Method": "GetFoodPlaceTypes",
+    "RelativePath": "api/Destinations/getFoodPlaceTypes",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Project_1_API.Controllers.DestinationsController",
+    "Method": "GetTransportaions",
+    "RelativePath": "api/Destinations/getTransportations",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Project_1_API.Controllers.DestinationsController",
+    "Method": "GetTransportationTypes",
+    "RelativePath": "api/Destinations/getTransportationTypes",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
     "ReturnTypes": []
   },
   {
@@ -29,6 +119,16 @@
         "IsRequired": true
       }
     ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Project_1_API.Controllers.LoginSignupController",
+    "Method": "GetSpenderTypes",
+    "RelativePath": "api/LoginSignup/getSpenderTypes",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
     "ReturnTypes": []
   },
   {

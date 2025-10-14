@@ -21,9 +21,9 @@ public partial class Accomodation
 
     public int DestId { get; set; }
 
-    public virtual AccomodationType AccType { get; set; } = null!;
+    
 
-    public virtual Destination Dest { get; set; } = null!;
+    
 
     
 }

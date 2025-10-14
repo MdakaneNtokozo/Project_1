@@ -11,7 +11,7 @@ public partial class SelectedAttraction
 
     public double EstimatedActivityPrice { get; set; }
 
-    public virtual Attraction Attr { get; set; } = null!;
+    
 
-    public virtual Vacation Vac { get; set; } = null!;
+    
 }

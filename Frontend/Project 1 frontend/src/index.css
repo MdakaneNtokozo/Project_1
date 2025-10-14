@@ -7,12 +7,14 @@
     --background-brown: #cfb499;
     --header-height: 60px;
     --footer-height: 60px;
+    --container-height: calc(100vh - (var(--header-height) + var(--footer-height)))
 }
 
 body{
     background-image: url("\src\assets\brown travel themed background.jpg");
     height: 100vh; 
     margin: 0px;   
+    color: var(--brown);
 }
 
 header{
@@ -51,8 +53,32 @@ footer{
     padding: 2%;
 }
 
+button{
+    width: 50%;
+    padding: 2%;
+    margin-bottom: 3%;
+    border-style: none;
+    border-radius: 30px;
+    background-color: var(--brown);
+    transition: background-color 1s ease;
+    color: var(--white);
+}
+
+button:hover{
+    background-color: var(--green);
+    transition: background-color 1s ease;
+}
+
+input, select, textarea{
+    width: 95%;
+    margin: 1%;
+    padding: 2%;
+    border-style: none;
+    border-radius: 30px;
+}
+
 .form-container{
-    height: calc(100vh - (var(--header-height) + var(--footer-height)));
+    height: var(--container-height);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -85,30 +111,6 @@ footer{
     color: var(--white)
 }
 
-.form div input{
-    width: 95%;
-    margin: 1%;
-    padding: 2%;
-    border-style: none;
-    border-radius: 10px;
-}
-
-.form div button{
-    width: 50%;
-    padding: 2%;
-    margin-bottom: 3%;
-    border-style: none;
-    border-radius: 10px;
-    background-color: var(--brown);
-    transition: background-color 1s ease;
-    color: var(--white);
-}
-
-.form div button:hover{
-    background-color: var(--green);
-    transition: background-color 1s ease;
-}
-
 .form div p{
     margin: 0%;
     margin-bottom: 3%;
@@ -119,8 +121,7 @@ footer{
 }
 
 .home-container{
-    height: calc(100vh - (var(--header-height) + var(--footer-height)));
-    /* backdrop-filter: blur(5px); */
+    height: var(--container-height);
     margin-right: 3%;
     margin-left: 3%;
     padding: 0.5%;
@@ -128,27 +129,15 @@ footer{
 
 .home-container h2, h3{
     background-color: var(--background-brown);
-    color: var(--dark-brown);
     width: 250px;
     padding: 1%;
     margin: 0.5%;
 }
 
 .home-container button{
-    background-color: white;
-    color: #d0694f;
-    transition: background-color 1s ease;
-    border-style: none;
-    padding: 1.7%;
-    border-radius: 25px;
+    width: fit-content;
     float: right ;
     position: relative;
-}
-
-.home-container button:hover{
-    background-color: #f8b7a7;
-    color: var(--dark-brown);
-    transition: background-color 1s ease;
 }
 
 .home-content{
@@ -210,7 +199,6 @@ footer{
 }
 
 .plan-form{
-    /* background-color: blue; */
     background-color: var(--white);
     height: 90%; 
     display: flex;
@@ -219,7 +207,6 @@ footer{
 }
 
 .plan-form-left{
-    /* background-color: orange; */
     flex-basis: 30%;
     border-radius: 30px;
     padding: 5%;
@@ -229,7 +216,7 @@ footer{
 .plan-form-left h2{
     margin: 0%;
     margin-bottom: 2%;
-    color: var(--brown);
+    float: left;
 }
 
 .plan-form-left img{
@@ -251,56 +238,13 @@ footer{
    overflow-y: auto;
 }
 
-.plan-form-right input{
-    width: 100%;
-    padding: 1%; 
-    border-style: none;
-    border-radius: 15px;
-    margin-bottom: 1.5%;
-}
-
-.plan-form-right select{
-    width: 100%;
-    padding: 1%; 
-    border-style: none;
-    border-radius: 15px;
-    margin-bottom: 1.5%;
-}
-
 .dest-selected{
-    height: fit-content;
     width: 30%;
-    padding: 2%;
-    margin-bottom: 3%;
-    border-style: none;
-    border-radius: 20px;
-    background-color: var(--brown);
-    transition: background-color 1s ease;
-    color: var(--white);
-}
-
-.dest-selected:hover{
-    background-color:#f7542b ;
-    transition: background-color 1s ease;
-    color: var(--white);
 }
 
 .plan-form-button{
-    height: fit-content;
     width: 30%;
-    padding: 2%;
-    margin-bottom: 3%;
-    border-style: none;
-    border-radius: 20px;
-    background-color: var(--brown);
-    transition: background-color 1s ease;
-    color: var(--white);
     float: right;
-}
-
-.plan-form-button:hover{
-    background-color: var(--green);
-    transition: background-color 1s ease;
 }
 
 .preview-upper{
@@ -315,6 +259,8 @@ footer{
 
 .preview-upper-left h3{
     background-color: transparent;
+    text-align: left;
+    padding-left: 5%;
 }
 
 .preview-upper-left img{
@@ -326,9 +272,10 @@ footer{
 
 .preview-upper-right{
     flex-basis: 50%;
-    color: var(--dark-brown);
     font-weight: bold;
     overflow-y: auto;
+    justify-items: flex-start;
+    padding-top: 5%;
 }
 
 .preview-upper-right p{
@@ -336,30 +283,21 @@ footer{
 }
 
 .preview-lower{
-    margin-top: 5%;
     display: flex;
     justify-content: space-between;
 }
 
 .preview-lower h3{
     background-color: transparent;
+    padding: 0%;
+    padding-left: 2%;
+    margin-top: 1%;
+    width: fit-content;
 }
 
 .preview-lower button{
-    background-color: var(--brown);
-    transition: background-color 1s ease;
-    padding: 10px;
     width: 20%;
-    color: white;
-    font-weight: bold;
-    border-style: none;
-    border-radius: 15px;
     float: right;
-}
-
-.preview-lower button:hover{
-    background-color: var(--blue);
-    transition: background-color 1s ease;
 }
 
 .nav-upper div{
@@ -376,26 +314,14 @@ footer{
 }
 
 .nav-lower button{
-    background-color: var(--brown);
-    transition: background-color 1s ease;
-    padding: 10px;
+    padding: 4%;
     width: 50%;
-    color: white;
-    font-weight: bold;
-    border-style: none;
-    border-radius: 15px;
     float: right;
-}
-
-.nav-lower button:hover{
-    background-color: var(--green);
-    transition: background-color 1s ease;
 }
 
 .cards-view h3{
     background-color: transparent;
     width: fit-content;
-    color: var(--dark-brown);
     padding: 0%;
 }
 
@@ -407,18 +333,55 @@ footer{
     overflow-y: auto;
 }
 
-.cards-selection div{
+.card-showcase{
     background-color: var(--background-brown);
     height: auto;
-    width: 44%;
-    padding: 2%;
-    min-width: 130px;
+    width: 46%;
     margin: 3px;
+    padding: 5px;
     border-radius: 15px;
 }
 
+.card-showcase img{
+    width: 95%;
+    height: auto;
+    border-radius: 20px;
+}
+
+.card-showcase p{
+    margin: 1%;
+}
+
+.card-showcase-title{
+    font-weight: bold;
+}
+
+.card-showcase-price{
+    background-color: wheat;
+    padding: 0.5%;
+    padding-left: 10px;
+    padding-right: 10px;
+    border-radius: 10px;
+}
+
+.card-showcase-info{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding-left: 3%;
+    padding-right: 3%;
+}
+
+.card-showcase-more-info{
+    display: flex;
+    flex-direction: column;
+    align-items:flex-start;
+    padding-left: 3%;
+    padding-right: 3%;
+}
+
 .profile-container{
-    height: calc(100vh - (var(--header-height) + var(--footer-height)));
+    height: var(--container-height);
     margin-right: 3%;
     margin-left: 3%;
     padding: 0.5%;
@@ -439,20 +402,8 @@ footer{
 }
 
 .profile-content button{
-    background-color: var(--brown);
-    transition: background-color 1s ease;
-    padding: 10px;
     width: 30%;
-    color: white;
-    font-weight: bold;
-    border-style: none;
-    border-radius: 15px;
-    float: right;
-}
-
-.profile-content button:hover{
-    background-color: var(--green);
-    transition: background-color 1s ease;
+    margin-bottom: 0%;
 }
 
 .profile-content h2{
@@ -527,18 +478,7 @@ footer{
 }
 
 .edit-profile-form-buttons button{
-    background-color: var(--brown);
-    transition: background-color 1s ease;
     padding: 10px;
     width: 30%;
-    color: white;
-    font-weight: bold;
-    border-style: none;
-    border-radius: 15px;
-    margin-top: 1%;
-}
-
-.edit-profile-form-buttons button:hover{
-    background-color: var(--green);
-    transition: background-color 1s ease;
+    margin-top: 5px;
 }

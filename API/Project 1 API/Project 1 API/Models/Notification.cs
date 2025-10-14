@@ -19,5 +19,5 @@ public partial class Notification
 
     public int UserId { get; set; }
 
-    public virtual CreatedVacationPlan CreatedVacationPlan { get; set; } = null!;
+    
 }

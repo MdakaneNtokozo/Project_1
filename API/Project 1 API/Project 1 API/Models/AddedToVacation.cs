@@ -11,7 +11,7 @@ public partial class AddedToVacation
 
     public ulong ViewedVac { get; set; }
 
-    public virtual User User { get; set; } = null!;
+    
 
-    public virtual Vacation Vac { get; set; } = null!;
+    
 }

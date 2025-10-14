@@ -11,7 +11,7 @@ public partial class SelectedTransportation
 
     public double EstimatedTranspPrice { get; set; }
 
-    public virtual Transportation Transp { get; set; } = null!;
+    
 
-    public virtual Vacation Vac { get; set; } = null!;
+    
 }

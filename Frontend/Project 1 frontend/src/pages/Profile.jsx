@@ -6,7 +6,24 @@ import { MyContext } from "../MyProvider"
 function Profile() {
     const { api, token, user } = useContext(MyContext)
     const [edit, setEdit] = useState("")
-    const [currency, setCurrency] = useState("")
+    const [currencies, setCurrencies] = useState([])
+    const [currency, setCurrency] = useState(null)
+
+    useEffect(() =>{
+        var api_call = api + "Destinations/getCurrencies"
+        fetch(api_call, {
+            method: "GET",
+            headers: { 
+                "Authorization": "Bearer " + token,
+                "Content-Type": "application/json"
+            },
+        }).then(async res => {
+            const data = await res.json()
+            setCurrencies( data )
+            setCurrency( data.find(c => c.currId == user.currId))
+        })
+        
+    }, [])
 
     return (
         <>
@@ -29,9 +46,9 @@ function Profile() {
                     <button onClick={() => setEdit("Email")}>Edit email</button>
                     <p>Password: ******</p>
                     <button onClick={() => setEdit("Password")}>Edit password</button>
-                    <p>Currency preference: {currency.currName} ({currency.currSymbol}) </p>
+                    <p>Currency preference: {currency != null ? currency.currName + " (" + currency.currSymbol + ")": ""} </p>
                     <button >Set preference</button>
-                    <p>Notifications: </p>
+                    <p>Notifications: {user.notificationOn == 1 ? "On" : "Off"}</p>
                     <button >Turn on/off</button>
                 </div>
 
@@ -69,8 +86,12 @@ function Profile() {
                             <input placeholder="previous password" value={user.userEmail}></input>
                             <p>New email: </p>
                             <input placeholder="new password"></input>
+                            <p>Retype email: </p>
+                            <input placeholder="retype password"></input>
                             
                         </div>
+
+                        <div style={{height:"100%"}}></div>
                         
                         <div className="edit-profile-form-buttons">
                             <button onClick={() => setEdit("")}>Cancel</button>
@@ -94,6 +115,8 @@ function Profile() {
                             <p>Confirm password: </p>
                             <input placeholder="confirm password"></input>
                         </div>
+
+                        <div style={{height:"100%"}}></div>
                         
                         <div className="edit-profile-form-buttons">
                             <button onClick={() => setEdit("")}>Cancel</button>

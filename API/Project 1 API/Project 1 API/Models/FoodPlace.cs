@@ -23,9 +23,9 @@ public partial class FoodPlace
 
     public int DestId { get; set; }
 
-    public virtual Destination Dest { get; set; } = null!;
+    
 
-    public virtual FoodPlaceType FoodpType { get; set; } = null!;
+    
 
     
 }

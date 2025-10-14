@@ -17,9 +17,9 @@ public partial class Transportation
 
     public int DestId { get; set; }
 
-    public virtual Destination Dest { get; set; } = null!;
+    
 
     
 
-    public virtual TransportationType TranspType { get; set; } = null!;
+    
 }

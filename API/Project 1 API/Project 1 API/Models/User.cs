@@ -25,7 +25,7 @@ public partial class User
 
     
 
-    public virtual Currency Curr { get; set; } = null!;
+    
 
     
 

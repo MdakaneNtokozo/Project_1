@@ -9,6 +9,15 @@ create table currency(
 	curr_symbol char(5) NOT NULL
 );
 
+create table exchange_rate(
+	current_id int NOT NULL,
+	target_id int NOT NULL,
+	exchange_rate DOUBLE NOT NULL,
+	PRIMARY KEY (current_id, target_id),
+	FOREIGN KEY (current_id) REFERENCES currency(curr_id),
+	FOREIGN KEY (target_id) REFERENCES currency(curr_id)
+);
+
 create table destination(
 	dest_id int PRIMARY KEY,
 	dest_name char(100) NOT NULL,

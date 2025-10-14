@@ -107,12 +107,20 @@ namespace Project_1_API.Controllers
             return NotFound("This email does not exist.");
         }
 
-        //[Authorize]
+        [Authorize]
         [HttpGet]
         [Route("users")]
         public async Task<Object> GetUsers()
         {
             return Ok(await _context.Users.ToListAsync());
+        }
+
+        [Authorize]
+        [HttpGet]
+        [Route("getSpenderTypes")]
+        public async Task<Object> GetSpenderTypes()
+        {
+            return Ok(await _context.SpenderTypes.ToListAsync());
         }
 
         [HttpDelete]

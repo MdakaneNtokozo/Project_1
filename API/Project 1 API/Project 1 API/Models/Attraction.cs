@@ -17,7 +17,7 @@ public partial class Attraction
 
     public int DestId { get; set; }
 
-    public virtual Destination Dest { get; set; } = null!;
+    
 
     
 }

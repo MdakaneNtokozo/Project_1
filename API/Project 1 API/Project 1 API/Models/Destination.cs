@@ -19,9 +19,9 @@ public partial class Destination
 
     
 
-    public virtual Currency Curr { get; set; } = null!;
+    
 
-    public virtual DestinationRating DestRating { get; set; } = null!;
+    
 
     
 

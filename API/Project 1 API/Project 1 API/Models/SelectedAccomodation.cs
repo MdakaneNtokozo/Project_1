@@ -13,7 +13,7 @@ public partial class SelectedAccomodation
 
     public double EstimatedAccPrice { get; set; }
 
-    public virtual Accomodation Acc { get; set; } = null!;
+    
 
-    public virtual Vacation Vac { get; set; } = null!;
+    
 }

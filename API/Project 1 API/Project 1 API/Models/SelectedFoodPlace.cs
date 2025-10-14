@@ -13,7 +13,7 @@ public partial class SelectedFoodPlace
 
     public double EstimatedFoodPrice { get; set; }
 
-    public virtual FoodPlace Foodp { get; set; } = null!;
+    
 
-    public virtual Vacation Vac { get; set; } = null!;
+    
 }

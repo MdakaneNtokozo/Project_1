@@ -14,4 +14,8 @@ public partial class Currency
     
 
     
+
+    
+
+    
 }
