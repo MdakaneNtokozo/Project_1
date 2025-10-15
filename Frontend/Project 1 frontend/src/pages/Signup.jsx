@@ -67,17 +67,22 @@ function SignUp() {
         <>
             <Header />
 
-            <div className="form-container">
+            <div className="container">
                 <form className="form" onSubmit={stopReload}>
                     <div>
                         <h2>Sign up</h2>
                     </div>
 
                     <div>
+                        <label>Name</label>
                         <input ref={nameRef} placeholder="name" type="text" required></input>
+                        <label>Surname</label>
                         <input ref={surnameRef} placeholder="surname" type="text" required></input>
+                        <label>Email</label>
                         <input ref={emailRef} placeholder="email" type="email" required></input>
+                        <label>Password</label>
                         <input ref={passwordRef} placeholder="password" type="password" required></input>
+                        <label>Confirm password</label>
                         <input ref={confirmRef} placeholder="confirm password" type="password" required></input>
                     </div>
 
@@ -85,7 +90,6 @@ function SignUp() {
                         {error != "" ? <p className="error-msg">{error}</p> : <></>}
                         <button onClick={SignUp}>Sign up</button><br />
                     </div>
-
                 </form>
             </div>
 

@@ -29,8 +29,8 @@ function Profile() {
         <>
             <Header />
 
-            <div className="profile-container">
-                <div className="profile-content">
+            <div className="container">
+                <div className="profile">
                     <h2>Profile</h2>
                     <div className="profile-details">
                         <img src="\src\assets\profile icon.png" alt="profile picture" ></img>
@@ -53,12 +53,12 @@ function Profile() {
                 </div>
 
                 {edit == "Profile" ? 
-                <div className="edit-pop-up">
-                    <div className="edit-profile-form">
+                <div className="edit-profile">
+             
                         <h2>Editing profile</h2>
                         <img src="\src\assets\profile icon.png" alt="profile picture"></img>
 
-                        <div className="edit-profile-form-info">
+                        <div>
                             <p>Name: </p>
                             <input placeholder="name" value={user.userName}></input>
                             <p>Surname: </p>
@@ -67,21 +67,20 @@ function Profile() {
                             <textarea placeholder="bio" value={user.userBio}></textarea>
                         </div>
                         
-                        <div className="edit-profile-form-buttons">
+                        <div>
                             <button onClick={() => setEdit("")}>Cancel</button>
                             <button>Save</button>
                         </div>
-                    </div>
+                    
                 </div>
                 :<></>
                 }
 
                 {edit == "Email" ? 
-                <div className="edit-pop-up">
-                    <div className="edit-profile-form">
-                        <h2>Editing email</h2>
+                <div className="edit-profile">
+                    <h2>Editing email</h2>
 
-                        <div className="edit-profile-form-info">
+                        <div>
                             <p>Previous email: </p>
                             <input placeholder="previous password" value={user.userEmail}></input>
                             <p>New email: </p>
@@ -90,22 +89,18 @@ function Profile() {
                             <input placeholder="retype password"></input>
                             
                         </div>
-
-                        <div style={{height:"100%"}}></div>
                         
-                        <div className="edit-profile-form-buttons">
+                        <div>
                             <button onClick={() => setEdit("")}>Cancel</button>
                             <button>Save</button>
                         </div>
-                    </div>
-                </div>:
-                <></>
+                </div>
+                :<></>
                 }
 
                 {edit == "Password" ? 
-                <div className="edit-pop-up">
-                    <div className="edit-profile-form">
-                        <h2>Editing password</h2>
+                <div className="edit-profile">
+                    <h2>Editing password</h2>
 
                         <div className="edit-profile-form-info">
                             <p>Previous password: </p>
@@ -115,16 +110,13 @@ function Profile() {
                             <p>Confirm password: </p>
                             <input placeholder="confirm password"></input>
                         </div>
-
-                        <div style={{height:"100%"}}></div>
                         
                         <div className="edit-profile-form-buttons">
                             <button onClick={() => setEdit("")}>Cancel</button>
                             <button>Save</button>
                         </div>
-                    </div>
-                </div>:
-                <></>
+                </div>
+                :<></>
                 }
 
             </div>

@@ -26,27 +26,52 @@ function Home() {
             <Header />
 
             {role == 1 ?
-                <div className="home-container">
-                    <h2>Welcome {user.userName}</h2>
-                    <h3>Upcoming vacations</h3>
+                <div className="container">
+                    <div className="home"> 
+                        <h2>Welcome {user.userName}</h2>
+                        <h3>Upcoming vacations</h3>
 
-                    <div className="home-content">
                         {plans.length == 0 ?
-                            <div className="no-plans-container">
+                            <div className="home-no-plans">
                                 <img src="\src\assets\no upcoming vacation plans.png" alt="no upcoming vacation plans"></img>
                             </div> :
-                            <div className="plans-container">
+                            <div>
                                 {plans.map((plan, idx) => {
-                                    return <div key={idx} onClick={() => viewPlan(idx)}><p>{plan}</p><p className="left-p">3 days left</p></div>
+                                    return <div key={idx} onClick={() => viewPlan(idx)} className="home-plans"><p>{plan}</p><p>3 days left</p></div>
                                 })}
                             </div>
                         }
-                        <div>
+                        
+                        <div className="home-fixed-button">
                             <button onClick={addPlan}>Add vacation plan</button>
                         </div>
-                    </div>
 
-                </div> :
+                    </div>                    
+
+                </div>
+
+                // <div className="home-container">
+                //     <h2>Welcome {user.userName}</h2>
+                //     <h3>Upcoming vacations</h3>
+
+                //     <div className="home-content">
+                //         {plans.length == 0 ?
+                //             <div className="no-plans-container">
+                //                 <img src="\src\assets\no upcoming vacation plans.png" alt="no upcoming vacation plans"></img>
+                //             </div> :
+                //             <div className="plans-container">
+                //                 {plans.map((plan, idx) => {
+                //                     return <div key={idx} onClick={() => viewPlan(idx)}><p>{plan}</p><p className="left-p">3 days left</p></div>
+                //                 })}
+                //             </div>
+                //         }
+                //         <div>
+                //             <button onClick={addPlan}>Add vacation plan</button>
+                //         </div>
+                //     </div>
+
+                // </div> 
+                :
                 <></>
             }
 

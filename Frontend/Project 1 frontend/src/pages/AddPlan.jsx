@@ -4,7 +4,7 @@ import Header from "../Header"
 import { MyContext } from "../MyProvider"
 
 function AddPlan() {
-    const { api, token, user } = useContext(MyContext) 
+    const { api, token, user } = useContext(MyContext)
     //Reference variables
     const destRef = useRef("")
     const compRef = useRef("")
@@ -25,6 +25,10 @@ function AddPlan() {
     const [companions, setCompanions] = useState([])
     const [compSelected, setSelectedComps] = useState([])
     const [spenderTypeSelected, setSpenderTypeSelected] = useState("")
+    const [transNum, setTransNum] = useState(0)
+    const [accomsNum, setAccomsNum] = useState(0)
+    const [foodpsNum, setFoodPsNum] = useState(0)
+    const [attrsNum, setAttrsNum] = useState(0)
 
     //variables when showing preveiw of compiled vacation plan
     const [startDate, setStartDate] = useState("")
@@ -48,27 +52,27 @@ function AddPlan() {
         var api_call = api + "Destinations/getDestinations"
         fetch(api_call, {
             method: "GET",
-            headers: { 
+            headers: {
                 "Authorization": "Bearer " + token,
                 "Content-Type": "application/json"
             },
-        }).then(async res => setDestinations( await res.json()))
+        }).then(async res => setDestinations(await res.json()))
 
         //Spender types
         api_call = api + "LoginSignup/getSpenderTypes"
         fetch(api_call, {
             method: "GET",
-            headers: { 
+            headers: {
                 "Authorization": "Bearer " + token,
                 "Content-Type": "application/json"
             },
-        }).then(async res => setSpenderTypes( await res.json()))
+        }).then(async res => setSpenderTypes(await res.json()))
 
         //Users (companions)
         api_call = api + "LoginSignup/users"
         fetch(api_call, {
             method: "GET",
-            headers: { 
+            headers: {
                 "Authorization": "Bearer " + token,
                 "Content-Type": "application/json"
             },
@@ -82,78 +86,78 @@ function AddPlan() {
         api_call = api + "Destinations/getTransportations"
         fetch(api_call, {
             method: "GET",
-            headers: { 
+            headers: {
                 "Authorization": "Bearer " + token,
                 "Content-Type": "application/json"
             },
-        }).then(async res => setAllTrans( await res.json()))
+        }).then(async res => setAllTrans(await res.json()))
 
         //Accommodations
         api_call = api + "Destinations/getAccommodations"
         fetch(api_call, {
             method: "GET",
-            headers: { 
+            headers: {
                 "Authorization": "Bearer " + token,
                 "Content-Type": "application/json"
             },
-        }).then(async res => setAllAccoms( await res.json()))
+        }).then(async res => setAllAccoms(await res.json()))
 
         //Food places
         api_call = api + "Destinations/getFoodPlaces"
         fetch(api_call, {
             method: "GET",
-            headers: { 
+            headers: {
                 "Authorization": "Bearer " + token,
                 "Content-Type": "application/json"
             },
-        }).then(async res => setAllFoodps( await res.json()))
+        }).then(async res => setAllFoodps(await res.json()))
 
         //Attractions
         api_call = api + "Destinations/getAttractions"
         fetch(api_call, {
             method: "GET",
-            headers: { 
+            headers: {
                 "Authorization": "Bearer " + token,
                 "Content-Type": "application/json"
             },
-        }).then(async res => setAllAttrs( await res.json()))
+        }).then(async res => setAllAttrs(await res.json()))
 
         //Transportation types
         api_call = api + "Destinations/getTransportationTypes"
         fetch(api_call, {
             method: "GET",
-            headers: { 
+            headers: {
                 "Authorization": "Bearer " + token,
                 "Content-Type": "application/json"
             },
-        }).then(async res => setTransTypes( await res.json()))
+        }).then(async res => setTransTypes(await res.json()))
 
         //Accommodation types
         api_call = api + "Destinations/getAccommodationTypes"
         fetch(api_call, {
             method: "GET",
-            headers: { 
+            headers: {
                 "Authorization": "Bearer " + token,
                 "Content-Type": "application/json"
             },
-        }).then(async res => setAccomTypes( await res.json()))
+        }).then(async res => setAccomTypes(await res.json()))
 
         //Food place types
         api_call = api + "Destinations/getFoodPlaceTypes"
         fetch(api_call, {
             method: "GET",
-            headers: { 
+            headers: {
                 "Authorization": "Bearer " + token,
                 "Content-Type": "application/json"
             },
-        }).then(async res => setFoodpTypes( await res.json()))
+        }).then(async res => setFoodpTypes(await res.json()))
     }, [])
 
     const addToSelectedDest = () => {
         setDestError("")
         const destToFind = destinations.find(d => d.destName == destRef.current.value)
 
-        if(destToFind != undefined && !destSelected.includes(destToFind)) {
+        if (destToFind != undefined && !destSelected.includes(destToFind)) {
             setSelectedDests([...destSelected, destToFind])
             destRef.current.value = ""
         }
@@ -166,7 +170,7 @@ function AddPlan() {
     const addToSelectedComps = () => {
         const compToFind = companions.find(c => c.userName == compRef.current.value)
 
-        if(compToFind != undefined && !compSelected.includes(compToFind)){
+        if (compToFind != undefined && !compSelected.includes(compToFind)) {
             setSelectedComps([...compSelected, compToFind])
             compRef.current.value = ""
         }
@@ -184,17 +188,17 @@ function AddPlan() {
 
         if (destSelected.length == 0) {
             setDestError("Please select at least one destination")
-        } else if(startDate < today || endDate < today){
+        } else if (startDate < today || endDate < today) {
             setDateError("Dates should be today onwards")
         } else if (startDate > endDate) {
             setDateError("Start date must be before end date")
-        } else if(spenderTypeSelected == ""){
+        } else if (spenderTypeSelected == "") {
             setSpenderError("Please select type of spender")
         } else if (destSelected.length != 0 &&
             startDate != "" &&
             endDate != "" &&
             spenderTypeSelected != ""
-        ){
+        ) {
             setSection(2)
         }
     }
@@ -205,12 +209,12 @@ function AddPlan() {
     }
 
     const formatDate = (date) => {
-        if(date != ""){ 
+        if (date != "") {
             const year = date.getFullYear()
             const month = date.getMonth() + 1
             const day = date.getDate()
 
-            return year + "-" + month + "-" + (day < 10 ? "0" + day: day)
+            return year + "-" + month + "-" + (day < 10 ? "0" + day : day)
         }
     }
 
@@ -228,18 +232,13 @@ function AddPlan() {
         <>
             <Header />
 
-            <div className="add-plan-container">
-                {section == 1 ?
-                    <div className="plan-form">
-                        <div className="plan-form-left">
-                            <h2>Vacation plan 1</h2>
+            <div className="container">
+                <form className="add-plan-form" onSubmit={stopReload}>
+                    {section == 1 ?
+                        <>
+                            <h2>Vacation plan creation</h2>
                             <div>
-                                <img src="\src\assets\destination on map.png" alt="destination image"></img>
-                            </div>
-                        </div>
-
-                        <form className="plan-form-right" >
-                            <div onSubmit={stopReload}>
+                                <label>Search for destination</label>
                                 <input ref={destRef} placeholder="select destination(s)" type="select" list="list" onSelect={() => addToSelectedDest()}  ></input>
                                 <datalist id="list">
                                     {destinations.map((dest, idx) => {
@@ -250,16 +249,24 @@ function AddPlan() {
                                     destSelected.map((dest, idx) => {
                                         return <button key={idx} className="dest-selected" onClick={() => removeSelectedDest(dest)} type="button">{dest.destName} x</button>
                                     }) :
-                                    <p className="error-msg" style={{ margin: "0px", marginBottom: "8px" }}>{destError}</p>
+                                    <></>
+                                }
+                                {destError != "" ?
+                                    <p className="error-msg" style={{ margin: "0px", marginBottom: "8px" }}>{destError}</p> :
+                                    <></>
                                 }
 
-                                <input placeholder="select start vacation date" type="date" value={formatDate(startDate)}  onChange={(e) => setStartDate(e.target.valueAsDate)} required></input>
-                                <input placeholder="select end vacation date" type="date" value={formatDate(endDate)}  onChange={(e) => setEndDate(e.target.valueAsDate)} required></input>
+                                <label>Start date</label>
+                                <input placeholder="select start vacation date" type="date" value={formatDate(startDate)} onChange={(e) => setStartDate(e.target.valueAsDate)} required></input>
+                                
+                                <label>End date</label>
+                                <input placeholder="select end vacation date" type="date" value={formatDate(endDate)} onChange={(e) => setEndDate(e.target.valueAsDate)} required></input>
                                 {dateError != "" ?
                                     <p className="error-msg" style={{ margin: "0px", marginBottom: "8px" }}>{dateError}</p> :
                                     <></>
                                 }
 
+                                <label>Type of spender</label>
                                 <select placeholder="select type of spender" type="select" value={spenderTypeSelected} onChange={(e) => setSpenderTypeSelected(e.target.value)} required>
                                     <option value={""}>Select the type of spender you are</option>
                                     {spenderTypes.map((type, idx) => {
@@ -271,6 +278,7 @@ function AddPlan() {
                                     <></>
                                 }
 
+                                <label>Search for companions</label>
                                 <input ref={compRef} placeholder="select travel companions" list="companions" onSelect={() => addToSelectedComps()}></input>
                                 <datalist id="companions">
                                     {companions.map((comp, idx) => {
@@ -282,205 +290,221 @@ function AddPlan() {
                                         return <button key={comp.userId} className="dest-selected" onClick={() => removeSelectedComp(comp)} type="button">{comp.userName} x</button>
                                     })
                                 }
+
+                                <label>Number of transportations</label>
+                                <input type="number" placeholder="enter number of transportations" min="0" value={transNum} onChange={(e) => setTransNum(e.target.value)}></input>
+                                
+                                <label>Number of accommodations</label>
+                                <input type="number" placeholder="enter number of accommodations" min="0" value={accomsNum} onChange={(e) => setAccomsNum(e.target.value)}></input>
+                                
+                                <label>Number of food places</label>
+                                <input type="number" placeholder="enter number of food places" min="0" value={foodpsNum} onChange={(e) => setFoodPsNum(e.target.value)}></input>
+                                
+                                <label>Number of attractions</label>
+                                <input type="number" placeholder="enter number of attractions" min="0" value={attrsNum} onChange={(e) => setAttrsNum(e.target.value)}></input>
                             </div>
+                            
+                            <button onClick={nextSection} type="button">Next</button>
+                        </>
+                        :
+                        
+                        //The other section here
+                        <div className="preview-plan">
+                            <div className="preview-plan-form-left">
+                                <div className="preview-plan-nav">
+                                    <div onClick={() => setNavSelected("Preview")}>Preview</div>
+                                    <div onClick={() => setNavSelected("Transportations")}>Transportations</div>
+                                    <div onClick={() => setNavSelected("Accommodations")}>Accommodations</div>
+                                    <div onClick={() => setNavSelected("Food places")}>Food places</div>
+                                    <div onClick={() => setNavSelected("Attractions")}>Attractions</div>
+                                </div>
 
-                            <div className="buttom-div">
-                                <button className="plan-form-button" onClick={nextSection} type="button">Next</button>
-                            </div>
-
-                        </form>
-
-                    </div> :
-
-                    <div className="plan-form">
-                        <div className="plan-form-left" style={{ flexBasis: "60%" }}>
-
-                            {navSelected == "Preview" ?
                                 <div>
-                                    <div className="preview-upper">
-                                        <div className="preview-upper-left">
+                                    <button>Save</button>
+                                </div>
+                            </div>
+
+                            <div className="preview-plan-form-right">
+                                {navSelected == "Preview" ?
+                                    <div className="preview">
+                                        <div>
                                             <h3>Vacation plan: {navSelected}</h3>
-                                            <img src="\src\assets\destination on map.png" alt="destination image"></img>
-                                        </div>
-                                        <div className="preview-upper-right">
-                                            <p style={{float:"left"}}>Destination(s): {destSelected.map((d, idx) => {
-                                                if(idx != destSelected.length - 1)
-                                                    return d.destName + ", "
-                                                else
-                                                    return d.destName
-                                                
+                                            <div className="preview-details">
+                                                <p>Destination(s): {destSelected.map((d, idx) => {
+                                                    if (idx != destSelected.length - 1)
+                                                        return d.destName + ", "
+                                                    else
+                                                        return d.destName
+
                                                 })}</p>
-                                            <p>Start date: {formatDate2(startDate)}</p>
-                                            <p>End date: {formatDate2(endDate)}</p>
-                                            <p>No of travel companion: {compSelected.length}</p>
-                                            <p>Transportaions: {selectedTrans.length}</p>
-                                            <p>Accommodations: {selectedAccoms.length}</p>
-                                            <p>Food places: {selectedFoodps.length}</p>
-                                            <p>Attractions: {selectedAttrs.length} </p>
+                                                <p>Start date: {formatDate2(startDate)}</p>
+                                                <p>End date: {formatDate2(endDate)}</p>
+                                                <p>No of travel companion: {compSelected.length}</p>
+                                                <p>Transportaions: {transNum}</p>
+                                                <p>Accommodations: {accomsNum}</p>
+                                                <p>Food places: {foodpsNum}</p>
+                                                <p>Attractions: {attrsNum} </p>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div className="preview-lower">
-                                        <h3>Total estimated budget:</h3>
-                                        <button onClick={() => setSection(1)}>Edit</button>
-                                    </div>
+                                        <div className="preview-budget">
+                                            <h3>Total estimated budget:</h3>
+                                            <button onClick={() => setSection(1)}>Edit</button>
+                                        </div>
 
-                                </div>
-
-                                :
-                                <></>
-                            }
-
-                            {navSelected == "Transportations" ?
-                                <div className="cards-view">
-                                    <h3>Vacation plan: {navSelected}</h3>
-                                    <div className="cards-selection">
-                                        {allTrans.length != 0 ?
-                                            allTrans.map((trans, idx) =>{
-                                                return <div onClick={() => console.log(trans)} key={idx} className="card-showcase">
-                                                    <img src="\src\assets\transportation.png" alt="transportation image"></img>
-                                                    <div className="card-showcase-info">
-                                                        <p className="card-showcase-title">{trans.transpName}</p>                                                    
-                                                        <p className="card-showcase-price">Price</p> 
-                                                    </div>
-
-                                                    <div className="card-showcase-more-info">
-                                                        <p>{destinations.find(d => d.destId == trans.destId).destName}</p>
-                                                        <p>Type: {TransTypes.find(t => t.transpTypeId == trans.transpTypeId).transpTypeName}</p>
-                                                    </div>
-                                                                                                        
-                                                </div>
-                                            }):
-                                            <p>No transportations</p>
-                                        }
-                                    </div>
-                                    <div>
-                                        <h3>Transportation budget:</h3>
                                     </div>
 
-                                </div>
+                                    :
+                                    <></>
+                                }
 
-                                :
-                                <></>
-                            }
-
-                            {navSelected == "Accommodations" ?
-                                <div className="cards-view">
-                                    <h3>Vacation plan: {navSelected}</h3>
-                                    <div className="cards-selection">
-                                        {allAccoms.length != 0 ?
-                                            allAccoms.map((accomm, idx) =>{
-                                                return <div onClick={() => console.log(accomm)} key={idx} className="card-showcase">
-                                                    <img src="\src\assets\accommodation.png" alt="transportation image"></img>
-                                                    <div className="card-showcase-info">
-                                                        <p className="card-showcase-title">{accomm.accName}</p>                                                    
-                                                        <p className="card-showcase-price">Price</p> 
-                                                    </div>
-
-                                                    <div className="card-showcase-more-info">
-                                                        <p>{accomm.accAddress}</p>
-                                                        <p>Type: {AccomTypes.find(a => a.accTypeId == accomm.accTypeId).accTypeName}</p>
-                                                        <p>No. of people: {accomm.accMaxNumOfPeople}</p>
-                                                    </div>
-                                                                                                        
-                                                </div>
-                                    
-                                            }):
-                                            <p>No Acoommodations</p>
-                                        }
-                                    </div>
-                                    <div>
-                                        <h3>Accommodation budget:</h3>
-                                    </div>
-
-                                </div>
-
-                                :
-                                <></>
-                            }
-
-                            {navSelected == "Food places" ?
-                                <div className="cards-view">
-                                    <h3>Vacation plan: {navSelected}</h3>
-                                    <div className="cards-selection">
-                                        {allFoodps.length != 0 ?
-                                            allFoodps.map((foodp, idx) =>{
-                                                return <div onClick={() => console.log(foodp)} key={idx} className="card-showcase">
-                                                        <img src="\src\assets\food places.png" alt="transportation image"></img>
-                                                        <div className="card-showcase-info">
-                                                            <p className="card-showcase-title">{foodp.foodpName}</p>                                                    
-                                                            <p className="card-showcase-price">Price</p> 
+                                {navSelected == "Transportations" ?
+                                    <div className="preview">
+                                        <h3>Vacation plan: {navSelected}</h3>
+                                        <div className="cards-selection">
+                                            {allTrans.length != 0 ?
+                                                allTrans.map((trans, idx) => {
+                                                    return <div onClick={() => console.log(trans)} key={idx} className="card">
+                                                        <img src="\src\assets\transportation.png" alt="transportation image"></img>
+                                                        <div>
+                                                            <h4>{trans.transpName}</h4>
+                                                            <p>Price</p>
                                                         </div>
 
-                                                        <div className="card-showcase-more-info">
+                                                        <div>
+                                                            <p>{destinations.find(d => d.destId == trans.destId).destName}</p>
+                                                            <p>Type: {TransTypes.find(t => t.transpTypeId == trans.transpTypeId).transpTypeName}</p>
+                                                        </div>
+
+                                                    </div>
+                                                }) :
+                                                <p>No transportations</p>
+                                            }
+                                        </div>
+
+                                        <div className="preview-budget">
+                                            <h3>Transportation budget:</h3>
+                                            <button onClick={() => setSection(1)}>Edit</button>
+                                        </div>
+                                    </div>
+
+                                    :
+                                    <></>
+                                }
+
+                                {navSelected == "Accommodations" ?
+                                    <div className="preview">
+                                        <h3>Vacation plan: {navSelected}</h3>
+                                        <div className="cards-selection">
+                                            {allAccoms.length != 0 ?
+                                                allAccoms.map((accomm, idx) => {
+                                                    return <div onClick={() => console.log(accomm)} key={idx} className="card">
+                                                        <img src="\src\assets\accommodation.png" alt="transportation image"></img>
+                                                        <div>
+                                                            <h4>{accomm.accName}</h4>
+                                                            <p>Price</p>
+                                                        </div>
+
+                                                        <div>
+                                                            <p>{accomm.accAddress}</p>
+                                                            <p>Type: {AccomTypes.find(a => a.accTypeId == accomm.accTypeId).accTypeName}</p>
+                                                            <p>No. of people: {accomm.accMaxNumOfPeople}</p>
+                                                        </div>
+
+                                                    </div>
+
+                                                }) :
+                                                <p>No Acoommodations</p>
+                                            }
+                                        </div>
+
+                                        <div className="preview-budget">
+                                            <h3>Accommodation budget:</h3>
+                                            <button onClick={() => setSection(1)}>Edit</button>
+                                        </div>
+
+                                    </div>
+
+                                    :
+                                    <></>
+                                }
+
+                                {navSelected == "Food places" ?
+                                    <div className="preview">
+                                        <h3>Vacation plan: {navSelected}</h3>
+                                        <div className="cards-selection">
+                                            {allFoodps.length != 0 ?
+                                                allFoodps.map((foodp, idx) => {
+                                                    return <div onClick={() => console.log(foodp)} key={idx} className="card">
+                                                        <img src="\src\assets\food places.png" alt="transportation image"></img>
+                                                        <div>
+                                                            <h4>{foodp.foodpName}</h4>
+                                                            <p>Price</p>
+                                                        </div>
+
+                                                        <div>
                                                             <p>{foodp.foodpAddress}</p>
                                                             <p>Type: {FoodpTypes.find(f => f.foodpTypeId == foodp.foodpTypeId).foodpTypeName}</p>
                                                             <p>Menu items: {foodp.foodpMenuItems}</p>
                                                             <p>Rating: {foodp.foodpRating}</p>
                                                         </div>
-                                                                                                            
+
                                                     </div>
-                                            }):
-                                            <p>No food places</p>
-                                        }
+                                                }) :
+                                                <p>No food places</p>
+                                            }
+                                        </div>
+
+                                        <div className="preview-budget">
+                                            <h3>Food places budget:</h3>
+                                            <button onClick={() => setSection(1)}>Edit</button>
+                                        </div>
                                     </div>
-                                    <div>
-                                        <h3>Food places budget:</h3>
-                                    </div>
 
-                                </div>
+                                    :
+                                    <></>
+                                }
 
-                                :
-                                <></>
-                            }
+                                {navSelected == "Attractions" ?
+                                    <div className="preview">
+                                        <h3>Vacation plan: {navSelected}</h3>
+                                        <div className="cards-selection">
+                                            {allAttrs.length != 0 ?
+                                                allAttrs.map((attr, idx) => {
+                                                    return <div onClick={() => console.log(attr)} key={idx} className="card">
+                                                        <img src="\src\assets\attraction.png" alt="transportation image"></img>
+                                                        <div>
+                                                            <h4>{attr.attrName}</h4>
+                                                            <p>Price</p>
+                                                        </div>
 
-                            {navSelected == "Attractions" ?
-                                <div className="cards-view">
-                                    <h3>Vacation plan: {navSelected}</h3>
-                                    <div className="cards-selection">
-                                        {allAttrs.length != 0 ?
-                                            allAttrs.map((attr, idx) =>{
-                                                return <div onClick={() => console.log(attr)} key={idx} className="card-showcase">
-                                                    <img src="\src\assets\attraction.png" alt="transportation image"></img>
-                                                    <div className="card-showcase-info">
-                                                        <p className="card-showcase-title">{attr.attrName}</p>                                                    
-                                                        <p className="card-showcase-price">Price</p> 
+                                                        <div>
+                                                            <p>{attr.attrAddress}</p>
+                                                        </div>
+
                                                     </div>
+                                                }) :
+                                                <p>No attractions</p>
+                                            }
+                                        </div>
 
-                                                    <div className="card-showcase-more-info">
-                                                        <p>{attr.attrAddress}</p>
-                                                    </div>
-                                                                                                        
-                                                </div>
-                                            }):
-                                            <p>No attractions</p>
-                                        }
-                                    </div>
-                                    <div>
-                                        <h3>Attractions budget:</h3>
+                                        <div className="preview-budget">
+                                            <h3>Attractions budget:</h3>
+                                            <button onClick={() => setSection(1)}>Edit</button>
+                                        </div>
                                     </div>
 
-                                </div>
+                                    :
+                                    <></>
+                                }
 
-                                :
-                                <></>
-                            }
-                        </div>
-
-                        <div className="plan-form-right" style={{ flexBasis: "30%" }}>
-                            <div className="nav-upper">
-                                <div onClick={() => setNavSelected("Preview")}>Preview</div>
-                                <div onClick={() => setNavSelected("Transportations")}>Transportations</div>
-                                <div onClick={() => setNavSelected("Accommodations")}>Accommodations</div>
-                                <div onClick={() => setNavSelected("Food places")}>Food places</div>
-                                <div onClick={() => setNavSelected("Attractions")}>Attractions</div>
                             </div>
 
-                            <div className="nav-lower">
-                                <button>Save</button>
-                            </div>
+                            
                         </div>
-                    </div>
-                }
+                    }
+
+                </form>
+
 
             </div>
 

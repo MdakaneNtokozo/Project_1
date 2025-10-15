@@ -13,7 +13,7 @@ function App() {
     <>
       <MyProvider>
         <BrowserRouter>
-          <Suspense fallback={<p>Loading</p>}>
+          <Suspense fallback={<p className="loading">Loading</p>}>
             <Routes>
               <Route path="/" element={<Login />}></Route>
               <Route path="/signup" element={<SignUp />}></Route>

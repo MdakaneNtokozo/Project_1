@@ -73,14 +73,16 @@ function Login() {
         <>
             <Header />
 
-            <div className="form-container">
+            <div className="container">
                 <form className="form" onSubmit={stopReload}>
                     <div>
-                        <h2>Login</h2>
+                        <h2 style={{textAlign:"center"}}>Login</h2>
                     </div>
 
                     <div>
+                        <label>Email</label>
                         <input ref={emailRef} placeholder="email" type="email" required></input>
+                        <label>Password</label>
                         <input ref={passwordRef} placeholder="password" type="password" required></input>
                     </div>
 
@@ -90,7 +92,6 @@ function Login() {
                         <p>Don't have an account? <Link to="/signup">Sign up</Link></p>
                         <a href="/">Forgot password</a>
                     </div>
-
                 </form>
             </div>
 
