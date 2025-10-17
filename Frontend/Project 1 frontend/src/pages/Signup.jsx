@@ -13,7 +13,7 @@ function SignUp() {
     const [error, setError] = useState("")
     const navigate = useNavigate();
     const { api } = useContext(MyContext)
-    
+
     const SignUp = async () => {
         const api_call = api + "LoginSignup/signUp"
         if (nameRef.current.value != "" &&
@@ -42,7 +42,7 @@ function SignUp() {
                     if (res.status == 201) {
                         //Sign in is successful
                         navigate("/")
-                    } else if(res.status == 400){
+                    } else if (res.status == 400) {
                         //Email is already in use
                         setError(await res.text())
                     }
@@ -58,42 +58,36 @@ function SignUp() {
         }
     }
 
-    const stopReload = (event) =>{
+    const stopReload = (event) => {
         //to stop the form from reloading when submitting
         event.preventDefault()
     }
 
     return (
         <>
-            <Header />
+            <form className="form" onSubmit={stopReload} onClick={(e) => e.stopPropagation()}>
+                <div>
+                    <h2>Sign up</h2>
+                </div>
 
-            <div className="container">
-                <form className="form" onSubmit={stopReload}>
-                    <div>
-                        <h2>Sign up</h2>
-                    </div>
+                <div>
+                    <label>Name</label>
+                    <input ref={nameRef} placeholder="name" type="text" required></input>
+                    <label>Surname</label>
+                    <input ref={surnameRef} placeholder="surname" type="text" required></input>
+                    <label>Email</label>
+                    <input ref={emailRef} placeholder="email" type="email" required></input>
+                    <label>Password</label>
+                    <input ref={passwordRef} placeholder="password" type="password" required></input>
+                    <label>Confirm password</label>
+                    <input ref={confirmRef} placeholder="confirm password" type="password" required></input>
+                </div>
 
-                    <div>
-                        <label>Name</label>
-                        <input ref={nameRef} placeholder="name" type="text" required></input>
-                        <label>Surname</label>
-                        <input ref={surnameRef} placeholder="surname" type="text" required></input>
-                        <label>Email</label>
-                        <input ref={emailRef} placeholder="email" type="email" required></input>
-                        <label>Password</label>
-                        <input ref={passwordRef} placeholder="password" type="password" required></input>
-                        <label>Confirm password</label>
-                        <input ref={confirmRef} placeholder="confirm password" type="password" required></input>
-                    </div>
-
-                    <div>
-                        {error != "" ? <p className="error-msg">{error}</p> : <></>}
-                        <button onClick={SignUp}>Sign up</button><br />
-                    </div>
-                </form>
-            </div>
-
-            <Footer />
+                <div>
+                    {error != "" ? <p className="error-msg">{error}</p> : <></>}
+                    <button onClick={SignUp}>Sign up</button><br />
+                </div>
+            </form>
         </>
     )
 }

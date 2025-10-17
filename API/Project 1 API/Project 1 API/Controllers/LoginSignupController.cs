@@ -24,7 +24,8 @@ namespace Project_1_API.Controllers
         {
             List<User> users = await _context.Users.ToListAsync();
             var signUserIn = users.Find(u => u.UserEmail.Equals(user.UserEmail));
-            if (signUserIn != null) {
+            if (signUserIn != null)
+            {
                 return BadRequest("This email is already in use.");
             }
 
@@ -41,12 +42,13 @@ namespace Project_1_API.Controllers
         {
             int idxAtSymbol = email.IndexOf('@');
             int idxFullStop = email.IndexOf('.', idxAtSymbol);
-            String emailUsed = email.Substring(idxAtSymbol + 1, idxFullStop - idxAtSymbol - 1 );
+            String emailUsed = email.Substring(idxAtSymbol + 1, idxFullStop - idxAtSymbol - 1);
 
             if (emailUsed.Equals("work"))
             {
-                var admins = await _context.Admins.ToListAsync();
-                return IsAdmin(admins, email, password);
+                //var admins = await _context.Admins.ToListAsync();
+                //return IsAdmin(admins, email, password);
+                return 0;
             }
             else
             {
@@ -71,7 +73,7 @@ namespace Project_1_API.Controllers
                     return BadRequest("Incorrect details were entered. Please try again.");
                 }
             }
-            
+
             return NotFound("This email does not exist.");
         }
 
@@ -86,26 +88,26 @@ namespace Project_1_API.Controllers
             return Ok(user);
         }
 
-        private Object IsAdmin(List<Admin> admins, String email, String password)
-        {
-            
-            Admin? admin = admins.Find(a => a.AdminEmail.Equals(email));
+        //private Object IsAdmin(List<Admin> admins, String email, String password)
+        //{
 
-            if (admin != null)
-            {
-                var result = _passwordHasher.VerifyHashedPassword(null, admin.AdminPassword, password);
-                if (result == PasswordVerificationResult.Success)
-                {
-                    //2 means they are an admin
-                    return Ok($"2 {jwts.GenerateToken(admin.AdminEmail)}");
-                }
-                else
-                {
-                    return BadRequest("Incorrect details were entered. Please try again.");
-                }
-            }
-            return NotFound("This email does not exist.");
-        }
+        //    Admin? admin = admins.Find(a => a.AdminEmail.Equals(email));
+
+        //    if (admin != null)
+        //    {
+        //        var result = _passwordHasher.VerifyHashedPassword(null, admin.AdminPassword, password);
+        //        if (result == PasswordVerificationResult.Success)
+        //        {
+        //            //2 means they are an admin
+        //            return Ok($"2 {jwts.GenerateToken(admin.AdminEmail)}");
+        //        }
+        //        else
+        //        {
+        //            return BadRequest("Incorrect details were entered. Please try again.");
+        //        }
+        //    }
+        //    return NotFound("This email does not exist.");
+        //}
 
         [Authorize]
         [HttpGet]

@@ -1,0 +1,34 @@
+C:\Users\Ntokozo\Downloads\Project_1\API\Project 1 API\Project 1 API\obj\Release\net9.0\PubTmp\Out\Project 1 API.exe
+C:\Users\Ntokozo\Downloads\Project_1\API\Project 1 API\Project 1 API\obj\Release\net9.0\PubTmp\Out\appsettings.Development.json
+C:\Users\Ntokozo\Downloads\Project_1\API\Project 1 API\Project 1 API\obj\Release\net9.0\PubTmp\Out\appsettings.json
+C:\Users\Ntokozo\Downloads\Project_1\API\Project 1 API\Project 1 API\obj\Release\net9.0\PubTmp\Out\Project 1 API.dll
+C:\Users\Ntokozo\Downloads\Project_1\API\Project 1 API\Project 1 API\obj\Release\net9.0\PubTmp\Out\Project 1 API.runtimeconfig.json
+C:\Users\Ntokozo\Downloads\Project_1\API\Project 1 API\Project 1 API\obj\Release\net9.0\PubTmp\Out\Project 1 API.pdb
+C:\Users\Ntokozo\Downloads\Project_1\API\Project 1 API\Project 1 API\obj\Release\net9.0\PubTmp\Out\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+C:\Users\Ntokozo\Downloads\Project_1\API\Project 1 API\Project 1 API\obj\Release\net9.0\PubTmp\Out\Microsoft.AspNetCore.OpenApi.dll
+C:\Users\Ntokozo\Downloads\Project_1\API\Project 1 API\Project 1 API\obj\Release\net9.0\PubTmp\Out\Microsoft.EntityFrameworkCore.dll
+C:\Users\Ntokozo\Downloads\Project_1\API\Project 1 API\Project 1 API\obj\Release\net9.0\PubTmp\Out\Microsoft.EntityFrameworkCore.Abstractions.dll
+C:\Users\Ntokozo\Downloads\Project_1\API\Project 1 API\Project 1 API\obj\Release\net9.0\PubTmp\Out\Microsoft.EntityFrameworkCore.Relational.dll
+C:\Users\Ntokozo\Downloads\Project_1\API\Project 1 API\Project 1 API\obj\Release\net9.0\PubTmp\Out\Microsoft.Extensions.Caching.Abstractions.dll
+C:\Users\Ntokozo\Downloads\Project_1\API\Project 1 API\Project 1 API\obj\Release\net9.0\PubTmp\Out\Microsoft.Extensions.Caching.Memory.dll
+C:\Users\Ntokozo\Downloads\Project_1\API\Project 1 API\Project 1 API\obj\Release\net9.0\PubTmp\Out\Microsoft.Extensions.Configuration.Abstractions.dll
+C:\Users\Ntokozo\Downloads\Project_1\API\Project 1 API\Project 1 API\obj\Release\net9.0\PubTmp\Out\Microsoft.Extensions.DependencyInjection.dll
+C:\Users\Ntokozo\Downloads\Project_1\API\Project 1 API\Project 1 API\obj\Release\net9.0\PubTmp\Out\Microsoft.Extensions.DependencyInjection.Abstractions.dll
+C:\Users\Ntokozo\Downloads\Project_1\API\Project 1 API\Project 1 API\obj\Release\net9.0\PubTmp\Out\Microsoft.Extensions.Logging.dll
+C:\Users\Ntokozo\Downloads\Project_1\API\Project 1 API\Project 1 API\obj\Release\net9.0\PubTmp\Out\Microsoft.Extensions.Logging.Abstractions.dll
+C:\Users\Ntokozo\Downloads\Project_1\API\Project 1 API\Project 1 API\obj\Release\net9.0\PubTmp\Out\Microsoft.Extensions.Options.dll
+C:\Users\Ntokozo\Downloads\Project_1\API\Project 1 API\Project 1 API\obj\Release\net9.0\PubTmp\Out\Microsoft.Extensions.Primitives.dll
+C:\Users\Ntokozo\Downloads\Project_1\API\Project 1 API\Project 1 API\obj\Release\net9.0\PubTmp\Out\Microsoft.IdentityModel.Abstractions.dll
+C:\Users\Ntokozo\Downloads\Project_1\API\Project 1 API\Project 1 API\obj\Release\net9.0\PubTmp\Out\Microsoft.IdentityModel.JsonWebTokens.dll
+C:\Users\Ntokozo\Downloads\Project_1\API\Project 1 API\Project 1 API\obj\Release\net9.0\PubTmp\Out\Microsoft.IdentityModel.Logging.dll
+C:\Users\Ntokozo\Downloads\Project_1\API\Project 1 API\Project 1 API\obj\Release\net9.0\PubTmp\Out\Microsoft.IdentityModel.Protocols.dll
+C:\Users\Ntokozo\Downloads\Project_1\API\Project 1 API\Project 1 API\obj\Release\net9.0\PubTmp\Out\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+C:\Users\Ntokozo\Downloads\Project_1\API\Project 1 API\Project 1 API\obj\Release\net9.0\PubTmp\Out\Microsoft.IdentityModel.Tokens.dll
+C:\Users\Ntokozo\Downloads\Project_1\API\Project 1 API\Project 1 API\obj\Release\net9.0\PubTmp\Out\Microsoft.OpenApi.dll
+C:\Users\Ntokozo\Downloads\Project_1\API\Project 1 API\Project 1 API\obj\Release\net9.0\PubTmp\Out\MySqlConnector.dll
+C:\Users\Ntokozo\Downloads\Project_1\API\Project 1 API\Project 1 API\obj\Release\net9.0\PubTmp\Out\Pomelo.EntityFrameworkCore.MySql.dll
+C:\Users\Ntokozo\Downloads\Project_1\API\Project 1 API\Project 1 API\obj\Release\net9.0\PubTmp\Out\Swashbuckle.AspNetCore.Swagger.dll
+C:\Users\Ntokozo\Downloads\Project_1\API\Project 1 API\Project 1 API\obj\Release\net9.0\PubTmp\Out\Swashbuckle.AspNetCore.SwaggerGen.dll
+C:\Users\Ntokozo\Downloads\Project_1\API\Project 1 API\Project 1 API\obj\Release\net9.0\PubTmp\Out\Swashbuckle.AspNetCore.SwaggerUI.dll
+C:\Users\Ntokozo\Downloads\Project_1\API\Project 1 API\Project 1 API\obj\Release\net9.0\PubTmp\Out\System.IdentityModel.Tokens.Jwt.dll
+C:\Users\Ntokozo\Downloads\Project_1\API\Project 1 API\Project 1 API\obj\Release\net9.0\PubTmp\Out\Project 1 API.deps.json

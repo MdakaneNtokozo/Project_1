@@ -3,11 +3,13 @@ import Header from "../Header"
 import Footer from "../Footer"
 import { Link, useNavigate } from "react-router-dom"
 import { MyContext } from "../MyProvider"
+import SignUp from "./Signup"
 
 function Login() {
     const emailRef = useRef(null)
     const passwordRef = useRef(null)
     const [error, setError] = useState("")
+    const [page, setPage] = useState("")
     const navigate = useNavigate()
     const { api, role, token, user, setRole, setToken, setUser } = useContext(MyContext)
 
@@ -16,6 +18,8 @@ function Login() {
             var email = emailRef.current.value
             var password = passwordRef.current.value
             var api_call = api + "LoginSignup/login?email=" + email + "&password=" + password
+
+            console.log(email + " " + password)
 
             try {
                 var res = await fetch(api_call, {
@@ -38,22 +42,22 @@ function Login() {
                     api_call = api + "LoginSignup/getUserById/" + id
                     res = await fetch(api_call, {
                         method: "GET",
-                        headers: { 
+                        headers: {
                             "Authorization": "Bearer " + l[1],
                             "Content-Type": "application/json"
                         },
                     })
 
-                    if(res.status == 200){
+                    if (res.status == 200) {
                         var loggedInUser = await res.json()
                         setUser(loggedInUser)
                         navigate("/home")
                     }
-                    
-                } else if(res.status == 400){
+
+                } else if (res.status == 400) {
                     //incorrect details entered
                     setError(await res.text())
-                }else if(res.status == 404){
+                } else if (res.status == 404) {
                     //Email not found
                     setError(await res.text())
                 }
@@ -71,31 +75,34 @@ function Login() {
 
     return (
         <>
-            <Header />
+            <form className="form" onSubmit={stopReload} onClick={(e) => e.stopPropagation()}>
+                <div>
+                    <h2 style={{ textAlign: "center" }}>Login</h2>
+                </div>
 
-            <div className="container">
-                <form className="form" onSubmit={stopReload}>
-                    <div>
-                        <h2 style={{textAlign:"center"}}>Login</h2>
-                    </div>
+                <div>
+                    <label>Email</label>
+                    <input ref={emailRef} placeholder="email" type="email" required></input>
+                    <label>Password</label>
+                    <input ref={passwordRef} placeholder="password" type="password" required></input>
+                </div>
 
-                    <div>
-                        <label>Email</label>
-                        <input ref={emailRef} placeholder="email" type="email" required></input>
-                        <label>Password</label>
-                        <input ref={passwordRef} placeholder="password" type="password" required></input>
-                    </div>
+                <div>
+                    {error != "" ? <p className="error-msg">{error}</p> : <></>}
+                    <button onClick={Login}>Login</button>
+                    <p>Don't have an account? <p onClick={() => setPage("Sign up")}>Sign up</p></p>
+                    <a href="/">Forgot password</a>
+                </div>
+            </form>
 
-                    <div>
-                        {error != "" ? <p className="error-msg">{error}</p> : <></>}
-                        <button onClick={Login}>Login</button>
-                        <p>Don't have an account? <Link to="/signup">Sign up</Link></p>
-                        <a href="/">Forgot password</a>
-                    </div>
-                </form>
-            </div>
+            {page == "Sign up" ?
+                <div className="container-popup" onClick={() => setPage("")}>
+                    <SignUp />
+                </div>
 
-            <Footer />
+                : <></>
+            }
+
         </>
     )
 }

@@ -291,17 +291,6 @@ function AddPlan() {
                                     })
                                 }
 
-                                <label>Number of transportations</label>
-                                <input type="number" placeholder="enter number of transportations" min="0" value={transNum} onChange={(e) => setTransNum(e.target.value)}></input>
-                                
-                                <label>Number of accommodations</label>
-                                <input type="number" placeholder="enter number of accommodations" min="0" value={accomsNum} onChange={(e) => setAccomsNum(e.target.value)}></input>
-                                
-                                <label>Number of food places</label>
-                                <input type="number" placeholder="enter number of food places" min="0" value={foodpsNum} onChange={(e) => setFoodPsNum(e.target.value)}></input>
-                                
-                                <label>Number of attractions</label>
-                                <input type="number" placeholder="enter number of attractions" min="0" value={attrsNum} onChange={(e) => setAttrsNum(e.target.value)}></input>
                             </div>
                             
                             <button onClick={nextSection} type="button">Next</button>

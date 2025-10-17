@@ -8,7 +8,7 @@ using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+//Add services to the container.
 var connectionString = builder.Configuration.GetConnectionString("myString");
 builder.Services.AddDbContext<Project1DatabaseContext>(options =>
 {

@@ -5,19 +5,23 @@ namespace Project_1_API.Models;
 
 public partial class Transportation
 {
-    public int TranspId { get; set; }
+    public int TransportationId { get; set; }
 
-    public string TranspName { get; set; } = null!;
+    public string TransportationName { get; set; } = null!;
 
-    public double TranspMinPrice { get; set; }
+    public double TransportationPricePerPerson { get; set; }
 
-    public double TranspMaxPrice { get; set; }
+    public int TransportationMinPeople { get; set; }
 
-    public int TranspTypeId { get; set; }
+    public int TransportationMaxPeople { get; set; }
 
-    public int DestId { get; set; }
+    public int TransportationRating { get; set; }
 
-    
+    public int TransportationTypeId { get; set; }
+
+    public int DestinationId { get; set; }
+
+    public string? TransportationImage { get; set; }
 
     
 

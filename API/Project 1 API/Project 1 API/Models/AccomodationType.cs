@@ -5,9 +5,9 @@ namespace Project_1_API.Models;
 
 public partial class AccomodationType
 {
-    public int AccTypeId { get; set; }
+    public int AccomodationTypeId { get; set; }
 
-    public string AccTypeName { get; set; } = null!;
+    public string AccomodationTypeName { get; set; } = null!;
 
     
 }

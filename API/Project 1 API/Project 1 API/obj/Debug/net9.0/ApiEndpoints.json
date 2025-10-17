@@ -31,8 +31,8 @@
   },
   {
     "ContainingType": "Project_1_API.Controllers.DestinationsController",
-    "Method": "GetCurrencies",
-    "RelativePath": "api/Destinations/getCurrencies",
+    "Method": "GetCountries",
+    "RelativePath": "api/Destinations/getCountries",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -41,18 +41,12 @@
   },
   {
     "ContainingType": "Project_1_API.Controllers.DestinationsController",
-    "Method": "GetUserById",
-    "RelativePath": "api/Destinations/getCurrencyByID/{id}",
+    "Method": "GetCurrencies",
+    "RelativePath": "api/Destinations/getCurrencies",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
-    "Parameters": [
-      {
-        "Name": "id",
-        "Type": "System.Int32",
-        "IsRequired": true
-      }
-    ],
+    "Parameters": [],
     "ReturnTypes": []
   },
   {
@@ -67,8 +61,8 @@
   },
   {
     "ContainingType": "Project_1_API.Controllers.DestinationsController",
-    "Method": "GetFoodPlaces",
-    "RelativePath": "api/Destinations/getFoodPlaces",
+    "Method": "GetFoodSpots",
+    "RelativePath": "api/Destinations/getFoodSpots",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -77,8 +71,102 @@
   },
   {
     "ContainingType": "Project_1_API.Controllers.DestinationsController",
-    "Method": "GetFoodPlaceTypes",
-    "RelativePath": "api/Destinations/getFoodPlaceTypes",
+    "Method": "GetFoodSpotTypes",
+    "RelativePath": "api/Destinations/getFoodSpotTypes",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Project_1_API.Controllers.DestinationsController",
+    "Method": "GetSuggestedAccommodation",
+    "RelativePath": "api/Destinations/getSuggestedAccommodation",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "spenderTypeId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "destinationId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Project_1_API.Controllers.DestinationsController",
+    "Method": "GetSuggestedAttraction",
+    "RelativePath": "api/Destinations/getSuggestedAttraction",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "spenderTypeId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "destinationId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Project_1_API.Controllers.DestinationsController",
+    "Method": "GetSuggestedFoodSpot",
+    "RelativePath": "api/Destinations/getSuggestedFoodSpot",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "spenderTypeId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "destinationId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Project_1_API.Controllers.DestinationsController",
+    "Method": "GetSuggestedTransportation",
+    "RelativePath": "api/Destinations/getSuggestedTransportation",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "spenderTypeId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "destinationId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Project_1_API.Controllers.DestinationsController",
+    "Method": "GetRandomTopDestinations",
+    "RelativePath": "api/Destinations/getTopDestinations",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,

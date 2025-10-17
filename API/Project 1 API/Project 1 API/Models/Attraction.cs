@@ -5,19 +5,25 @@ namespace Project_1_API.Models;
 
 public partial class Attraction
 {
-    public int AttrId { get; set; }
+    public int AttractionId { get; set; }
 
-    public string AttrName { get; set; } = null!;
+    public string AttractionName { get; set; } = null!;
 
-    public string AttrAddress { get; set; } = null!;
+    public string AttractionAddress { get; set; } = null!;
 
-    public double AttrMinPrice { get; set; }
+    public string AttractionRating { get; set; } = null!;
 
-    public double AttrMaxPrice { get; set; }
+    public double AttractionEntranceFee { get; set; }
 
-    public int DestId { get; set; }
+    public double AttractionPricePerPerson { get; set; }
 
-    
+    public ulong AttractionTimeLimited { get; set; }
+
+    public string AttractionDescription { get; set; } = null!;
+
+    public int DestinationId { get; set; }
+
+    public string? AttractionImage { get; set; }
 
     
 }

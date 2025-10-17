@@ -5,17 +5,19 @@ namespace Project_1_API.Models;
 
 public partial class Destination
 {
-    public int DestId { get; set; }
+    public int DestinationId { get; set; }
 
-    public string DestName { get; set; } = null!;
+    public string DestinationName { get; set; } = null!;
 
-    public string DestCountry { get; set; } = null!;
+    public string DestinationCountry { get; set; } = null!;
 
-    public int DestRatingId { get; set; }
+    public int DestinationRating { get; set; }
 
-    public int CurrId { get; set; }
+    public string DestinationDescription { get; set; } = null!;
 
-    
+    public int CountryId { get; set; }
+
+    public string? DestinationImage { get; set; }
 
     
 

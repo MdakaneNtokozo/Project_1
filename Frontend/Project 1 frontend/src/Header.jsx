@@ -1,25 +1,50 @@
-import { useContext } from "react"
+import { useContext, useState } from "react"
 import { MyContext } from "./MyProvider"
 import { useNavigate } from "react-router-dom"
+import Login from "./pages/Login"
+import SignUp from "./pages/Signup"
 
-function Header(){
-    const {role} = useContext(MyContext)
+function Header() {
+    const { role } = useContext(MyContext)
+    const [page, setPage] = useState("")
     const navigate = useNavigate()
 
-    return(
+    return (
         <>
             <header>
                 <h1><span onClick={() => navigate('/home')}>VacayPay</span></h1>
 
-                {role == 1 ? 
+                {role == 1 ?
                     <nav>
-                        <img src="\src\assets\notification bell.png" alt="notification bell" className="icon"></img>
-                        <img src="\src\assets\profile icon.png" alt="profile picture" className="icon" onClick={() => navigate('/profile')}></img>
-                    </nav>:
+                        <p>Vacation plans</p>
+                        <p>Profile</p>
+                    </nav> :
                     <></>
                 }
-                    
+
+                {role == "" ?
+                    <nav>
+                        <button onClick={() => setPage("Sign up")}>Sign up</button>
+                        <button onClick={() => setPage("Login")}>Login</button>
+                    </nav> :
+                    <></>
+                }
             </header>
+
+            {page == "Login" ?
+                <div className="container-popup" onClick={() => setPage("")}> 
+                    <Login />
+                </div>
+                : <></>
+            }
+
+            {page == "Sign up" ?
+                <div className="container-popup" onClick={() => setPage("")}> 
+                    <SignUp />
+                </div>
+                
+                : <></>
+            }
         </>
     )
 }

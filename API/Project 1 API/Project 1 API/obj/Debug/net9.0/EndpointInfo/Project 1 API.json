@@ -5,29 +5,6 @@
     "version": "1.0"
   },
   "paths": {
-    "/api/Destinations/getCurrencyByID/{id}": {
-      "get": {
-        "tags": [
-          "Destinations"
-        ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
     "/api/Destinations/getCurrencies": {
       "get": {
         "tags": [
@@ -40,7 +17,31 @@
         }
       }
     },
+    "/api/Destinations/getCountries": {
+      "get": {
+        "tags": [
+          "Destinations"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/Destinations/getDestinations": {
+      "get": {
+        "tags": [
+          "Destinations"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Destinations/getTopDestinations": {
       "get": {
         "tags": [
           "Destinations"
@@ -76,6 +77,36 @@
         }
       }
     },
+    "/api/Destinations/getSuggestedTransportation": {
+      "get": {
+        "tags": [
+          "Destinations"
+        ],
+        "parameters": [
+          {
+            "name": "spenderTypeId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "destinationId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/Destinations/getAccommodations": {
       "get": {
         "tags": [
@@ -100,7 +131,37 @@
         }
       }
     },
-    "/api/Destinations/getFoodPlaces": {
+    "/api/Destinations/getSuggestedAccommodation": {
+      "get": {
+        "tags": [
+          "Destinations"
+        ],
+        "parameters": [
+          {
+            "name": "spenderTypeId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "destinationId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Destinations/getFoodSpots": {
       "get": {
         "tags": [
           "Destinations"
@@ -112,10 +173,40 @@
         }
       }
     },
-    "/api/Destinations/getFoodPlaceTypes": {
+    "/api/Destinations/getFoodSpotTypes": {
       "get": {
         "tags": [
           "Destinations"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Destinations/getSuggestedFoodSpot": {
+      "get": {
+        "tags": [
+          "Destinations"
+        ],
+        "parameters": [
+          {
+            "name": "spenderTypeId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "destinationId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
         ],
         "responses": {
           "200": {
@@ -128,6 +219,36 @@
       "get": {
         "tags": [
           "Destinations"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Destinations/getSuggestedAttraction": {
+      "get": {
+        "tags": [
+          "Destinations"
+        ],
+        "parameters": [
+          {
+            "name": "spenderTypeId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "destinationId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
         ],
         "responses": {
           "200": {
@@ -283,11 +404,11 @@
             "type": "string",
             "nullable": true
           },
-          "userBio": {
+          "userEmail": {
             "type": "string",
             "nullable": true
           },
-          "userEmail": {
+          "userBio": {
             "type": "string",
             "nullable": true
           },
@@ -299,11 +420,11 @@
             "type": "string",
             "format": "date-time"
           },
-          "notificationOn": {
+          "userNotificationOn": {
             "type": "integer",
             "format": "int64"
           },
-          "currId": {
+          "currencyId": {
             "type": "integer",
             "format": "int32"
           }

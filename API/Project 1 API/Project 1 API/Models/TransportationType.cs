@@ -5,9 +5,9 @@ namespace Project_1_API.Models;
 
 public partial class TransportationType
 {
-    public int TranspTypeId { get; set; }
+    public int TransportationTypeId { get; set; }
 
-    public string TranspTypeName { get; set; } = null!;
+    public string TransportationTypeName { get; set; } = null!;
 
     
 }
