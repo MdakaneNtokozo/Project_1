@@ -106,11 +106,6 @@ create table attraction(
 	FOREIGN KEY (destination_id) REFERENCES destination(destination_id)
 );
 
-
-
-------------------------------
-
-
 create table user(
 	user_id INT PRIMARY KEY,
 	user_name char(100) NOT NULL,
@@ -124,12 +119,71 @@ create table user(
 	FOREIGN KEY(currency_id) REFERENCES currency(currency_id)
 );
 
-create table spender_type(
+CREATE TABLE spender_type(
 	spender_type_id int PRIMARY KEY,
 	spender_type_name char(50) NOT NULL,
 	spender_type_level int NOT NULL
 );
 
+CREATE TABLE vacation(
+	vacation_id INT PRIMARY KEY,
+	vacation_start_date DATETIME NOT NULL,
+	vacation_end_date DATETIME NOT NULL
+);
+
+CREATE TABLE selected_transportation(
+	transportation_id int NOT NULL,
+	vacation_id INT NOT NULL,
+	PRIMARY KEY (transportation_id, vacation_id),
+	FOREIGN KEY (transportation_id) REFERENCES transportation(transportation_id),
+	FOREIGN KEY (vacation_id) REFERENCES vacation(vacation_id)
+);
+
+CREATE TABLE selected_accommodation(
+	accommodation_id int NOT NULL,
+	vacation_id INT NOT NULL,
+	PRIMARY KEY (accommodation_id, vacation_id),
+	FOREIGN KEY (accommodation_id) REFERENCES accommodation(accommodation_id),
+	FOREIGN KEY (vacation_id) REFERENCES vacation(vacation_id)
+);
+
+CREATE TABLE selected_food_spot(
+	food_spot_id_id int NOT NULL,
+	vacation_id INT NOT NULL,
+	PRIMARY KEY (food_spot_id_id, vacation_id),
+	FOREIGN KEY (food_spot_id_id) REFERENCES food_spot(food_spot_id),
+	FOREIGN KEY (vacation_id) REFERENCES vacation(vacation_id)
+);
+
+CREATE TABLE selected_attractions(
+	attraction_id int NOT NULL,
+	vacation_id INT NOT NULL,
+	PRIMARY KEY (attraction_id, vacation_id),
+	FOREIGN KEY (attraction_id) REFERENCES attraction(attraction_id),
+	FOREIGN KEY (vacation_id) REFERENCES vacation(vacation_id)
+);
+
+CREATE TABLE created_plan(
+	vacation_id INT NOT NULL,
+	user_id INT NOT NULL,
+	plan_budget DOUBLE NOT NULL,
+	plan_created_date DATETIME NOT NULL,
+	plan_modified_date DATETIME NOT NULL,
+	spender_type_id INT NOT NULL,
+	PRIMARY KEY(vacation_id, user_id),
+	FOREIGN KEY (vacation_id) REFERENCES vacation(vacation_id),
+	FOREIGN KEY (user_id) REFERENCES user(user_id),
+	FOREIGN KEY (spender_type_id) REFERENCES spender_type(spender_type_id)
+);
+
+CREATE TABLE travel_buddy(
+	vacation_id INT NOT NULL,
+	user_id INT NOT NULL,
+	viewed_plan BIT NOT NULL DEFAULT 0,
+	PRIMARY KEY(vacation_id, user_id),
+	FOREIGN KEY (vacation_id) REFERENCES vacation(vacation_id),
+	FOREIGN KEY (user_id) REFERENCES user(user_id)
+);
 
 
 

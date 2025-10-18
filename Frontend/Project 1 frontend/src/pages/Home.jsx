@@ -8,10 +8,11 @@ import { Rating } from "react-simple-star-rating"
 function Home() {
     const [plans, setPlans] = useState([])
     const [top3Destinations, setTop3Destinations] = useState([])
-    const { role, user, api, token } = useContext(MyContext)
+    const { role, user, api, token, setCurrency } = useContext(MyContext)
     const navigate = useNavigate()
 
     useEffect(() => {
+        // //Top 3 destinations
         var api_call = api + "Destinations/getTopDestinations"
         fetch(api_call, {
             method: "GET",
@@ -27,6 +28,20 @@ function Home() {
                 setTop3Destinations(await res.json())
             }
         })
+
+        // //Currency
+        api_call = api + "Destinations/getCurrency?currencyId=" + user.currencyId
+        fetch(api_call, {
+            method: "GET",
+            headers: {
+                "Authorization": "Bearer " + token,
+                "Content-Type": "application/json"
+            },
+        }).then(async res => {
+            setCurrency(await res.json())
+        })
+
+
     }, [])
 
     const viewPlan = (idx) => {

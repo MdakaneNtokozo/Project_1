@@ -6,7 +6,18 @@
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
-    "Parameters": [],
+    "Parameters": [
+      {
+        "Name": "destId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "currencyId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
     "ReturnTypes": []
   },
   {
@@ -21,12 +32,75 @@
   },
   {
     "ContainingType": "Project_1_API.Controllers.DestinationsController",
+    "Method": "GetAccomsTotal",
+    "RelativePath": "api/Destinations/getAccomsTotal",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "start",
+        "Type": "System.DateTime",
+        "IsRequired": false
+      },
+      {
+        "Name": "end",
+        "Type": "System.DateTime",
+        "IsRequired": false
+      },
+      {
+        "Name": "list",
+        "Type": "System.Collections.Generic.List\u00601[[Project_1_API.AccommNum, Project 1 API, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Project_1_API.Controllers.DestinationsController",
     "Method": "GetAttractions",
     "RelativePath": "api/Destinations/getAttractions",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
-    "Parameters": [],
+    "Parameters": [
+      {
+        "Name": "destId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "currencyId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Project_1_API.Controllers.DestinationsController",
+    "Method": "GetAttrsTotal",
+    "RelativePath": "api/Destinations/getAttrsTotal",
+    "HttpMethod": "",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "start",
+        "Type": "System.DateTime",
+        "IsRequired": false
+      },
+      {
+        "Name": "end",
+        "Type": "System.DateTime",
+        "IsRequired": false
+      },
+      {
+        "Name": "list",
+        "Type": "System.Collections.Generic.List\u00601[[Project_1_API.AttrNum, Project 1 API, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "IsRequired": true
+      }
+    ],
     "ReturnTypes": []
   },
   {
@@ -51,6 +125,22 @@
   },
   {
     "ContainingType": "Project_1_API.Controllers.DestinationsController",
+    "Method": "GetCurrencyById",
+    "RelativePath": "api/Destinations/getCurrency",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "currencyId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Project_1_API.Controllers.DestinationsController",
     "Method": "GetDestinations",
     "RelativePath": "api/Destinations/getDestinations",
     "HttpMethod": "GET",
@@ -66,7 +156,44 @@
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
-    "Parameters": [],
+    "Parameters": [
+      {
+        "Name": "destId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "currencyId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Project_1_API.Controllers.DestinationsController",
+    "Method": "GetFoodSpotsTotal",
+    "RelativePath": "api/Destinations/getFoodSpotsTotal",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "start",
+        "Type": "System.DateTime",
+        "IsRequired": false
+      },
+      {
+        "Name": "end",
+        "Type": "System.DateTime",
+        "IsRequired": false
+      },
+      {
+        "Name": "list",
+        "Type": "System.Collections.Generic.List\u00601[[Project_1_API.SpotNum, Project 1 API, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "IsRequired": true
+      }
+    ],
     "ReturnTypes": []
   },
   {
@@ -180,7 +307,18 @@
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
-    "Parameters": [],
+    "Parameters": [
+      {
+        "Name": "destId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "currencyId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
     "ReturnTypes": []
   },
   {
@@ -191,6 +329,32 @@
     "IsController": true,
     "Order": 0,
     "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Project_1_API.Controllers.DestinationsController",
+    "Method": "GetTransTotal",
+    "RelativePath": "api/Destinations/getTransTotal",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "start",
+        "Type": "System.DateTime",
+        "IsRequired": false
+      },
+      {
+        "Name": "end",
+        "Type": "System.DateTime",
+        "IsRequired": false
+      },
+      {
+        "Name": "list",
+        "Type": "System.Collections.Generic.List\u00601[[Project_1_API.TransNum, Project 1 API, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "IsRequired": true
+      }
+    ],
     "ReturnTypes": []
   },
   {

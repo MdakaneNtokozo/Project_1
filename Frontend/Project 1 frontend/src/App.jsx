@@ -1,14 +1,18 @@
-import { BrowserRouter, Route, Router, Routes } from "react-router-dom"
+import { BrowserRouter, Route, Routes } from "react-router-dom"
 import { MyProvider } from "./MyProvider"
 import { lazy, Suspense } from "react"
 import Profile from "./pages/Profile"
-import AddVacayPlan from "./pages/AddVacayPlan"
 
+const AddVacayPlan = lazy(() => import(  "./pages/AddVacayPlan"))
+const SelectDest = lazy(() => import(  "./pages/SelectDest"))
+const AddDetails = lazy(() => import(  "./pages/AddDetails"))
+const SelectTrans = lazy(() => import(  "./pages/SelectTrans"))
+const SelectAccomm = lazy(() => import(  "./pages/SelectAccomm"))
+const SelectFoodSpot = lazy(() => import(  "./pages/SelectFoodSpot"))
+const SelectAttr = lazy(() => import(  "./pages/SelectAttr"))
+const VacayPlanPreview = lazy(() => import(  "./pages/VacayPlanPreview"))
 const Landing = lazy(() => import( "./pages/Landing"))
 const Home = lazy(() => import("./pages/Home"))
-const Login = lazy(() => import("./pages/Login"))
-const SignUp = lazy(() => import("./pages/Signup"))
-const AddPlan = lazy(() => import("./pages/AddPlan"))
 
 function App() {
   return (
@@ -17,14 +21,19 @@ function App() {
         <BrowserRouter>
           <Suspense fallback={<p className="loading">Loading</p>}>
             <Routes>
-              {/* <Route path="/" element={<Login />}></Route>
-              <Route path="/signup" element={<SignUp />}></Route>
-              <Route path="/home" element={<Home />}></Route>
-              <Route path="/addPlan" element={<AddPlan />}></Route>
+              {/* 
               <Route path="/profile" element={<Profile />}></Route> */}
               <Route path="/" element={<Landing />}></Route>
               <Route path="/home" element={<Home />}></Route>
-              <Route path="/addVacayPlan" element={<AddVacayPlan />}></Route>
+              <Route path="/addVacayPlan" element={<AddVacayPlan />}>
+                <Route path="" element={<SelectDest />}></Route>
+                <Route path="addDetails" element={<AddDetails />}></Route>
+                <Route path="selectTrans" element={<SelectTrans />}></Route>
+                <Route path="selectAccomm" element={<SelectAccomm />}></Route>
+                <Route path="selectFoodSpot" element={<SelectFoodSpot />}></Route>
+                <Route path="selectAttr" element={<SelectAttr />}></Route>
+                <Route path="preview" element={<VacayPlanPreview />}></Route>
+              </Route>
             </Routes>
           </Suspense>
         </BrowserRouter>

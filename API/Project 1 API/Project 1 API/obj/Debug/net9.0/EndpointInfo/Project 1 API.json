@@ -17,6 +17,28 @@
         }
       }
     },
+    "/api/Destinations/getCurrency": {
+      "get": {
+        "tags": [
+          "Destinations"
+        ],
+        "parameters": [
+          {
+            "name": "currencyId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/Destinations/getCountries": {
       "get": {
         "tags": [
@@ -57,6 +79,24 @@
       "get": {
         "tags": [
           "Destinations"
+        ],
+        "parameters": [
+          {
+            "name": "destId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "currencyId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
         ],
         "responses": {
           "200": {
@@ -112,6 +152,24 @@
         "tags": [
           "Destinations"
         ],
+        "parameters": [
+          {
+            "name": "destId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "currencyId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "OK"
@@ -165,6 +223,24 @@
       "get": {
         "tags": [
           "Destinations"
+        ],
+        "parameters": [
+          {
+            "name": "destId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "currencyId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
         ],
         "responses": {
           "200": {
@@ -220,6 +296,24 @@
         "tags": [
           "Destinations"
         ],
+        "parameters": [
+          {
+            "name": "destId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "currencyId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "OK"
@@ -250,6 +344,278 @@
             }
           }
         ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Destinations/getTransTotal": {
+      "post": {
+        "tags": [
+          "Destinations"
+        ],
+        "parameters": [
+          {
+            "name": "start",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "end",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/TransNum"
+                }
+              }
+            },
+            "text/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/TransNum"
+                }
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/TransNum"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Destinations/getAccomsTotal": {
+      "post": {
+        "tags": [
+          "Destinations"
+        ],
+        "parameters": [
+          {
+            "name": "start",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "end",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/AccommNum"
+                }
+              }
+            },
+            "text/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/AccommNum"
+                }
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/AccommNum"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Destinations/getFoodSpotsTotal": {
+      "post": {
+        "tags": [
+          "Destinations"
+        ],
+        "parameters": [
+          {
+            "name": "start",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "end",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/SpotNum"
+                }
+              }
+            },
+            "text/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/SpotNum"
+                }
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/SpotNum"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Destinations/getAttrsTotal": {
+      "post": {
+        "tags": [
+          "Destinations"
+        ],
+        "parameters": [
+          {
+            "name": "start",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "end",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/Attraction"
+                }
+              }
+            },
+            "text/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/Attraction"
+                }
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/Attraction"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Destinations/getObject": {
+      "post": {
+        "tags": [
+          "Destinations"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/TransNum"
+                }
+              }
+            },
+            "text/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/TransNum"
+                }
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/TransNum"
+                }
+              }
+            }
+          }
+        },
         "responses": {
           "200": {
             "description": "OK"
@@ -389,6 +755,233 @@
   },
   "components": {
     "schemas": {
+      "AccommNum": {
+        "type": "object",
+        "properties": {
+          "accomm": {
+            "$ref": "#/components/schemas/Accommodation"
+          },
+          "num": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Accommodation": {
+        "type": "object",
+        "properties": {
+          "accommodationId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "accommodationName": {
+            "type": "string",
+            "nullable": true
+          },
+          "accommodationAddress": {
+            "type": "string",
+            "nullable": true
+          },
+          "accommodationRating": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "accommodationPricePerPerson": {
+            "type": "number",
+            "format": "double"
+          },
+          "accommodationMinNumOfPeople": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "accommodationMaxNumOfPeople": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "accommodationAmenities": {
+            "type": "string",
+            "nullable": true
+          },
+          "accommodationTypeId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "destinationId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "accomodationTypeId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "accommodationImage": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Attraction": {
+        "type": "object",
+        "properties": {
+          "attractionId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "attractionName": {
+            "type": "string",
+            "nullable": true
+          },
+          "attractionAddress": {
+            "type": "string",
+            "nullable": true
+          },
+          "attractionRating": {
+            "type": "string",
+            "nullable": true
+          },
+          "attractionEntranceFee": {
+            "type": "number",
+            "format": "double"
+          },
+          "attractionPricePerPerson": {
+            "type": "number",
+            "format": "double"
+          },
+          "attractionTimeLimited": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "attractionDescription": {
+            "type": "string",
+            "nullable": true
+          },
+          "destinationId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "attractionImage": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "FoodSpot": {
+        "type": "object",
+        "properties": {
+          "foodSpotId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "foodSpotName": {
+            "type": "string",
+            "nullable": true
+          },
+          "foodSpotAddress": {
+            "type": "string",
+            "nullable": true
+          },
+          "foodSpotRating": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "foodSpotMinMenuPrice": {
+            "type": "number",
+            "format": "double"
+          },
+          "foodSpotMaxMenuPrice": {
+            "type": "number",
+            "format": "double"
+          },
+          "foodSpotMenuItems": {
+            "type": "string",
+            "nullable": true
+          },
+          "foodSpotTypeId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "destinationId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "foodSpotImage": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "SpotNum": {
+        "type": "object",
+        "properties": {
+          "spot": {
+            "$ref": "#/components/schemas/FoodSpot"
+          },
+          "num": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "TransNum": {
+        "type": "object",
+        "properties": {
+          "trans": {
+            "$ref": "#/components/schemas/Transportation"
+          },
+          "num": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Transportation": {
+        "type": "object",
+        "properties": {
+          "transportationId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "transportationName": {
+            "type": "string",
+            "nullable": true
+          },
+          "transportationPricePerPerson": {
+            "type": "number",
+            "format": "double"
+          },
+          "transportationMinPeople": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "transportationMaxPeople": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "transportationRating": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "transportationTypeId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "destinationId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "transportationImage": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "User": {
         "type": "object",
         "properties": {
