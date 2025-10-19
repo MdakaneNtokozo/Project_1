@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react"
-import { MyContext } from "../MyProvider"
+import { MyContext } from "../../MyProvider"
 import { Rating } from "react-simple-star-rating"
 import { BiCheckCircle } from "react-icons/bi"
 import { useNavigate } from "react-router-dom"
@@ -24,7 +24,7 @@ function SelectTrans() {
         transTotal, setTransTotal
     } = useContext(MyContext)
     const navigate = useNavigate()
-    const [isLoading, setIsLoading] = useState(true);
+    const [isLoading, setIsLoading] = useState(true)
 
     useEffect(() => {
         //Transportations
@@ -82,7 +82,9 @@ function SelectTrans() {
     }
 
     const formatDate = (date) => {
-        if (date != "") {
+        var date = new Date(date)
+
+        if (date != undefined) {
             const year = date.getFullYear()
             const month = date.getMonth() + 1
             const day = date.getDate()
@@ -105,7 +107,7 @@ function SelectTrans() {
             setTransTotal(await res.json())
             navigate('/addVacayPlan/selectAccomm')
         })
-        
+
     }
 
     const back = () => {
@@ -114,11 +116,15 @@ function SelectTrans() {
 
     const addTheSelectedTransportation = (trans) => {
         const isSelected = selectedTransportation.find(tr => tr.transportationId == trans.transportationId) != undefined
+
         if (isSelected) {
+            //transportation has been selected, remove it from the list
             setSelectedTransportations([...selectedTransportation.filter(tr => tr.transportationId != trans.transportationId)])
             setTransList([...transList.filter(t => t.trans.transportationId != trans.transportationId)])
         } else {
+            //transportation has not been selected, add it from the list
             setSelectedTransportations([...selectedTransportation, trans])
+
         }
     }
 
@@ -132,27 +138,25 @@ function SelectTrans() {
         } else {
             return "card-ui"
         }
-    }  
+    }
 
-    const setUse = (trans, val) => {
-        var isFound = transList.find(i => i.trans.transportationId == trans.transportationId) != undefined
-
-        if(isFound == false && val != ""){
-            //not in the list
+    const setTimes = (trans, useType, num) => {
+        console.log(useType)
+        if(useType != 0){
             var item = {
                 trans: trans,
-                num: val
-            }
-             setTransList([...transList, item])
-
-        }
-        else if(isFound == true && val != ""){
-            var item = {
-                trans: trans,
-                num: val
+                useType: useType,
+                num: num
             }
 
-            setTransList([...transList.filter(i => i.trans != trans), item])
+            var isFound = transList.find(item => item.trans.transportationId == trans.transportationId) == undefined
+            if(isFound){
+                //Add to list
+                setTransList([...transList, item])
+            }else{
+                //Update list
+                setTransList([...transList.filter(item => item.trans.transportationId != trans.transportationId), item])
+            }
         }
     }
 
@@ -164,11 +168,10 @@ function SelectTrans() {
 
                 <div className="cards-section">
                     {transportations.length.length != 0 ?
-                        transportations.map(t => {
-
+                        transportations.map((t, idx) => {
                             var isFound = suggestedTransportations.find(tr => tr.transportationId == t.transportationId) != undefined
 
-                            return <div className={determineClassName(t)} onClick={() => addTheSelectedTransportation(t)}>
+                            return <div key={idx} className={determineClassName(t)} onClick={() => addTheSelectedTransportation(t)}>
                                 <div className="card-img">
                                     <img src={t.transportationImage}></img>
                                     <div className="card-rating">
@@ -197,23 +200,27 @@ function SelectTrans() {
 
             </div>
 
+
             {selectedTransportation.length != 0 ?
 
-                <div style={{ backgroundColor: "#71c7f1ff", padding: "5px" }}>
+                <div className="more-details">
                     <h3>Fill in details below</h3>
                     {
-                        selectedTransportation.map((t) => {
+                        selectedTransportation.map((t, idx) => {
                             var item = transList.find(i => i.trans.transportationId == t.transportationId)
-                            return <div >
+                            console.log(item)
+
+                            return <div key={idx}>
                                 <p>{t.transportationName}</p>
-                                <label>Type of use:</label>
-                                <select value={item != undefined? item.num: ""} onChange={(e) => setUse(t, e.target.value)} required>
-                                    <option value={""}>Select use</option>
-                                    <option value={"1"}>One way trip</option>
-                                    <option value={"2"}>Two way trip</option>
-                                    <option value={"3"}>Everyday use</option>
+                                <label>Type of use for transportation:</label>
+                                <select value={item != undefined ? item.useType : 0} onChange={(e) => setTimes(t, e.target.value, undefined)}>
+                                    <option value={0}>How many times will you use this transportation</option>
+                                    <option value={1}>Limited throughout the trip</option>
+                                    <option value={2}>Every day of the trip</option>
                                 </select>
 
+                                <label>Specify the number of times it will be used:</label>
+                                <input type="number" min={0} value={item != undefined ? item.num: ""} onChange={(e) => setTimes(t, item.useType, e.target.value)}></input>
                             </div>
                         })
                     }
@@ -222,6 +229,9 @@ function SelectTrans() {
 
                 : <></>
             }
+
+
+
 
             <div style={{ display: "flex", flexDirection: "row", justifyContent: "space-between" }}>
                 <button onClick={back} type="button">Back</button>

@@ -19,52 +19,42 @@ function Login() {
             var password = passwordRef.current.value
             var api_call = api + "LoginSignup/login?email=" + email + "&password=" + password
 
-            console.log(email + " " + password)
-
-            try {
-                var res = await fetch(api_call, {
-                    method: "GET",
-                    headers: { "Content-Type": "application/json" },
-                })
-
-                if (res.status == 200) {
+            fetch(api_call, {
+                method: "GET",
+                headers: { "Content-Type": "application/json" },
+            }).then(async (res) => {
+                if (res.ok) {
                     var role_and_token = await res.text()
-                    console.log("Status test: " + role_and_token)
                     var l = role_and_token.split(' ')
 
                     setRole(l[0])
                     setToken(l[1])
-                    console.log("Role: " + role)
-                    console.log("token: " + token)
 
                     var id = l[2]
-                    console.log("user id: " + id)
                     api_call = api + "LoginSignup/getUserById/" + id
-                    res = await fetch(api_call, {
+                    fetch(api_call, {
                         method: "GET",
                         headers: {
                             "Authorization": "Bearer " + l[1],
                             "Content-Type": "application/json"
                         },
+                    }).then(async (res) => {
+                        if (res.ok) {
+                            var loggedInUser = await res.json()
+                            setUser(loggedInUser)
+                            navigate("/home")
+                        } else if (res.status == 400) {
+                            //incorrect details entered
+                            setError(await res.text())
+                        } else if (res.status == 404) {
+                            //Email not found
+                            setError(await res.text())
+                        }
+
                     })
-
-                    if (res.status == 200) {
-                        var loggedInUser = await res.json()
-                        setUser(loggedInUser)
-                        navigate("/home")
-                    }
-
-                } else if (res.status == 400) {
-                    //incorrect details entered
-                    setError(await res.text())
-                } else if (res.status == 404) {
-                    //Email not found
-                    setError(await res.text())
                 }
+            })
 
-            } catch (err) {
-                console.error(err)
-            }
         }
     }
 
@@ -90,7 +80,7 @@ function Login() {
                 <div>
                     {error != "" ? <p className="error-msg">{error}</p> : <></>}
                     <button onClick={Login}>Login</button>
-                    <p>Don't have an account? <p onClick={() => setPage("Sign up")}>Sign up</p></p>
+                    <div>Don't have an account? <div onClick={() => setPage("Sign up")}>Sign up</div></div>
                     <a href="/">Forgot password</a>
                 </div>
             </form>

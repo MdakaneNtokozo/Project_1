@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Project_1_API.Classes_for_totals;
 using Project_1_API.Models;
-using System.Security.Cryptography;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -227,6 +227,7 @@ namespace Project_1_API.Controllers
             return Ok(attractions);
         }
 
+
         private async Task<Double> GetExchangeRate(int destId, int currencyId)
         {
             //convert transportation prices to the user's preffered currency
@@ -279,47 +280,53 @@ namespace Project_1_API.Controllers
         [Route("getTransTotal")]
         public Object GetTransTotal(DateTime start, DateTime end, List<TransNum> list)
         {
-            
+            var total = 0.0;
+            list.ForEach((t) => total += TransTotalCalculation(t, start, end));
+            return Ok(total);
+        }
+
+        private int daysCalculator(DateTime start, DateTime end)
+        {
+            TimeSpan dateDiff = end - start;
+            var days = dateDiff.Days + 1;
+            days = days == 0 ? 1 : days;
+
+            return days;
+        }
+
+        private Double TransTotalCalculation(TransNum t, DateTime start, DateTime end)
+        {
             var total = 0.0;
 
-            list.ForEach((t) =>
+            if (t.useType == 1)
             {
-                if (t.num == 1)
-                {
-                    //One time use chosen
-                    total += t.trans.TransportationPricePerPerson;
-                }else if (t.num == 2) {
-                    total += t.trans.TransportationPricePerPerson * 2;
-                }
-                else if(t.num == 3)
-                {
-                    //Everyday use chosen
-                    TimeSpan dateDiff = end - start;
-                    var days = dateDiff.Days;
-                    days = days == 0 ? 1 : days;
-                    total += t.trans.TransportationPricePerPerson * days * 2; //traveling everday taking two way trips
-                }
-            });
+                total += t.trans.TransportationPricePerPerson * t.num;
+            }
+            else if(t.useType == 2)
+            {
+                var days = daysCalculator(start, end);
+                total += t.trans.TransportationPricePerPerson * t.num * days;
+            }
 
-            return Ok(total);
+            return total;
         }
 
         [HttpPost]
         [Route("getAccomsTotal")]
-        public Object GetAccomsTotal(DateTime start, DateTime end, List<AccommNum> list)
+        public Object GetAccomsTotal(List<AccommDates> list)
         {
             var total = 0.0;
-
-            list.ForEach((a) =>
-            {
-                    TimeSpan dateDiff = end - start;
-                    var days = dateDiff.Days;
-                    days = days == 0 ? 1 : days;
-                    total += a.accomm.AccommodationPricePerPerson * a.num;
-                
-            });
-
+            list.ForEach((a) => total += AccomsTotalCalculation(a));
             return Ok(total);
+        }
+
+        private Double AccomsTotalCalculation(AccommDates a)
+        {
+            var total = 0.0;
+            var days = daysCalculator(a.dates[0], a.dates[1]);
+            total = a.accomm.AccommodationPricePerPerson * days;
+
+            return total;
         }
 
         [HttpPost]
@@ -327,50 +334,200 @@ namespace Project_1_API.Controllers
         public Object GetFoodSpotsTotal(DateTime start, DateTime end, List<SpotNum> list)
         {
             var total = 0.0;
-
-            list.ForEach((t) =>
-            {
-                if (t.num == 1)
-                {
-                    //Trying out the food spot once
-                    total += t.spot.FoodSpotMaxMenuPrice;
-                }
-                else if (t.num == 2)
-                {
-                    //Food eaten multiple times 
-                    TimeSpan dateDiff = end - start;
-                    var days = dateDiff.Days;
-                    days = days == 0 ? 1 : days;
-                    total += t.spot.FoodSpotMaxMenuPrice * days * 3; //Eating 3 meals a day everyday
-                }
-            });
-
+            list.ForEach((s) => total += SpotTotalCalculation(s, start, end));
             return Ok(total);
         }
 
+        private Double SpotTotalCalculation(SpotNum s, DateTime start, DateTime end)
+        {
+            var total = 0.0;
+
+            if (s.useType == 1)
+            {
+                total += s.spot.FoodSpotMaxMenuPrice * s.num;
+            }
+            else if (s.useType == 2)
+            {
+                var days = daysCalculator(start, end);
+                total += s.spot.FoodSpotMaxMenuPrice * s.num * days;
+            }
+
+            return total;
+        }
+
+        [HttpPost]
         [Route("getAttrsTotal")]
         public Object GetAttrsTotal(DateTime start, DateTime end, List<AttrNum> list)
         {
             var total = 0.0;
+            list.ForEach((a) => total += AttrTotalCalculation(a, start, end));
+            return Ok(total);
+        }
 
-            list.ForEach((t) =>
+        private Double AttrTotalCalculation(AttrNum a, DateTime start, DateTime end)
+        {
+            var total = 0.0;
+
+            if (a.useType == 1)
             {
-                if (t.num == 1)
-                {
-                    //Trying out the attraction spot once
-                    total += t.attr.AttractionEntranceFee;
-                }
-                else if (t.num == 2)
-                {
-                    //Try out the attraction multiple times 
-                    TimeSpan dateDiff = end - start;
-                    var days = dateDiff.Days;
-                    days = days == 0 ? 1 : days;
-                    total += t.attr.AttractionEntranceFee * days ;
-                }
+                total += a.attr.AttractionEntranceFee * a.num;
+            }
+            else if (a.useType == 2)
+            {
+                var days = daysCalculator(start, end);
+                total += a.attr.AttractionEntranceFee * a.num * days;
+            }
+
+            return total;
+        }
+
+        [HttpPost]
+        [Route("calVacayBudget")]
+        public Object CalcVacayBudget( VacayLists vcl, DateTime start, DateTime end)
+        {
+            var vacayTotal = 0.0;
+
+            //create a vacation plan 
+            var plans = _context.Vacations.ToList();
+            var lastIdx = 0;
+
+            if (plans.Count != 0)
+            {
+                lastIdx = plans.Max(p => p.VacationId) + 1;
+            }
+
+            var vacay = new Vacation();
+            vacay.VacationId = lastIdx;
+            vacay.VacationStartDate = start;
+            vacay.VacationEndDate = end;
+
+            _context.Vacations.Add(vacay);
+            _context.SaveChanges();
+
+            //add the selected transportations
+            vcl.transSelected.ForEach((i) =>
+            {
+                var selectedTrans = new SelectedTransportation();
+                selectedTrans.TransportationId = i.trans.TransportationId;
+                selectedTrans.VacationId = vacay.VacationId;
+
+                var days = daysCalculator(start, end);
+                selectedTrans.NumOfTimes = i.useType == 1 ? i.num : i.num * days;
+
+                var transTotal = TransTotalCalculation(i, start, end);
+                vacayTotal += transTotal;
+                selectedTrans.TransportationBudget = transTotal;
+
+                _context.SelectedTransportations.Add(selectedTrans);
+                _context.SaveChanges();
             });
 
-            return Ok(total);
+            vcl.accommSelected.ForEach((i) =>
+            {
+                var selectedAccom = new SelectedAccommodation();
+                selectedAccom.AccommodationId = i.accomm.AccommodationId;
+                selectedAccom.VacationId = vacay.VacationId;
+
+                var days = daysCalculator(i.dates[0], i.dates[1]);
+                selectedAccom.NumOfDays = days;
+
+                var accomTotal = AccomsTotalCalculation(i);
+                vacayTotal += accomTotal;
+                selectedAccom.AccommodationBudget = accomTotal;
+
+                _context.SelectedAccommodations.Add(selectedAccom);
+                _context.SaveChanges();
+            });
+
+            vcl.spotsSelected.ForEach((i) =>
+            {
+                var selectedSpot = new SelectedFoodSpot();
+                selectedSpot.FoodSpotIdId = i.spot.FoodSpotId;
+                selectedSpot.VacationId = vacay.VacationId;
+
+                var days = daysCalculator(start, end);
+                selectedSpot.NumOfTimes = i.useType == 1 ? i.num : i.num * days; ;
+
+                var spotTotal = SpotTotalCalculation(i, start, end);
+                vacayTotal += spotTotal;
+                selectedSpot.FoodSpotBudget = spotTotal;
+
+                _context.SelectedFoodSpots.Add(selectedSpot);
+                _context.SaveChanges();
+            });
+
+            vcl.attrSelected.ForEach((i) =>
+            {
+                var selectedAttr = new SelectedAttraction();
+                selectedAttr.AttractionId = i.attr.AttractionId;
+                selectedAttr.VacationId = vacay.VacationId;
+
+                var days = daysCalculator(start, end);
+                selectedAttr.NumOfTimes = i.useType == 1 ? i.num : i.num * days;
+
+                var attrTotal = AttrTotalCalculation(i, start, end);
+                vacayTotal += attrTotal;
+                selectedAttr.AttractionBudget = attrTotal;
+
+                _context.SelectedAttractions.Add(selectedAttr);
+                _context.SaveChanges();
+            });
+
+            //Finally, add the created vacation plan
+            var createdPlan = new CreatedPlan();
+
+            createdPlan.UserId = vcl.user.UserId;
+            createdPlan.VacationId = vacay.VacationId;
+            createdPlan.PlanCreatedDate = DateTime.Now;
+            createdPlan.PlanModifiedDate = DateTime.Now;
+            createdPlan.PlanBudget = vacayTotal;
+            createdPlan.SpenderTypeId = vcl.type.SpenderTypeId;
+           
+            _context.CreatedPlans.Add(createdPlan);
+            _context.SaveChanges();
+
+            return Ok("Vacay plan has been saved");
+        }
+
+        [HttpGet]
+        [Route("getVacayPlans/{userId}")]
+        public async Task<Object> GetVacayPlans(int userId)
+        {
+            var createdPlans = await _context.CreatedPlans.ToListAsync();
+            createdPlans = createdPlans.FindAll(p => p.UserId == userId);
+            return Ok(createdPlans);
+        }
+
+        [HttpGet]
+        [Route("getPlanInfo/{userId}")]
+        public Object GetPlanInfo(int userId)
+        {
+            var destInfo = new List<VacayInfo>();
+
+            var createdPlans = _context.CreatedPlans.ToList();
+            createdPlans = createdPlans.FindAll(p => p.UserId == userId);
+            var selectedTrans = _context.SelectedTransportations.ToList();
+            var destinations = _context.Destinations.ToList();
+
+            createdPlans.ForEach(c =>
+            {
+                var selecetdTrans = selectedTrans.Find(t => t.VacationId == c.VacationId);
+                var transportations = _context.Transportations.ToList();
+                var trans = transportations.Find(tr => tr.TransportationId == selecetdTrans.TransportationId);
+                var dest = destinations.Find(d => d.DestinationId == trans.DestinationId);
+                var vacations = _context.Vacations.ToList();
+                var vac = vacations.Find(v => v.VacationId == c.VacationId);
+
+                var info = new VacayInfo();
+                info.vacationId = vac.VacationId;
+                info.vacayDestName = dest.DestinationName;
+                int daysLeft = daysCalculator(DateTime.Now, vac.VacationStartDate);
+                info.vacayDaysLeft = daysLeft;
+
+                destInfo.Add(info);
+            });
+
+            return Ok(destInfo);
         }
 
     }

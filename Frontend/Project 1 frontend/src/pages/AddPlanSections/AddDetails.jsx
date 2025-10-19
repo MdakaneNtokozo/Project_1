@@ -1,6 +1,7 @@
 import { useContext, useEffect, useState } from "react"
-import { MyContext } from "../MyProvider";
+import { MyContext } from "../../MyProvider";
 import { useNavigate } from "react-router-dom";
+import DatePicker from "react-multi-date-picker";
 
 function AddDetails() {
 
@@ -67,14 +68,15 @@ function AddDetails() {
         setDateError("")
         setSpenderError("")
         setBuddyError("")
-        const today = new Date(formatDate(new Date))
+        const today = new Date (formatDate(new Date()))
+        today.setHours(0)
+        const start = new Date (startDate)
+        const end = new Date (endDate)
 
-        if (startDate == "" || endDate == "") {
+        if (startDate == undefined && endDate == undefined) {
             setDateError("Select start and end dates")
-        } else if (startDate < today || endDate < today) {
+        } else if (start < today || end < today) {
             setDateError("Dates should be today onwards")
-        } else if (startDate > endDate) {
-            setDateError("Start date must be before end date")
         } else if (selectedSpenderType == "") {
             setSpenderError("Please select type of spender")
         } else if (hasTravelBuddies == "") {
@@ -112,25 +114,21 @@ function AddDetails() {
 
     }
 
+    const setDates = (dates) => {
+        if(dates.length == 2){
+            setStartDate(dates[0])
+            setEndDate(dates[1])
+        }
+    }
+
     return (
         <>
             <div className="adding-details-container">
                 <div>
                     <h2>Vacation plan creation for {selectedDestination.destinationName}</h2>
-                    <div className="adding-details-dates-container">
-                        <div>
-                            <label>Start date</label>
-                            <input placeholder="select start vacation date" type="date" value={formatDate(startDate)} onChange={(e) => setStartDate(e.target.valueAsDate)} required></input>
-
-                        </div>
-
-                        <div>
-                            <label>End date</label>
-                            <input placeholder="select end vacation date" type="date" value={formatDate(endDate)} onChange={(e) => setEndDate(e.target.valueAsDate)} required></input>
-
-                        </div>
-
-                    </div>
+                    
+                    <label>Select date range</label><br />
+                    <DatePicker mode="range" range value={[startDate, endDate]} onChange={(dates) => setDates(dates)} style={{width:"100vh"}}></DatePicker><br />
                     {dateError != "" ?
                         <p className="error-msg" style={{ margin: "0px", marginBottom: "8px" }}>{dateError}</p> :
                         <></>

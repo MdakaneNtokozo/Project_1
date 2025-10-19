@@ -10,4 +10,6 @@ public partial class SpenderType
     public string SpenderTypeName { get; set; } = null!;
 
     public int SpenderTypeLevel { get; set; }
+
+    
 }

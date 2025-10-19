@@ -5,38 +5,91 @@ import { useNavigate } from "react-router-dom"
 function VacayPlanPreview() {
     const {
         api,
-        token, 
-        user, 
+        token,
+        user,
         currency,
         selectedDestination,
         startDate,
         endDate,
+        selectedSpenderType,
         selectedBuddies,
         selectedTransportation,
         selectedAccommodations,
         selectedFoodSpots,
         selectedAttractions,
-        transTotal, 
-        accommTotal,
-        spotsTotal,
-        attrsTotal, 
+        transTotal, transList,
+        accommTotal, accommList,
+        spotsTotal, spotsList,
+        attrsTotal, attrsList
     } = useContext(MyContext)
     const navigate = useNavigate()
     const [vacayTotal, setVacayTotal] = useState()
 
     const formatDate2 = (date) => {
-        const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
+        var date = new Date(date)
+        if (date != undefined) {
+            const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
 
-        const year = date.getFullYear()
-        const month = months.at(date.getMonth())
-        const day = date.getDate()
+            const year = date.getFullYear()
+            const month = months.at(date.getMonth())
+            const day = date.getDate()
 
-        return day + " " + month + " " + year
+            return day + " " + month + " " + year
+        }
+
     }
-   
 
     const edit = () => {
         navigate(-5)
+    }
+
+    const formatDate = (date) => {
+        var date = new Date(date)
+        if (date != undefined) {
+            const year = date.getFullYear()
+            const month = date.getMonth() + 1
+            const day = date.getDate()
+
+            return year + "-" + month + "-" + (day < 10 ? "0" + day : day)
+        }
+    }
+
+    const save = () => {
+        var sendList = []
+        accommList.forEach(i => {
+            var start = new Date(i.dates[0])
+            var end = new Date(i.dates[1])
+
+            var item = {
+                accomm: i.accomm,
+                dates: [start, end]
+            }
+
+            sendList.push(item)
+        });
+
+        var vacayList = {
+            user: user,
+            type: selectedSpenderType,
+            travelBuddies: selectedBuddies,
+            transSelected: transList,
+            accommSelected: sendList,
+            spotsSelected: spotsList,
+            attrSelected: attrsList
+        }
+
+        var api_call = api + "Destinations/calVacayBudget?start=" + formatDate(startDate) + "&end=" + formatDate(endDate)
+        fetch(api_call, {
+            method: "POST",
+            headers: {
+                "Authorization": "Bearer " + token,
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(vacayList)
+        }).then(async res => {
+            console.log(res.status)
+            navigate('/home')
+        })
     }
 
     return (
@@ -109,7 +162,7 @@ function VacayPlanPreview() {
 
                         <div style={{ display: "flex", flexDirection: "row", justifyContent: "space-between" }}>
                             <p> </p>
-                            
+
                             <button type="button" onClick={() => edit()}>Edit</button>
                         </div>
                     </div>
@@ -147,7 +200,7 @@ function VacayPlanPreview() {
 
                         <div style={{ display: "flex", flexDirection: "row", justifyContent: "space-between" }}>
                             <p> </p>
-                            <button type="button">Save</button>
+                            <button type="button" onClick={() => save() }>Save</button>
                         </div>
 
                     </div>

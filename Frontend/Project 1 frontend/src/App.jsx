@@ -4,12 +4,12 @@ import { lazy, Suspense } from "react"
 import Profile from "./pages/Profile"
 
 const AddVacayPlan = lazy(() => import(  "./pages/AddVacayPlan"))
-const SelectDest = lazy(() => import(  "./pages/SelectDest"))
-const AddDetails = lazy(() => import(  "./pages/AddDetails"))
-const SelectTrans = lazy(() => import(  "./pages/SelectTrans"))
-const SelectAccomm = lazy(() => import(  "./pages/SelectAccomm"))
-const SelectFoodSpot = lazy(() => import(  "./pages/SelectFoodSpot"))
-const SelectAttr = lazy(() => import(  "./pages/SelectAttr"))
+const SelectDest = lazy(() => import(  "./pages/AddPlanSections/SelectDest"))
+const AddDetails = lazy(() => import(  "./pages/AddPlanSections/AddDetails"))
+const SelectTrans = lazy(() => import(  "./pages/AddPlanSections/SelectTrans"))
+const SelectAccomm = lazy(() => import(  "./pages/AddPlanSections/SelectAccomm"))
+const SelectFoodSpot = lazy(() => import(  "./pages/AddPlanSections/SelectFoodSpot"))
+const SelectAttr = lazy(() => import(  "./pages/AddPlanSections/SelectAttr"))
 const VacayPlanPreview = lazy(() => import(  "./pages/VacayPlanPreview"))
 const Landing = lazy(() => import( "./pages/Landing"))
 const Home = lazy(() => import("./pages/Home"))

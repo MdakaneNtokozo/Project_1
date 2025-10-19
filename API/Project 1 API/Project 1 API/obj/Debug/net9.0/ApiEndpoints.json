@@ -1,6 +1,32 @@
 [
   {
     "ContainingType": "Project_1_API.Controllers.DestinationsController",
+    "Method": "CalcVacayBudget",
+    "RelativePath": "api/Destinations/calVacayBudget",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "vcl",
+        "Type": "Project_1_API.Classes_for_totals.VacayLists",
+        "IsRequired": true
+      },
+      {
+        "Name": "start",
+        "Type": "System.DateTime",
+        "IsRequired": false
+      },
+      {
+        "Name": "end",
+        "Type": "System.DateTime",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Project_1_API.Controllers.DestinationsController",
     "Method": "GetAccommodations",
     "RelativePath": "api/Destinations/getAccommodations",
     "HttpMethod": "GET",
@@ -39,18 +65,8 @@
     "Order": 0,
     "Parameters": [
       {
-        "Name": "start",
-        "Type": "System.DateTime",
-        "IsRequired": false
-      },
-      {
-        "Name": "end",
-        "Type": "System.DateTime",
-        "IsRequired": false
-      },
-      {
         "Name": "list",
-        "Type": "System.Collections.Generic.List\u00601[[Project_1_API.AccommNum, Project 1 API, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "Type": "System.Collections.Generic.List\u00601[[Project_1_API.AccommDates, Project 1 API, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
         "IsRequired": true
       }
     ],
@@ -81,7 +97,7 @@
     "ContainingType": "Project_1_API.Controllers.DestinationsController",
     "Method": "GetAttrsTotal",
     "RelativePath": "api/Destinations/getAttrsTotal",
-    "HttpMethod": "",
+    "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
     "Parameters": [
@@ -204,6 +220,22 @@
     "IsController": true,
     "Order": 0,
     "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Project_1_API.Controllers.DestinationsController",
+    "Method": "GetPlanInfo",
+    "RelativePath": "api/Destinations/getPlanInfo/{userId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "userId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
     "ReturnTypes": []
   },
   {
@@ -352,6 +384,22 @@
       {
         "Name": "list",
         "Type": "System.Collections.Generic.List\u00601[[Project_1_API.TransNum, Project 1 API, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Project_1_API.Controllers.DestinationsController",
+    "Method": "GetVacayPlans",
+    "RelativePath": "api/Destinations/getVacayPlans/{userId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "userId",
+        "Type": "System.Int32",
         "IsRequired": true
       }
     ],

@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react"
-import { MyContext } from "../MyProvider"
+import { MyContext } from "../../MyProvider"
 import { Rating } from "react-simple-star-rating"
 import { BiCheckCircle } from "react-icons/bi"
 import { useNavigate } from "react-router-dom"
@@ -76,7 +76,8 @@ function SelectFoodSpot() {
     }
 
     const formatDate = (date) => {
-        if (date != "") {
+        var date = new Date(date)
+        if (date != undefined) {
             const year = date.getFullYear()
             const month = date.getMonth() + 1
             const day = date.getDate()
@@ -107,10 +108,13 @@ function SelectFoodSpot() {
 
     const addTheSelectedFoodSpot = (spot) => {
         const isSelected = selectedFoodSpots.find(fs => fs.foodSpotId == spot.foodSpotId) != undefined
+
         if (isSelected) {
+            //food spot has been selected, remove it from the list
             setSelectedFoodSpots([...selectedFoodSpots.filter(fs => fs.foodSpotId != spot.foodSpotId)])
             setSpotsList([...spotsList.filter(s => s.spot.foodSpotId != spot.foodSpotId)])
         } else {
+            //food spot has not been selected, add it from the list
             setSelectedFoodSpots([...selectedFoodSpots, spot])
         }
     }
@@ -127,27 +131,26 @@ function SelectFoodSpot() {
         }
     }
 
-    const setTimes = (spot, val) => {
-        var isFound = spotsList.find(s => s.spot.foodSpotId == spot.foodSpotId) != undefined
-
-        if(isFound == false && val != ""){
-            //not in the list
+    const setTimes = (spot, useType, num) => {
+        if(useType != 0){
             var item = {
                 spot: spot,
-                num: val
-            }
-             setSpotsList([...spotsList, item])
-
-        }
-        else if(isFound == true && val != ""){
-            var item = {
-                spot: spot,
-                num: val
+                useType: useType,
+                num: num
             }
 
-            setSpotsList([...spotsList.filter(s => s.spot != spot), item])
+            var isFound = spotsList.find(item => item.spot.foodSpotId == spot.foodSpotId) == undefined
+            if(isFound){
+                //Add to list
+                setSpotsList([...spotsList, item])
+            }else{
+                //Update list
+                setSpotsList([...spotsList.filter(item => item.spot.foodSpotId != spot.foodSpotId), item])
+            }
         }
     }
+
+    console.log(spotsList)
 
     return (
         <>
@@ -156,10 +159,10 @@ function SelectFoodSpot() {
 
                 <div className="cards-section">
                     {foodSpots.length.length != 0 ?
-                        foodSpots.map(f => {
+                        foodSpots.map((f, idx) => {
                             var isFound = suggestedFoodSpots.find(fs => fs.foodSpotId == f.foodSpotId) != undefined
 
-                            return <div className={determineClassName(f)} onClick={() => addTheSelectedFoodSpot(f)}>
+                            return <div key={idx} className={determineClassName(f)} onClick={() => addTheSelectedFoodSpot(f)}>
                                 <div className="card-img">
                                     <img src={f.foodSpotImage}></img>
                                     <div className="card-rating">
@@ -190,19 +193,24 @@ function SelectFoodSpot() {
 
             {selectedFoodSpots.length != 0 ?
 
-                <div style={{ backgroundColor: "#71c7f1ff", padding: "5px" }}>
+                <div className="more-details">
                     <h3>Fill in details below</h3>
                     {
                         selectedFoodSpots.map((s) => {
                             var item = spotsList.find(i => i.spot.foodSpotId == s.foodSpotId)
                             return <div >
                                 <p>{s.foodSpotName}</p>
-                                <label>Number of times:</label>
-                                <select value={item != undefined? item.num: ""} onChange={(e) => setTimes(s, e.target.value)} required>
-                                    <option value={""}>Select number of times</option>
-                                    <option value={"1"}>Try out once</option>
-                                    <option value={"2"}>Multiple times</option>
+
+                                <label>Type of food experience:</label>
+                                <select value={item != undefined ? item.useType : 0} onChange={(e) => setTimes(s, e.target.value, undefined)}>
+                                    <option value={0}>What type of food experience best describes the above food spot?</option>
+                                    <option value={1}>Limited experience throughout the trip</option>
+                                    <option value={2}>Every day experience during the trip</option>
                                 </select>
+
+                                <label>Specify the number of times it will be experienced:</label>
+                                <input type="number" min={0} value={item != undefined ? item.num: ""} onChange={(e) => setTimes(s, item.useType, e.target.value)}></input>
+                            
 
                             </div>
                         })

@@ -134,6 +134,8 @@ CREATE TABLE vacation(
 CREATE TABLE selected_transportation(
 	transportation_id int NOT NULL,
 	vacation_id INT NOT NULL,
+	Num_of_times int NOT NULL,
+    transportation_budget DOUBLE NOT NULL,
 	PRIMARY KEY (transportation_id, vacation_id),
 	FOREIGN KEY (transportation_id) REFERENCES transportation(transportation_id),
 	FOREIGN KEY (vacation_id) REFERENCES vacation(vacation_id)
@@ -142,6 +144,8 @@ CREATE TABLE selected_transportation(
 CREATE TABLE selected_accommodation(
 	accommodation_id int NOT NULL,
 	vacation_id INT NOT NULL,
+    num_of_days int NOT NULL,
+    accommodation_budget DOUBLE NOT NULL,
 	PRIMARY KEY (accommodation_id, vacation_id),
 	FOREIGN KEY (accommodation_id) REFERENCES accommodation(accommodation_id),
 	FOREIGN KEY (vacation_id) REFERENCES vacation(vacation_id)
@@ -150,6 +154,8 @@ CREATE TABLE selected_accommodation(
 CREATE TABLE selected_food_spot(
 	food_spot_id_id int NOT NULL,
 	vacation_id INT NOT NULL,
+    Num_of_times int NOT NULL,
+    food_spot_budget DOUBLE NOT NULL,
 	PRIMARY KEY (food_spot_id_id, vacation_id),
 	FOREIGN KEY (food_spot_id_id) REFERENCES food_spot(food_spot_id),
 	FOREIGN KEY (vacation_id) REFERENCES vacation(vacation_id)
@@ -158,6 +164,8 @@ CREATE TABLE selected_food_spot(
 CREATE TABLE selected_attractions(
 	attraction_id int NOT NULL,
 	vacation_id INT NOT NULL,
+    Num_of_times int NOT NULL,
+    attraction_budget DOUBLE NOT NULL,
 	PRIMARY KEY (attraction_id, vacation_id),
 	FOREIGN KEY (attraction_id) REFERENCES attraction(attraction_id),
 	FOREIGN KEY (vacation_id) REFERENCES vacation(vacation_id)

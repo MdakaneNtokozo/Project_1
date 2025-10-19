@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react"
-import { MyContext } from "../MyProvider"
+import { MyContext } from "../../MyProvider"
 import { useNavigate } from "react-router-dom"
 import { Rating } from "react-simple-star-rating"
 
@@ -73,11 +73,6 @@ function SelectDest() {
 
     const next = (dest) => {
         setSelectedDestination(dest)
-        console.log(dest)
-        const country = countries.find(c => c.countryId == dest.countryId)
-        console.log(country)
-        const currencyId = country.currencyId
-        console.log(country)
         navigate('addDetails')
     }
 
@@ -88,8 +83,8 @@ function SelectDest() {
 
             <div className="cards-section">
                 {destinations.length != 0 ?
-                    searchedDestiations.map(dest => {
-                        return <div className="card-ui" onClick={() => next(dest)}>
+                    searchedDestiations.map((dest, idx) => {
+                        return <div key={idx} className="card-ui" onClick={() => next(dest)}>
                             <div className="card-img">
                                 <img src={dest.destinationImage}></img>
                                 <div className="card-rating">

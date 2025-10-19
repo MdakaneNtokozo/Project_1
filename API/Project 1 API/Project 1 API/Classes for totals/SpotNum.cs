@@ -2,9 +2,10 @@
 
 namespace Project_1_API
 {
-    public class AccommNum
+    public class SpotNum
     {
-        public Accommodation accomm { get; set; }
+        public FoodSpot spot { get; set; }
+        public int useType { get; set; }
         public int num { get; set; }
     }
 }

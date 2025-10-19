@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react"
-import { MyContext } from "../MyProvider"
+import { MyContext } from "../../MyProvider"
 import { Rating } from "react-simple-star-rating"
 import { BiCheckCircle } from "react-icons/bi"
 import { useNavigate } from "react-router-dom"
@@ -64,7 +64,8 @@ function SelectAttr() {
     }
 
     const formatDate = (date) => {
-        if (date != "") {
+        var date = new Date(date)
+        if (date != undefined) {
             const year = date.getFullYear()
             const month = date.getMonth() + 1
             const day = date.getDate()
@@ -86,8 +87,7 @@ function SelectAttr() {
         }).then(async res => {
             setAttrsTotal(await res.json())
             navigate('/addVacayPlan/preview')
-        })
-        
+        })   
     }
 
     const back = () => {
@@ -96,10 +96,13 @@ function SelectAttr() {
 
     const addTheSelectedAttraction = (attr) => {
         const isSelected = selectedAttractions.find(ac => ac.attractionId == attr.attractionId) != undefined
+
         if (isSelected) {
+            //attraction has been selected, remove it from the list
             setSelectedAttractions([...selectedAttractions.filter(a => a.attractionId != attr.attractionId)])
             setAttrsList([...attrsList.filter(a => a.attr.attractionId != attr.attractionId)])
         } else {
+            //attraction has not been selected, add it from the list
             setSelectedAttractions([...selectedAttractions, attr])
         }
     }
@@ -116,28 +119,27 @@ function SelectAttr() {
         }
     }
 
-    const setTimes = (attr, val) => {
-        var isFound = attrsList.find(s => s.attr.attractionId == attr.attractionId) != undefined
-
-        if(isFound == false && val != ""){
-            //not in the list
+    const setTimes = (attr, useType, num) => {
+        console.log(useType)
+        if(useType != 0){
             var item = {
                 attr: attr,
-                num: val
-            }
-             setAttrsList([...attrsList, item])
-
-        }
-        else if(isFound == true && val != ""){
-            var item = {
-                attr: attr,
-                num: val
+                useType: useType,
+                num: num
             }
 
-            setAttrsList([...attrsList.filter(a => a.attr != attr), item])
+            var isFound = attrsList.find(item => item.attr.attractionId == attr.attractionId) == undefined
+            if(isFound){
+                //Add to list
+                setAttrsList([...attrsList, item])
+            }else{
+                //Update list
+                setAttrsList([...attrsList.filter(item => item.attr.attractionId != attr.attractionId), item])
+            }
         }
     }
 
+    console.log(attrsList)
     
     return (
         <>
@@ -181,19 +183,22 @@ function SelectAttr() {
 
             {selectedAttractions.length != 0 ?
 
-                <div style={{ backgroundColor: "#71c7f1ff", padding: "5px" }}>
+                <div className="more-details">
                     <h3>Fill in details below</h3>
                     {
                         selectedAttractions.map((a) => {
                             var item = attrsList.find(i => i.attr.attractionId == a.attractionId)
                             return <div >
                                 <p>{a.attractionName}</p>
-                                <label>Number of times:</label>
-                                <select value={item != undefined? item.num: ""} onChange={(e) => setTimes(a, e.target.value)} required>
-                                    <option value={""}>Select number of times</option>
-                                    <option value={"1"}>Try out once</option>
-                                    <option value={"2"}>Multiple times</option>
+                                 <label>Type of use for attraction expereince:</label>
+                                <select value={item != undefined ? item.useType : 0} onChange={(e) => setTimes(a, e.target.value, undefined)}>
+                                    <option value={0}>How many times will you expereince this attraction</option>
+                                    <option value={1}>Limited throughout the trip</option>
+                                    <option value={2}>Every day of the trip</option>
                                 </select>
+
+                                <label>Specify the number of times it will be experienced:</label>
+                                <input type="number" min={0} value={item != undefined ? item.num: ""} onChange={(e) => setTimes(a, item.useType, e.target.value)}></input>
 
                             </div>
                         })

@@ -24,4 +24,8 @@ public partial class User
     public int CurrencyId { get; set; }
 
     
+
+    
+
+    
 }

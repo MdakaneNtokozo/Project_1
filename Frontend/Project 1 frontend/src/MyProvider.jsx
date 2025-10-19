@@ -9,8 +9,8 @@ export function MyProvider({ children }) {
     const [token, setToken] = useState(""); 
     const [user, setUser] = useState("");
     const [selectedDestination, setSelectedDestination] = useState(null)
-    const [startDate, setStartDate] = useState("")
-    const [endDate, setEndDate] = useState("")
+    const [startDate, setStartDate] = useState(null)
+    const [endDate, setEndDate] = useState(null)
     const [selectedSpenderType, setSelectedSpenderType] = useState("")
     const [selectedBuddies, setSelectedBuddies] = useState([])
     const [selectedTransportation, setSelectedTransportations] = useState([])

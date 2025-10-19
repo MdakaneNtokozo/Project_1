@@ -7,6 +7,7 @@ import { Rating } from "react-simple-star-rating"
 
 function Home() {
     const [plans, setPlans] = useState([])
+    const [info, setInfo] = useState([])
     const [top3Destinations, setTop3Destinations] = useState([])
     const { role, user, api, token, setCurrency } = useContext(MyContext)
     const navigate = useNavigate()
@@ -41,12 +42,28 @@ function Home() {
             setCurrency(await res.json())
         })
 
+        //Info
+        api_call = api + "Destinations/getPlanInfo/" + user.userId
+        fetch(api_call, {
+            method: "GET",
+            headers: {
+                "Authorization": "Bearer " + token,
+                "Content-Type": "application/json"
+            },
+        }).then(async res => {
+            setInfo(await res.json())
+            console.log(await res.json())
+        })
+
+
 
     }, [])
 
     const viewPlan = (idx) => {
         console.log(idx)
     }
+
+    console.log(info)
 
     return (
         <>
@@ -63,9 +80,9 @@ function Home() {
                             <div className="home-no-plans">
                                 <h3>No upcoming vacations planned</h3>
                             </div> :
-                            <div>
+                            <div className="home-plans">
                                 {plans.map((plan, idx) => {
-                                    return <div key={idx} onClick={() => viewPlan(idx)} className="home-plans"><p>{plan}</p><p>3 days left</p></div>
+                                    return <div key={idx} onClick={() => viewPlan(idx)}><p>Vacation plan for ...</p><p>3 days left</p></div>
                                 })}
                             </div>
                         }

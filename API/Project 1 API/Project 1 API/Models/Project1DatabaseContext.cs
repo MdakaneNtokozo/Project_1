@@ -24,6 +24,8 @@ public partial class Project1DatabaseContext : DbContext
 
     public virtual DbSet<Country> Countries { get; set; }
 
+    public virtual DbSet<CreatedPlan> CreatedPlans { get; set; }
+
     public virtual DbSet<Currency> Currencies { get; set; }
 
     public virtual DbSet<Destination> Destinations { get; set; }
@@ -34,13 +36,25 @@ public partial class Project1DatabaseContext : DbContext
 
     public virtual DbSet<FoodSpotType> FoodSpotTypes { get; set; }
 
+    public virtual DbSet<SelectedAccommodation> SelectedAccommodations { get; set; }
+
+    public virtual DbSet<SelectedAttraction> SelectedAttractions { get; set; }
+
+    public virtual DbSet<SelectedFoodSpot> SelectedFoodSpots { get; set; }
+
+    public virtual DbSet<SelectedTransportation> SelectedTransportations { get; set; }
+
     public virtual DbSet<SpenderType> SpenderTypes { get; set; }
 
     public virtual DbSet<Transportation> Transportations { get; set; }
 
     public virtual DbSet<TransportationType> TransportationTypes { get; set; }
 
+    public virtual DbSet<TravelBuddy> TravelBuddies { get; set; }
+
     public virtual DbSet<User> Users { get; set; }
+
+    public virtual DbSet<Vacation> Vacations { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
@@ -164,6 +178,36 @@ public partial class Project1DatabaseContext : DbContext
                 .IsFixedLength()
                 .HasColumnName("country_name");
             entity.Property(e => e.CurrencyId).HasColumnName("currency_id");
+
+            
+        });
+
+        modelBuilder.Entity<CreatedPlan>(entity =>
+        {
+            entity.HasKey(e => new { e.VacationId, e.UserId })
+                .HasName("PRIMARY")
+                .HasAnnotation("MySql:IndexPrefixLength", new[] { 0, 0 });
+
+            entity.ToTable("created_plan");
+
+            entity.HasIndex(e => e.SpenderTypeId, "spender_type_id");
+
+            entity.HasIndex(e => e.UserId, "user_id");
+
+            entity.Property(e => e.VacationId).HasColumnName("vacation_id");
+            entity.Property(e => e.UserId).HasColumnName("user_id");
+            entity.Property(e => e.PlanBudget).HasColumnName("plan_budget");
+            entity.Property(e => e.PlanCreatedDate)
+                .HasColumnType("datetime")
+                .HasColumnName("plan_created_date");
+            entity.Property(e => e.PlanModifiedDate)
+                .HasColumnType("datetime")
+                .HasColumnName("plan_modified_date");
+            entity.Property(e => e.SpenderTypeId).HasColumnName("spender_type_id");
+
+            
+
+            
 
             
         });
@@ -292,6 +336,86 @@ public partial class Project1DatabaseContext : DbContext
                 .HasColumnName("food_spot_type_name");
         });
 
+        modelBuilder.Entity<SelectedAccommodation>(entity =>
+        {
+            entity.HasKey(e => new { e.AccommodationId, e.VacationId })
+                .HasName("PRIMARY")
+                .HasAnnotation("MySql:IndexPrefixLength", new[] { 0, 0 });
+
+            entity.ToTable("selected_accommodation");
+
+            entity.HasIndex(e => e.VacationId, "vacation_id");
+
+            entity.Property(e => e.AccommodationId).HasColumnName("accommodation_id");
+            entity.Property(e => e.VacationId).HasColumnName("vacation_id");
+            entity.Property(e => e.AccommodationBudget).HasColumnName("accommodation_budget");
+            entity.Property(e => e.NumOfDays).HasColumnName("num_of_days");
+
+            
+
+            
+        });
+
+        modelBuilder.Entity<SelectedAttraction>(entity =>
+        {
+            entity.HasKey(e => new { e.AttractionId, e.VacationId })
+                .HasName("PRIMARY")
+                .HasAnnotation("MySql:IndexPrefixLength", new[] { 0, 0 });
+
+            entity.ToTable("selected_attractions");
+
+            entity.HasIndex(e => e.VacationId, "vacation_id");
+
+            entity.Property(e => e.AttractionId).HasColumnName("attraction_id");
+            entity.Property(e => e.VacationId).HasColumnName("vacation_id");
+            entity.Property(e => e.AttractionBudget).HasColumnName("attraction_budget");
+            entity.Property(e => e.NumOfTimes).HasColumnName("Num_of_times");
+
+            
+
+            
+        });
+
+        modelBuilder.Entity<SelectedFoodSpot>(entity =>
+        {
+            entity.HasKey(e => new { e.FoodSpotIdId, e.VacationId })
+                .HasName("PRIMARY")
+                .HasAnnotation("MySql:IndexPrefixLength", new[] { 0, 0 });
+
+            entity.ToTable("selected_food_spot");
+
+            entity.HasIndex(e => e.VacationId, "vacation_id");
+
+            entity.Property(e => e.FoodSpotIdId).HasColumnName("food_spot_id_id");
+            entity.Property(e => e.VacationId).HasColumnName("vacation_id");
+            entity.Property(e => e.FoodSpotBudget).HasColumnName("food_spot_budget");
+            entity.Property(e => e.NumOfTimes).HasColumnName("Num_of_times");
+
+            
+
+            
+        });
+
+        modelBuilder.Entity<SelectedTransportation>(entity =>
+        {
+            entity.HasKey(e => new { e.TransportationId, e.VacationId })
+                .HasName("PRIMARY")
+                .HasAnnotation("MySql:IndexPrefixLength", new[] { 0, 0 });
+
+            entity.ToTable("selected_transportation");
+
+            entity.HasIndex(e => e.VacationId, "vacation_id");
+
+            entity.Property(e => e.TransportationId).HasColumnName("transportation_id");
+            entity.Property(e => e.VacationId).HasColumnName("vacation_id");
+            entity.Property(e => e.NumOfTimes).HasColumnName("Num_of_times");
+            entity.Property(e => e.TransportationBudget).HasColumnName("transportation_budget");
+
+            
+
+            
+        });
+
         modelBuilder.Entity<SpenderType>(entity =>
         {
             entity.HasKey(e => e.SpenderTypeId).HasName("PRIMARY");
@@ -356,6 +480,28 @@ public partial class Project1DatabaseContext : DbContext
                 .HasColumnName("transportation_type_name");
         });
 
+        modelBuilder.Entity<TravelBuddy>(entity =>
+        {
+            entity.HasKey(e => new { e.VacationId, e.UserId })
+                .HasName("PRIMARY")
+                .HasAnnotation("MySql:IndexPrefixLength", new[] { 0, 0 });
+
+            entity.ToTable("travel_buddy");
+
+            entity.HasIndex(e => e.UserId, "user_id");
+
+            entity.Property(e => e.VacationId).HasColumnName("vacation_id");
+            entity.Property(e => e.UserId).HasColumnName("user_id");
+            entity.Property(e => e.ViewedPlan)
+                .HasDefaultValueSql("b'0'")
+                .HasColumnType("bit(1)")
+                .HasColumnName("viewed_plan");
+
+            
+
+            
+        });
+
         modelBuilder.Entity<User>(entity =>
         {
             entity.HasKey(e => e.UserId).HasName("PRIMARY");
@@ -395,6 +541,23 @@ public partial class Project1DatabaseContext : DbContext
                 .HasColumnName("user_surname");
 
             
+        });
+
+        modelBuilder.Entity<Vacation>(entity =>
+        {
+            entity.HasKey(e => e.VacationId).HasName("PRIMARY");
+
+            entity.ToTable("vacation");
+
+            entity.Property(e => e.VacationId)
+                .ValueGeneratedNever()
+                .HasColumnName("vacation_id");
+            entity.Property(e => e.VacationEndDate)
+                .HasColumnType("datetime")
+                .HasColumnName("vacation_end_date");
+            entity.Property(e => e.VacationStartDate)
+                .HasColumnType("datetime")
+                .HasColumnName("vacation_start_date");
         });
 
         OnModelCreatingPartial(modelBuilder);

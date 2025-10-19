@@ -26,4 +26,6 @@ public partial class Attraction
     public string? AttractionImage { get; set; }
 
     
+
+    
 }

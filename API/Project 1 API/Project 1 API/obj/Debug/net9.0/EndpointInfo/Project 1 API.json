@@ -414,31 +414,13 @@
         "tags": [
           "Destinations"
         ],
-        "parameters": [
-          {
-            "name": "start",
-            "in": "query",
-            "schema": {
-              "type": "string",
-              "format": "date-time"
-            }
-          },
-          {
-            "name": "end",
-            "in": "query",
-            "schema": {
-              "type": "string",
-              "format": "date-time"
-            }
-          }
-        ],
         "requestBody": {
           "content": {
             "application/json": {
               "schema": {
                 "type": "array",
                 "items": {
-                  "$ref": "#/components/schemas/AccommNum"
+                  "$ref": "#/components/schemas/AccommDates"
                 }
               }
             },
@@ -446,7 +428,7 @@
               "schema": {
                 "type": "array",
                 "items": {
-                  "$ref": "#/components/schemas/AccommNum"
+                  "$ref": "#/components/schemas/AccommDates"
                 }
               }
             },
@@ -454,7 +436,7 @@
               "schema": {
                 "type": "array",
                 "items": {
-                  "$ref": "#/components/schemas/AccommNum"
+                  "$ref": "#/components/schemas/AccommDates"
                 }
               }
             }
@@ -554,7 +536,7 @@
               "schema": {
                 "type": "array",
                 "items": {
-                  "$ref": "#/components/schemas/Attraction"
+                  "$ref": "#/components/schemas/AttrNum"
                 }
               }
             },
@@ -562,7 +544,7 @@
               "schema": {
                 "type": "array",
                 "items": {
-                  "$ref": "#/components/schemas/Attraction"
+                  "$ref": "#/components/schemas/AttrNum"
                 }
               }
             },
@@ -570,7 +552,7 @@
               "schema": {
                 "type": "array",
                 "items": {
-                  "$ref": "#/components/schemas/Attraction"
+                  "$ref": "#/components/schemas/AttrNum"
                 }
               }
             }
@@ -583,39 +565,94 @@
         }
       }
     },
-    "/api/Destinations/getObject": {
+    "/api/Destinations/calVacayBudget": {
       "post": {
         "tags": [
           "Destinations"
+        ],
+        "parameters": [
+          {
+            "name": "start",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "end",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          }
         ],
         "requestBody": {
           "content": {
             "application/json": {
               "schema": {
-                "type": "array",
-                "items": {
-                  "$ref": "#/components/schemas/TransNum"
-                }
+                "$ref": "#/components/schemas/VacayLists"
               }
             },
             "text/json": {
               "schema": {
-                "type": "array",
-                "items": {
-                  "$ref": "#/components/schemas/TransNum"
-                }
+                "$ref": "#/components/schemas/VacayLists"
               }
             },
             "application/*+json": {
               "schema": {
-                "type": "array",
-                "items": {
-                  "$ref": "#/components/schemas/TransNum"
-                }
+                "$ref": "#/components/schemas/VacayLists"
               }
             }
           }
         },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Destinations/getVacayPlans/{userId}": {
+      "get": {
+        "tags": [
+          "Destinations"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Destinations/getPlanInfo/{userId}": {
+      "get": {
+        "tags": [
+          "Destinations"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "OK"
@@ -755,15 +792,19 @@
   },
   "components": {
     "schemas": {
-      "AccommNum": {
+      "AccommDates": {
         "type": "object",
         "properties": {
           "accomm": {
             "$ref": "#/components/schemas/Accommodation"
           },
-          "num": {
-            "type": "integer",
-            "format": "int32"
+          "dates": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -818,6 +859,23 @@
           "accommodationImage": {
             "type": "string",
             "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "AttrNum": {
+        "type": "object",
+        "properties": {
+          "attr": {
+            "$ref": "#/components/schemas/Attraction"
+          },
+          "useType": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "num": {
+            "type": "integer",
+            "format": "int32"
           }
         },
         "additionalProperties": false
@@ -914,11 +972,33 @@
         },
         "additionalProperties": false
       },
+      "SpenderType": {
+        "type": "object",
+        "properties": {
+          "spenderTypeId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "spenderTypeName": {
+            "type": "string",
+            "nullable": true
+          },
+          "spenderTypeLevel": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
       "SpotNum": {
         "type": "object",
         "properties": {
           "spot": {
             "$ref": "#/components/schemas/FoodSpot"
+          },
+          "useType": {
+            "type": "integer",
+            "format": "int32"
           },
           "num": {
             "type": "integer",
@@ -932,6 +1012,10 @@
         "properties": {
           "trans": {
             "$ref": "#/components/schemas/Transportation"
+          },
+          "useType": {
+            "type": "integer",
+            "format": "int32"
           },
           "num": {
             "type": "integer",
@@ -1020,6 +1104,53 @@
           "currencyId": {
             "type": "integer",
             "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "VacayLists": {
+        "type": "object",
+        "properties": {
+          "user": {
+            "$ref": "#/components/schemas/User"
+          },
+          "type": {
+            "$ref": "#/components/schemas/SpenderType"
+          },
+          "travelBuddies": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/User"
+            },
+            "nullable": true
+          },
+          "transSelected": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TransNum"
+            },
+            "nullable": true
+          },
+          "accommSelected": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AccommDates"
+            },
+            "nullable": true
+          },
+          "spotsSelected": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SpotNum"
+            },
+            "nullable": true
+          },
+          "attrSelected": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AttrNum"
+            },
+            "nullable": true
           }
         },
         "additionalProperties": false

@@ -1,8 +1,9 @@
 import { useContext, useEffect, useState } from "react"
-import { MyContext } from "../MyProvider"
+import { MyContext } from "../../MyProvider"
 import { Rating } from "react-simple-star-rating"
 import { BiCheckCircle } from "react-icons/bi"
 import { useNavigate } from "react-router-dom"
+import DatePicker from "react-multi-date-picker"
 
 function SelectAccomm() {
 
@@ -76,7 +77,8 @@ function SelectAccomm() {
     }
 
     const formatDate = (date) => {
-        if (date != "") {
+        var date = new Date(date)
+        if (date != undefined) {
             const year = date.getFullYear()
             const month = date.getMonth() + 1
             const day = date.getDate()
@@ -85,15 +87,28 @@ function SelectAccomm() {
         }
     }
 
+    var sendList = []
+    accommList.forEach(i => {
+        var start = new Date(i.dates[0])
+        var end = new Date(i.dates[1])
+
+        var item = {
+            accomm: i.accomm,
+            dates: [start, end]
+        }
+
+        sendList.push(item)
+    });
+
     const next = () => {
-        var api_call = api + "Destinations/getAccomsTotal?start=" + formatDate(startDate) + "&end=" + formatDate(endDate)
+        var api_call = api + "Destinations/getAccomsTotal"
         fetch(api_call, {
             method: "POST",
             headers: {
                 "Authorization": "Bearer " + token,
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify(accommList)
+            body: JSON.stringify(sendList)
         }).then(async res => {
             setAccommTotal(await res.json())
             navigate('/addVacayPlan/selectFoodSpot')
@@ -107,10 +122,13 @@ function SelectAccomm() {
 
     const addTheSelectedAccommodation = (accomm) => {
         const isSelected = selectedAccommodations.find(ac => ac.accommodationId == accomm.accommodationId) != undefined
+
         if (isSelected) {
+            //accommodation has been selected, remove it from the list
             setSelectedAccommodations([...selectedAccommodations.filter(a => a.accommodationId != accomm.accommodationId)])
             setAccommList([...accommList.filter(a => a.accomm.accommodationId != accomm.accommodationId)])
         } else {
+            //accommodation has not been selected, add it from the list
             setSelectedAccommodations([...selectedAccommodations, accomm])
         }
     }
@@ -127,25 +145,28 @@ function SelectAccomm() {
         }
     }
 
-    const setDays = (accomm, val) => {
-        var isFound = accommList.find(i => i.accomm.accommodationId == accomm.accommodationId) != undefined
+    const setDates = (a, dates) => {
+        if (dates.length == 2) {
 
-        if(isFound == false && val != ""){
-            //not in the list
-            var item = {
-                accomm: accomm,
-                num: val
+            var isFound = accommList.find(i => i.accomm.accommodationId == a.accommodationId) != undefined
+            if (isFound == false) {
+                //not in the list
+                var item = {
+                    accomm: a,
+                    dates: dates
+                }
+                setAccommList([...accommList, item])
+
             }
-             setAccommList([...accommList, item])
+            else if (isFound == true) {
+                var item = {
+                    accomm: a,
+                    dates: dates
+                }
 
-        }
-        else if(isFound == true && val != ""){
-            var item = {
-                accomm: accomm,
-                num: val
+                setAccommList([...accommList.filter(i => i.accomm != a), item])
             }
 
-            setAccommList([...accommList.filter(i => i.accomm != accomm), item])
         }
     }
 
@@ -156,11 +177,11 @@ function SelectAccomm() {
 
                 <div className="cards-section">
                     {accommodations.length.length != 0 ?
-                        accommodations.map(a => {
+                        accommodations.map((a, idx) => {
 
                             var isFound = suggestedAccommodations.find(ac => ac.accommodationId == a.accommodationId) != undefined
 
-                            return <div className={determineClassName(a)} onClick={() => addTheSelectedAccommodation(a)}>
+                            return <div key={idx} className={determineClassName(a)} onClick={() => addTheSelectedAccommodation(a)}>
                                 <div className="card-img">
                                     <img src={a.accommodationImage}></img>
                                     <div className="card-rating">
@@ -192,17 +213,45 @@ function SelectAccomm() {
 
             {selectedAccommodations.length != 0 ?
 
-                <div style={{ backgroundColor: "#71c7f1ff", padding: "5px" }}>
+                <div className="more-details">
                     <h3>Fill in details below</h3>
                     {
-                        selectedAccommodations.map((a) => {
+                        selectedAccommodations.map((a, idx) => {
                             var item = accommList.find(i => i.accomm.accommodationId == a.accommodationId)
-                            return <div >
+
+                            return <div key={idx}>
                                 <p>{a.accommodationName}</p>
-                                <label>Number of days:</label>
-                                <input placeholder="select number of stays in accommodation" type="number" min={0} value={item != undefined? item.num: ""} onChange={(e) => setDays(a, e.target.value)}></input>
+                                <label>Select days for accommodation:</label>
+                                <DatePicker mode="range" value={item != undefined ? [item.dates[0], item.dates[1]] : undefined} range onChange={(dates) => setDates(a, dates)} style={{ width: "100vh" }} minDate={startDate} maxDate={endDate}
+                                    mapDays={({ date }) => {
+                                        var props = {}
+
+                                        accommList.map((i) => {
+                                            if(i != item){
+                                                var d = formatDate(date)
+                                                var start = formatDate(i.dates[0])
+                                                var end = formatDate(i.dates[1])
+                                                var dateNum = new Date(d)
+                                                var startNum = new Date(start)
+                                                var endNum = new Date(end)
+
+                                                if(dateNum >= startNum && dateNum <= endNum){
+                                                    props.style = {
+                                                        backgroundColor: "#71c7f1ff"
+                                                    }
+                                                    props.disabled = true
+                                                }
+                                            }
+                                        })
+
+                                        return props
+                                    }}
+
+                                    
+                                ></DatePicker><br />
                             </div>
                         })
+
                     }
 
                 </div>
