@@ -4,6 +4,7 @@ import { Rating } from "react-simple-star-rating"
 import { BiCheckCircle } from "react-icons/bi"
 import { useNavigate } from "react-router-dom"
 import DatePicker from "react-multi-date-picker"
+import Loading from "../../Loading"
 
 function SelectAccomm() {
 
@@ -73,7 +74,7 @@ function SelectAccomm() {
     }, [])
 
     while (isLoading) {
-        return <p>Loading</p>
+        return <Loading />
     }
 
     const formatDate = (date) => {
@@ -101,18 +102,24 @@ function SelectAccomm() {
     });
 
     const next = () => {
-        var api_call = api + "Destinations/getAccomsTotal"
-        fetch(api_call, {
-            method: "POST",
-            headers: {
-                "Authorization": "Bearer " + token,
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(sendList)
-        }).then(async res => {
-            setAccommTotal(await res.json())
-            navigate('/addVacayPlan/selectFoodSpot')
-        })
+        if (selectedAccommodations.length != accommList.length) {
+            alert("make sure that you filled in the details for the selected accommodations")
+        } else {
+
+            var api_call = api + "Destinations/getAccomsTotal"
+            fetch(api_call, {
+                method: "POST",
+                headers: {
+                    "Authorization": "Bearer " + token,
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(sendList)
+            }).then(async res => {
+                setAccommTotal(await res.json())
+                navigate('/addVacayPlan/selectFoodSpot')
+            })
+
+        }
 
     }
 
@@ -227,7 +234,7 @@ function SelectAccomm() {
                                         var props = {}
 
                                         accommList.map((i) => {
-                                            if(i != item){
+                                            if (i != item) {
                                                 var d = formatDate(date)
                                                 var start = formatDate(i.dates[0])
                                                 var end = formatDate(i.dates[1])
@@ -235,7 +242,7 @@ function SelectAccomm() {
                                                 var startNum = new Date(start)
                                                 var endNum = new Date(end)
 
-                                                if(dateNum >= startNum && dateNum <= endNum){
+                                                if (dateNum >= startNum && dateNum <= endNum) {
                                                     props.style = {
                                                         backgroundColor: "#71c7f1ff"
                                                     }
@@ -247,8 +254,10 @@ function SelectAccomm() {
                                         return props
                                     }}
 
-                                    
+
                                 ></DatePicker><br />
+                                <p className="error-msg" id={"a" + a.accommodationId} style={{ margin: "0px", marginBottom: "8px" }}></p>
+
                             </div>
                         })
 

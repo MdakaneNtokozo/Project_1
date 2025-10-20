@@ -154,9 +154,7 @@ public partial class Project1DatabaseContext : DbContext
                 .HasMaxLength(100)
                 .IsFixedLength()
                 .HasColumnName("attraction_rating");
-            entity.Property(e => e.AttractionTimeLimited)
-                .HasColumnType("bit(1)")
-                .HasColumnName("attraction_time_limited");
+            entity.Property(e => e.AttractionTimeLimited).HasColumnName("attraction_time_limited");
             entity.Property(e => e.DestinationId).HasColumnName("destination_id");
 
             
@@ -370,6 +368,7 @@ public partial class Project1DatabaseContext : DbContext
             entity.Property(e => e.VacationId).HasColumnName("vacation_id");
             entity.Property(e => e.AttractionBudget).HasColumnName("attraction_budget");
             entity.Property(e => e.NumOfTimes).HasColumnName("Num_of_times");
+            entity.Property(e => e.SelectedExperienceType).HasColumnName("selected_experience_type");
 
             
 
@@ -390,6 +389,7 @@ public partial class Project1DatabaseContext : DbContext
             entity.Property(e => e.VacationId).HasColumnName("vacation_id");
             entity.Property(e => e.FoodSpotBudget).HasColumnName("food_spot_budget");
             entity.Property(e => e.NumOfTimes).HasColumnName("Num_of_times");
+            entity.Property(e => e.SelectedExperienceType).HasColumnName("selected_experience_type");
 
             
 
@@ -409,6 +409,7 @@ public partial class Project1DatabaseContext : DbContext
             entity.Property(e => e.TransportationId).HasColumnName("transportation_id");
             entity.Property(e => e.VacationId).HasColumnName("vacation_id");
             entity.Property(e => e.NumOfTimes).HasColumnName("Num_of_times");
+            entity.Property(e => e.SelectedUseType).HasColumnName("selected_use_type");
             entity.Property(e => e.TransportationBudget).HasColumnName("transportation_budget");
 
             
@@ -492,10 +493,7 @@ public partial class Project1DatabaseContext : DbContext
 
             entity.Property(e => e.VacationId).HasColumnName("vacation_id");
             entity.Property(e => e.UserId).HasColumnName("user_id");
-            entity.Property(e => e.ViewedPlan)
-                .HasDefaultValueSql("b'0'")
-                .HasColumnType("bit(1)")
-                .HasColumnName("viewed_plan");
+            entity.Property(e => e.ViewedPlan).HasColumnName("viewed_plan");
 
             
 
@@ -529,9 +527,7 @@ public partial class Project1DatabaseContext : DbContext
                 .HasMaxLength(100)
                 .IsFixedLength()
                 .HasColumnName("user_name");
-            entity.Property(e => e.UserNotificationOn)
-                .HasColumnType("bit(1)")
-                .HasColumnName("user_notification_on");
+            entity.Property(e => e.UserNotificationOn).HasColumnName("user_notification_on");
             entity.Property(e => e.UserPassword)
                 .HasColumnType("text")
                 .HasColumnName("user_password");

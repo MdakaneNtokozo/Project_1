@@ -13,7 +13,6 @@ function SelectDest() {
         setSelectedDestination,
         setExchangeRate
     } = useContext(MyContext)
-
     const navigate = useNavigate()
 
     useEffect(() => {

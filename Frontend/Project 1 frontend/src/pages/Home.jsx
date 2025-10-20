@@ -4,6 +4,7 @@ import Header from "../Header"
 import { useNavigate } from "react-router-dom"
 import { MyContext } from "../MyProvider"
 import { Rating } from "react-simple-star-rating"
+import Loading from "../Loading"
 
 function Home() {
     const [plans, setPlans] = useState([])
@@ -11,6 +12,8 @@ function Home() {
     const [top3Destinations, setTop3Destinations] = useState([])
     const { role, user, api, token, setCurrency } = useContext(MyContext)
     const navigate = useNavigate()
+    const [isLoading1, setIsLoading1] = useState(true)
+    const [isLoading2, setIsLoading2] = useState(true)
 
     useEffect(() => {
         // //Top 3 destinations
@@ -22,10 +25,10 @@ function Home() {
                 "Content-Type": "application/json"
             },
         }).then(async res => {
-            if(res.status == 401){
+            if (res.status == 401) {
                 console.log("unauthorized")
                 navigate('/')
-            }else{
+            } else {
                 setTop3Destinations(await res.json())
             }
         })
@@ -43,7 +46,7 @@ function Home() {
         })
 
         //Info
-        api_call = api + "Destinations/getPlanInfo/" + user.userId
+        api_call = api + "VacayPlansControllerr/getPlanInfo/" + user.userId
         fetch(api_call, {
             method: "GET",
             headers: {
@@ -52,18 +55,32 @@ function Home() {
             },
         }).then(async res => {
             setInfo(await res.json())
-            console.log(await res.json())
+            setIsLoading1(false)
         })
 
-
+        //Plans
+        api_call = api + "VacayPlansControllerr/getVacayPlans/" + user.userId
+        fetch(api_call, {
+            method: "GET",
+            headers: {
+                "Authorization": "Bearer " + token,
+                "Content-Type": "application/json"
+            },
+        }).then(async res => {
+            setPlans(await res.json())
+            setIsLoading2(false)
+        })
 
     }, [])
 
-    const viewPlan = (idx) => {
-        console.log(idx)
+    while (isLoading1 == true || isLoading1 == true) {
+        return <Loading />
     }
 
-    console.log(info)
+    const viewPlan = (plan, planInfo) => {
+        console.log(plan)
+        navigate('/viewVacayPlan', {state:{plan: plan, planInfo: planInfo}})
+    }
 
     return (
         <>
@@ -82,7 +99,9 @@ function Home() {
                             </div> :
                             <div className="home-plans">
                                 {plans.map((plan, idx) => {
-                                    return <div key={idx} onClick={() => viewPlan(idx)}><p>Vacation plan for ...</p><p>3 days left</p></div>
+                                    var planInfo = info.find(i => i.vacationId == plan.vacationId)
+
+                                    return <div key={idx} onClick={() => viewPlan(plan, planInfo)}><p>Vacation plan for {planInfo.vacayDestName}</p><p>{planInfo.vacayDaysLeft} days left</p></div>
                                 })}
                             </div>
                         }
@@ -112,7 +131,7 @@ function Home() {
                                 <p>No top destination</p>
                             }
 
-                            
+
                         </div>
 
                     </div>

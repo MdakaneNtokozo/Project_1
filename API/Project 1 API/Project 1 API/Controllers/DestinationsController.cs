@@ -87,7 +87,6 @@ namespace Project_1_API.Controllers
             transportations.ForEach( t => {
                     t.TransportationPricePerPerson = Math.Round( t.TransportationPricePerPerson * exchangeRateVal, 2);
                 }) ;
-
             
             return Ok(transportations);
         }
@@ -227,7 +226,6 @@ namespace Project_1_API.Controllers
             return Ok(attractions);
         }
 
-
         private async Task<Double> GetExchangeRate(int destId, int currencyId)
         {
             //convert transportation prices to the user's preffered currency
@@ -282,10 +280,11 @@ namespace Project_1_API.Controllers
         {
             var total = 0.0;
             list.ForEach((t) => total += TransTotalCalculation(t, start, end));
+            total = Math.Round(total, 2);
             return Ok(total);
         }
 
-        private int daysCalculator(DateTime start, DateTime end)
+        public static int DaysCalculator(DateTime start, DateTime end)
         {
             TimeSpan dateDiff = end - start;
             var days = dateDiff.Days + 1;
@@ -304,7 +303,7 @@ namespace Project_1_API.Controllers
             }
             else if(t.useType == 2)
             {
-                var days = daysCalculator(start, end);
+                var days = DaysCalculator(start, end);
                 total += t.trans.TransportationPricePerPerson * t.num * days;
             }
 
@@ -317,13 +316,14 @@ namespace Project_1_API.Controllers
         {
             var total = 0.0;
             list.ForEach((a) => total += AccomsTotalCalculation(a));
+            total = Math.Round(total, 2);
             return Ok(total);
         }
 
         private Double AccomsTotalCalculation(AccommDates a)
         {
             var total = 0.0;
-            var days = daysCalculator(a.dates[0], a.dates[1]);
+            var days = DaysCalculator(a.dates[0], a.dates[1]);
             total = a.accomm.AccommodationPricePerPerson * days;
 
             return total;
@@ -335,6 +335,7 @@ namespace Project_1_API.Controllers
         {
             var total = 0.0;
             list.ForEach((s) => total += SpotTotalCalculation(s, start, end));
+            total = Math.Round(total, 2);
             return Ok(total);
         }
 
@@ -348,7 +349,7 @@ namespace Project_1_API.Controllers
             }
             else if (s.useType == 2)
             {
-                var days = daysCalculator(start, end);
+                var days = DaysCalculator(start, end);
                 total += s.spot.FoodSpotMaxMenuPrice * s.num * days;
             }
 
@@ -361,6 +362,7 @@ namespace Project_1_API.Controllers
         {
             var total = 0.0;
             list.ForEach((a) => total += AttrTotalCalculation(a, start, end));
+            total = Math.Round(total, 2);
             return Ok(total);
         }
 
@@ -374,7 +376,7 @@ namespace Project_1_API.Controllers
             }
             else if (a.useType == 2)
             {
-                var days = daysCalculator(start, end);
+                var days = DaysCalculator(start, end);
                 total += a.attr.AttractionEntranceFee * a.num * days;
             }
 
@@ -410,9 +412,10 @@ namespace Project_1_API.Controllers
                 var selectedTrans = new SelectedTransportation();
                 selectedTrans.TransportationId = i.trans.TransportationId;
                 selectedTrans.VacationId = vacay.VacationId;
+                selectedTrans.SelectedUseType = i.useType;
 
-                var days = daysCalculator(start, end);
-                selectedTrans.NumOfTimes = i.useType == 1 ? i.num : i.num * days;
+                var days = DaysCalculator(start, end);
+                selectedTrans.NumOfTimes = selectedTrans.SelectedUseType == 1 ? i.num : i.num * days;
 
                 var transTotal = TransTotalCalculation(i, start, end);
                 vacayTotal += transTotal;
@@ -428,7 +431,7 @@ namespace Project_1_API.Controllers
                 selectedAccom.AccommodationId = i.accomm.AccommodationId;
                 selectedAccom.VacationId = vacay.VacationId;
 
-                var days = daysCalculator(i.dates[0], i.dates[1]);
+                var days = DaysCalculator(i.dates[0], i.dates[1]);
                 selectedAccom.NumOfDays = days;
 
                 var accomTotal = AccomsTotalCalculation(i);
@@ -444,9 +447,10 @@ namespace Project_1_API.Controllers
                 var selectedSpot = new SelectedFoodSpot();
                 selectedSpot.FoodSpotIdId = i.spot.FoodSpotId;
                 selectedSpot.VacationId = vacay.VacationId;
+                selectedSpot.SelectedExperienceType = i.useType;
 
-                var days = daysCalculator(start, end);
-                selectedSpot.NumOfTimes = i.useType == 1 ? i.num : i.num * days; ;
+                var days = DaysCalculator(start, end);
+                selectedSpot.NumOfTimes = selectedSpot.SelectedExperienceType == 1 ? i.num : i.num * days; ;
 
                 var spotTotal = SpotTotalCalculation(i, start, end);
                 vacayTotal += spotTotal;
@@ -461,15 +465,27 @@ namespace Project_1_API.Controllers
                 var selectedAttr = new SelectedAttraction();
                 selectedAttr.AttractionId = i.attr.AttractionId;
                 selectedAttr.VacationId = vacay.VacationId;
+                selectedAttr.SelectedExperienceType = i.useType;
 
-                var days = daysCalculator(start, end);
-                selectedAttr.NumOfTimes = i.useType == 1 ? i.num : i.num * days;
+                var days = DaysCalculator(start, end);
+                selectedAttr.NumOfTimes = selectedAttr.SelectedExperienceType == 1 ? i.num : i.num * days;
 
                 var attrTotal = AttrTotalCalculation(i, start, end);
                 vacayTotal += attrTotal;
                 selectedAttr.AttractionBudget = attrTotal;
 
                 _context.SelectedAttractions.Add(selectedAttr);
+                _context.SaveChanges();
+            });
+
+            vcl.travelBuddies.ForEach((b) =>
+            {
+                var travelBuddy = new TravelBuddy();
+                travelBuddy.UserId = b.UserId;
+                travelBuddy.VacationId = vacay.VacationId;
+                travelBuddy.ViewedPlan = false;
+
+                _context.TravelBuddies.Add(travelBuddy);
                 _context.SaveChanges();
             });
 
@@ -489,46 +505,7 @@ namespace Project_1_API.Controllers
             return Ok("Vacay plan has been saved");
         }
 
-        [HttpGet]
-        [Route("getVacayPlans/{userId}")]
-        public async Task<Object> GetVacayPlans(int userId)
-        {
-            var createdPlans = await _context.CreatedPlans.ToListAsync();
-            createdPlans = createdPlans.FindAll(p => p.UserId == userId);
-            return Ok(createdPlans);
-        }
-
-        [HttpGet]
-        [Route("getPlanInfo/{userId}")]
-        public Object GetPlanInfo(int userId)
-        {
-            var destInfo = new List<VacayInfo>();
-
-            var createdPlans = _context.CreatedPlans.ToList();
-            createdPlans = createdPlans.FindAll(p => p.UserId == userId);
-            var selectedTrans = _context.SelectedTransportations.ToList();
-            var destinations = _context.Destinations.ToList();
-
-            createdPlans.ForEach(c =>
-            {
-                var selecetdTrans = selectedTrans.Find(t => t.VacationId == c.VacationId);
-                var transportations = _context.Transportations.ToList();
-                var trans = transportations.Find(tr => tr.TransportationId == selecetdTrans.TransportationId);
-                var dest = destinations.Find(d => d.DestinationId == trans.DestinationId);
-                var vacations = _context.Vacations.ToList();
-                var vac = vacations.Find(v => v.VacationId == c.VacationId);
-
-                var info = new VacayInfo();
-                info.vacationId = vac.VacationId;
-                info.vacayDestName = dest.DestinationName;
-                int daysLeft = daysCalculator(DateTime.Now, vac.VacationStartDate);
-                info.vacayDaysLeft = daysLeft;
-
-                destInfo.Add(info);
-            });
-
-            return Ok(destInfo);
-        }
+        
 
     }
 }

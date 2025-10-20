@@ -614,52 +614,6 @@
         }
       }
     },
-    "/api/Destinations/getVacayPlans/{userId}": {
-      "get": {
-        "tags": [
-          "Destinations"
-        ],
-        "parameters": [
-          {
-            "name": "userId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
-    "/api/Destinations/getPlanInfo/{userId}": {
-      "get": {
-        "tags": [
-          "Destinations"
-        ],
-        "parameters": [
-          {
-            "name": "userId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
     "/api/LoginSignup/signUp": {
       "post": {
         "tags": [
@@ -776,6 +730,204 @@
             "name": "id",
             "in": "path",
             "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/VacayPlansControllerr/getVacayPlans/{userId}": {
+      "get": {
+        "tags": [
+          "VacayPlansControllerr"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/VacayPlansControllerr/getPlanInfo/{userId}": {
+      "get": {
+        "tags": [
+          "VacayPlansControllerr"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/VacayPlansControllerr/getTransportations": {
+      "get": {
+        "tags": [
+          "VacayPlansControllerr"
+        ],
+        "parameters": [
+          {
+            "name": "vacationId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "destId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "currencyId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/VacayPlansControllerr/getAccommodations": {
+      "get": {
+        "tags": [
+          "VacayPlansControllerr"
+        ],
+        "parameters": [
+          {
+            "name": "vacationId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "destId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "currencyId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/VacayPlansControllerr/getFoodSpots": {
+      "get": {
+        "tags": [
+          "VacayPlansControllerr"
+        ],
+        "parameters": [
+          {
+            "name": "vacationId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "destId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "currencyId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/VacayPlansControllerr/getAttractions": {
+      "get": {
+        "tags": [
+          "VacayPlansControllerr"
+        ],
+        "parameters": [
+          {
+            "name": "vacationId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "destId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "currencyId",
+            "in": "query",
             "schema": {
               "type": "integer",
               "format": "int32"
@@ -908,8 +1060,7 @@
             "format": "double"
           },
           "attractionTimeLimited": {
-            "type": "integer",
-            "format": "int64"
+            "type": "boolean"
           },
           "attractionDescription": {
             "type": "string",
@@ -1098,8 +1249,7 @@
             "format": "date-time"
           },
           "userNotificationOn": {
-            "type": "integer",
-            "format": "int64"
+            "type": "boolean"
           },
           "currencyId": {
             "type": "integer",

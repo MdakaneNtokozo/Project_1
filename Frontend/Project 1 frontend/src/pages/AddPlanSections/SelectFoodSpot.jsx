@@ -3,6 +3,7 @@ import { MyContext } from "../../MyProvider"
 import { Rating } from "react-simple-star-rating"
 import { BiCheckCircle } from "react-icons/bi"
 import { useNavigate } from "react-router-dom"
+import Loading from "../../Loading"
 
 function SelectFoodSpot() {
     const [foodSpots, setFoodSpots] = useState([])
@@ -20,7 +21,8 @@ function SelectFoodSpot() {
         selectedFoodSpots,
         setSelectedFoodSpots,
         spotsList, setSpotsList,
-        spotsTotal, setSpotsTotal
+        spotsTotal, setSpotsTotal,
+        transList
     } = useContext(MyContext)
     const navigate = useNavigate()
     const [isLoading, setIsLoading] = useState(true);
@@ -72,7 +74,7 @@ function SelectFoodSpot() {
     }, [])
 
     while (isLoading) {
-        return <p>Loading</p>
+        return <Loading />
     }
 
     const formatDate = (date) => {
@@ -87,19 +89,39 @@ function SelectFoodSpot() {
     }
 
     const next = () => {
-        //Total food spots
-        var api_call = api + "Destinations/getFoodSpotsTotal?start=" + formatDate(startDate) + "&end=" + formatDate(endDate)
-        fetch(api_call, {
-            method: "POST",
-            headers: {
-                "Authorization": "Bearer " + token,
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(spotsList)
-        }).then(async res => {
-            setSpotsTotal(await res.json())
-            navigate('/addVacayPlan/selectAttr')
-        })
+        var inputEntered = true
+
+        if (selectedFoodSpots.length != spotsList.length) {
+            alert("make sure that you filled in the details for the selected food spots")
+        } else {
+            spotsList.forEach(i => {
+                var errorElement = document.getElementById("s" + i.spot.foodSpotId)
+                if (i.num == undefined || i.num == "") {
+                    inputEntered = false
+                    errorElement.textContent = "Please enter the number of times you'll experience " + i.spot.foodSpotName
+                } else {
+                    errorElement.textContent = ""
+                }
+            })
+
+            if (inputEntered) {
+                //Total food spots
+                var api_call = api + "Destinations/getFoodSpotsTotal?start=" + formatDate(startDate) + "&end=" + formatDate(endDate)
+                fetch(api_call, {
+                    method: "POST",
+                    headers: {
+                        "Authorization": "Bearer " + token,
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(spotsList)
+                }).then(async res => {
+                    setSpotsTotal(await res.json())
+                    navigate('/addVacayPlan/selectAttr')
+                })
+            }
+        }
+
+
     }
 
     const back = () => {
@@ -132,7 +154,7 @@ function SelectFoodSpot() {
     }
 
     const setTimes = (spot, useType, num) => {
-        if(useType != 0){
+        if (useType != 0) {
             var item = {
                 spot: spot,
                 useType: useType,
@@ -140,17 +162,15 @@ function SelectFoodSpot() {
             }
 
             var isFound = spotsList.find(item => item.spot.foodSpotId == spot.foodSpotId) == undefined
-            if(isFound){
+            if (isFound) {
                 //Add to list
                 setSpotsList([...spotsList, item])
-            }else{
+            } else {
                 //Update list
                 setSpotsList([...spotsList.filter(item => item.spot.foodSpotId != spot.foodSpotId), item])
             }
         }
     }
-
-    console.log(spotsList)
 
     return (
         <>
@@ -209,8 +229,8 @@ function SelectFoodSpot() {
                                 </select>
 
                                 <label>Specify the number of times it will be experienced:</label>
-                                <input type="number" min={0} value={item != undefined ? item.num: ""} onChange={(e) => setTimes(s, item.useType, e.target.value)}></input>
-                            
+                                <input type="number" min={0} value={item != undefined ? item.num : ""} onChange={(e) => setTimes(s, item.useType, e.target.value)}></input>
+                                <p className="error-msg" id={"s" + s.foodSpotId} style={{ margin: "0px", marginBottom: "8px" }}></p>
 
                             </div>
                         })

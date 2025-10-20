@@ -2,7 +2,9 @@ import { BrowserRouter, Route, Routes } from "react-router-dom"
 import { MyProvider } from "./MyProvider"
 import { lazy, Suspense } from "react"
 import Profile from "./pages/Profile"
+import ViewVacayPlan from "./pages/ViewVacayPlan"
 
+const Loading = lazy(() => import(  "./Loading" ))
 const AddVacayPlan = lazy(() => import(  "./pages/AddVacayPlan"))
 const SelectDest = lazy(() => import(  "./pages/AddPlanSections/SelectDest"))
 const AddDetails = lazy(() => import(  "./pages/AddPlanSections/AddDetails"))
@@ -19,7 +21,7 @@ function App() {
     <>
       <MyProvider>
         <BrowserRouter>
-          <Suspense fallback={<p className="loading">Loading</p>}>
+          <Suspense fallback={<Loading />}>
             <Routes>
               {/* 
               <Route path="/profile" element={<Profile />}></Route> */}
@@ -34,6 +36,7 @@ function App() {
                 <Route path="selectAttr" element={<SelectAttr />}></Route>
                 <Route path="preview" element={<VacayPlanPreview />}></Route>
               </Route>
+              <Route path="/viewVacayPlan" element={<ViewVacayPlan />}></Route>
             </Routes>
           </Suspense>
         </BrowserRouter>

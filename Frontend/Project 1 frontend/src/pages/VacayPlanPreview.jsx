@@ -23,7 +23,6 @@ function VacayPlanPreview() {
         attrsTotal, attrsList
     } = useContext(MyContext)
     const navigate = useNavigate()
-    const [vacayTotal, setVacayTotal] = useState()
 
     const formatDate2 = (date) => {
         var date = new Date(date)
@@ -100,6 +99,7 @@ function VacayPlanPreview() {
                     <div>
                         <p>Vaction details for {selectedDestination.destinationName}</p>
                         <p>{formatDate2(startDate)} - {formatDate2(endDate)}</p>
+                        <p>Planed by: {user.userName} {user.userSurname}</p>
                     </div>
                 </div>
 
@@ -107,58 +107,121 @@ function VacayPlanPreview() {
                 <div className="preview-lower-section">
                     <div className="preview-detail-side">
                         <p>Vacation details</p>
-                        <div className="details-format">
-                            <p>Num of travel buddies:</p>
-                            <p>{selectedBuddies.length}</p>
-                        </div>
+
+                        <p>Travel buddies:</p>
+                        {selectedBuddies.length != 0 ?
+                            <table>
+                                <tbody>
+                                    {selectedBuddies.map((b, idx) => {
+                                        return <tr key={idx}>
+                                            <td className="td1">{b.userName} {b.userSurname}</td>
+                                            <td className="td1">{b.userEmail}</td>
+                                        </tr>
+                                    })}
+                                </tbody>
+
+                            </table>
+
+                            :
+                            <p>No buddies selected</p>
+                        }
+                        <br />
+
                         <p>Transportation:</p>
                         {selectedTransportation.length != 0 ?
-                            selectedTransportation.map((t, idx) => {
-                                return <div className="details-format" key={idx}>
-                                    <p>{t.transportationName}</p>
-                                    <p>{currency.currencySymbol} {t.transportationPricePerPerson}</p>
-                                </div>
-                            })
+
+                            <table>
+                                <tbody>
+                                    {
+                                        selectedTransportation.map(t => {
+                                            let item = transList.find(i => i.trans == t)
+                                            console.log(item)
+                                            return <tr>
+                                                <td className="td1">{t.transportationName}</td>
+                                                <td className="td2">{item.num} {item.useType == "1"? "times only" : "times everday"}</td>
+                                                <td className="td3">{t.transportationPricePerPerson}</td>
+                                            </tr>
+
+                                        })
+                                    }
+                                </tbody>
+
+                            </table>
+
 
                             :
                             <p>No transportation selected</p>
                         }
+                        <br />
+
                         <p>Selected accommodation:</p>
                         {selectedAccommodations.length != 0 ?
-                            selectedAccommodations.map((a, idx) => {
-                                return <div className="details-format" key={idx}>
-                                    <p>{a.accommodationName}</p>
-                                    <p>{currency.currencySymbol} {a.accommodationPricePerPerson}</p>
-                                </div>
-                            })
+                            <table>
+                                <tbody>
+                                    {selectedAccommodations.map((a, idx) => {
+                                        return <tr key={idx}>
+                                            <td className="td1">{a.accommodationName}</td>
+                                            <td className="td2"></td>
+                                            <td className="td3"> {a.accommodationPricePerPerson}</td>
+                                        </tr>
+                                    })}
+                                </tbody>
 
+                            </table>
                             :
                             <p>No accommodation selected</p>
                         }
+                        <br />
+
                         <p>Selected food spots:</p>
                         {selectedFoodSpots.length != 0 ?
-                            selectedFoodSpots.map((f, idx) => {
-                                return <div className="details-format" key={idx}>
-                                    <p>{f.foodSpotName}</p>
-                                    <p>{currency.currencySymbol} {f.foodSpotMinMenuPrice} - {f.foodSpotMaxMenuPrice}</p>
-                                </div>
-                            })
+                            <table>
+                                <tbody>
+                                    {
+                                        selectedFoodSpots.map((f, idx) => {
+                                            var spot = spotsList.find(s => s.spot.foodSpotId == f.foodSpotId)
+
+                                            return <tr key={idx}>
+                                                <td className="td1">{f.foodSpotName}</td>
+                                                <td className="td2">{spot.num} {spot.useType == "1"? " times only" : "times everyday"}</td>
+                                                <tr className="td3">{f.foodSpotMinMenuPrice} - {f.foodSpotMaxMenuPrice}</tr>
+                                            </tr>
+                                        })
+                                    }
+                                </tbody>
+
+                            </table>
+
 
                             :
                             <p>No food spots selected</p>
                         }
+                        <br />
+
                         <p>Selected attractions:</p>
                         {selectedAttractions.length != 0 ?
-                            selectedAttractions.map((a, idx) => {
-                                return <div className="details-format" key={idx}>
-                                    <p>{a.attractionName}</p>
-                                    <p>{currency.currencySymbol} {a.attractionEntranceFee}</p>
-                                </div>
-                            })
+                            <table>
+                                <tbody>
+                                    {
+                                        selectedAttractions.map((a, idx) => {
+                                            var attr = attrsList.find(at => at.attr.attractionId == a.attractionId)
+
+                                            return <tr key={idx}>
+                                                <td className="td1">{a.attractionName}</td>
+                                                <td className="td2">{attr.num} {attr.useType == "1"? " times only" : "times everyday"}</td>
+                                                <td className="td3">{a.attractionEntranceFee}</td>
+                                            </tr>
+                                        })
+                                    }
+                                </tbody>
+
+                            </table>
+
 
                             :
                             <p>No attractions selected</p>
                         }
+                        <br />
 
                         <div style={{ display: "flex", flexDirection: "row", justifyContent: "space-between" }}>
                             <p> </p>
@@ -170,37 +233,49 @@ function VacayPlanPreview() {
                     <div className="preview-total-side">
                         <div>
                             <p>Vacation Total</p>
-                            <div className="total-format">
-                                <p>Transportation</p>
-                                <p>{currency.currencySymbol} {transTotal}</p>
-                            </div>
+                            <table>
+                                <tbody>
+                                    <tr>
+                                        <td className="td1">Transportation</td>
+                                        <td className="td2">{currency.currencySymbol}</td>
+                                        <tr className="td3">{transTotal}</tr>
+                                    </tr>
+                                    <tr>
+                                        <td className="td1">Accommodation</td>
+                                        <td className="td2">{currency.currencySymbol}</td>
+                                        <tr className="td3">{accommTotal}</tr>
+                                    </tr>
+                                    <tr>
+                                        <td className="td1">Food spot</td>
+                                        <td className="td2">{currency.currencySymbol}</td>
+                                        <tr className="td3">{spotsTotal}</tr>
+                                    </tr>
+                                    <tr>
+                                        <td className="td1">Attraction</td>
+                                        <td className="td2">{currency.currencySymbol}</td>
+                                        <tr className="td3">{attrsTotal}</tr>
+                                    </tr>
+                                </tbody>
 
-                            <div className="total-format">
-                                <p>Accommodation</p>
-                                <p>{currency.currencySymbol} {accommTotal}</p>
-                            </div>
-
-                            <div className="total-format">
-                                <p>Food spots</p>
-                                <p>{currency.currencySymbol} {spotsTotal}</p>
-                            </div>
-
-                            <div className="total-format">
-                                <p>Attractions:</p>
-                                <p>{currency.currencySymbol} {attrsTotal}</p>
-                            </div>
+                            </table>
 
                             <hr></hr>
-                            <div className="total-format">
-                                <p>Vaction budget total:</p>
-                                <p>{currency.currencySymbol} {transTotal + accommTotal + spotsTotal + attrsTotal}</p>
-                            </div>
+                            <table>
+                                <tbody>
+                                    <tr>
+                                        <td className="td1">Budget total</td>
+                                        <td className="td2">{currency.currencySymbol}</td>
+                                        <tr className="td3">{transTotal + accommTotal + spotsTotal + attrsTotal}</tr>
+                                    </tr>
+                                </tbody>
+
+                            </table>
                         </div>
 
 
                         <div style={{ display: "flex", flexDirection: "row", justifyContent: "space-between" }}>
                             <p> </p>
-                            <button type="button" onClick={() => save() }>Save</button>
+                            <button type="button" onClick={() => save()}>Save</button>
                         </div>
 
                     </div>

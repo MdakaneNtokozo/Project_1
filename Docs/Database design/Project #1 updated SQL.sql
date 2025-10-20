@@ -99,7 +99,7 @@ create table attraction(
 	attraction_rating CHAR(100) NOT NULL,
 	attraction_entrance_fee DOUBLE NOT NULL,
 	attraction_price_per_person DOUBLE NOT NULL,
-	attraction_time_limited BIT NOT NULL,
+	attraction_time_limited BOOLEAN NOT NULL,
 	attraction_description TEXT NOT NULL,
 	destination_id int NOT NULL,
 	attraction_image TEXT,
@@ -114,7 +114,7 @@ create table user(
 	user_bio CHAR(100) NOT NULL,
 	user_password TEXT NOT NULL,
 	user_created_date DATETIME NOT NULL,
-	user_notification_on BIT NOT NULL,
+	user_notification_on BOOLEAN NOT NULL,
 	currency_id INT NOT NULL,
 	FOREIGN KEY(currency_id) REFERENCES currency(currency_id)
 );
@@ -134,6 +134,7 @@ CREATE TABLE vacation(
 CREATE TABLE selected_transportation(
 	transportation_id int NOT NULL,
 	vacation_id INT NOT NULL,
+	selected_use_type INT NOT NULL,
 	Num_of_times int NOT NULL,
     transportation_budget DOUBLE NOT NULL,
 	PRIMARY KEY (transportation_id, vacation_id),
@@ -154,6 +155,7 @@ CREATE TABLE selected_accommodation(
 CREATE TABLE selected_food_spot(
 	food_spot_id_id int NOT NULL,
 	vacation_id INT NOT NULL,
+	selected_experience_type INT NOT NULL,
     Num_of_times int NOT NULL,
     food_spot_budget DOUBLE NOT NULL,
 	PRIMARY KEY (food_spot_id_id, vacation_id),
@@ -164,6 +166,7 @@ CREATE TABLE selected_food_spot(
 CREATE TABLE selected_attractions(
 	attraction_id int NOT NULL,
 	vacation_id INT NOT NULL,
+	selected_experience_type INT NOT NULL,
     Num_of_times int NOT NULL,
     attraction_budget DOUBLE NOT NULL,
 	PRIMARY KEY (attraction_id, vacation_id),
@@ -187,7 +190,7 @@ CREATE TABLE created_plan(
 CREATE TABLE travel_buddy(
 	vacation_id INT NOT NULL,
 	user_id INT NOT NULL,
-	viewed_plan BIT NOT NULL DEFAULT 0,
+	viewed_plan BOOLEAN NOT NULL DEFAULT FALSE,
 	PRIMARY KEY(vacation_id, user_id),
 	FOREIGN KEY (vacation_id) REFERENCES vacation(vacation_id),
 	FOREIGN KEY (user_id) REFERENCES user(user_id)

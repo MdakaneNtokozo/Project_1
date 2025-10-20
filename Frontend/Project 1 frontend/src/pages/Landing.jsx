@@ -13,7 +13,7 @@ function Landing() {
 
             <div className="container">
                 <div className="landing">
-                    <h1>Get to know your <span className="playwrite-de-sas-beautiful-font">vacay budget</span>, before it even starts</h1>
+                    <h1>Get to know your <span className="playwrite-de-sas-beautiful-font">vacay budget</span>, before your vacay starts</h1>
                     <button onClick={() => setPage("Login")}>Get started</button>
                 </div>
                 {page == "Login" ?

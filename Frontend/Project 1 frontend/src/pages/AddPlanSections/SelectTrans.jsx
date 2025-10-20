@@ -3,6 +3,7 @@ import { MyContext } from "../../MyProvider"
 import { Rating } from "react-simple-star-rating"
 import { BiCheckCircle } from "react-icons/bi"
 import { useNavigate } from "react-router-dom"
+import Loading from "../../Loading"
 
 function SelectTrans() {
 
@@ -78,7 +79,7 @@ function SelectTrans() {
     }, [])
 
     while (isLoading) {
-        return <p>Loading</p>
+        return <Loading />
     }
 
     const formatDate = (date) => {
@@ -94,20 +95,37 @@ function SelectTrans() {
     }
 
     const next = () => {
-        //Total transportation
-        var api_call = api + "Destinations/getTransTotal?start=" + formatDate(startDate) + "&end=" + formatDate(endDate)
-        fetch(api_call, {
-            method: "POST",
-            headers: {
-                "Authorization": "Bearer " + token,
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(transList)
-        }).then(async res => {
-            setTransTotal(await res.json())
-            navigate('/addVacayPlan/selectAccomm')
-        })
+        var inputEntered = true
 
+        if (selectedTransportation.length != transList.length) {
+            alert("make sure that you filled in the details for the selected transportation")
+        } else {
+            transList.forEach(i => {
+                var errorElement = document.getElementById("t" + i.trans.transportationId)
+                if (i.num == undefined || i.num == "") {
+                    inputEntered = false
+                    errorElement.textContent = "Please enter the number of times you'll use " + i.trans.transportationName
+                } else {
+                    errorElement.textContent = ""
+                }
+            })
+
+            if(inputEntered){
+                //Total transportation
+                var api_call = api + "Destinations/getTransTotal?start=" + formatDate(startDate) + "&end=" + formatDate(endDate)
+                fetch(api_call, {
+                    method: "POST",
+                    headers: {
+                        "Authorization": "Bearer " + token,
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(transList)
+                }).then(async res => {
+                    setTransTotal(await res.json())
+                    navigate('/addVacayPlan/selectAccomm')
+                })
+            }
+        }
     }
 
     const back = () => {
@@ -128,6 +146,8 @@ function SelectTrans() {
         }
     }
 
+    console.log(transList)
+
     const determineClassName = (t) => {
         if (selectedTransportation.length != 0) {
             if (selectedTransportation.find(trans => trans.transportationId == t.transportationId)) {
@@ -141,21 +161,21 @@ function SelectTrans() {
     }
 
     const setTimes = (trans, useType, num) => {
-        console.log(useType)
-        if(useType != 0){
+        console.log(trans)
+        if (useType != 0) {
             var item = {
                 trans: trans,
                 useType: useType,
                 num: num
             }
 
-            var isFound = transList.find(item => item.trans.transportationId == trans.transportationId) == undefined
-            if(isFound){
+            var isFound = transList.find(item => item.trans == trans) == undefined
+            if (isFound) {
                 //Add to list
                 setTransList([...transList, item])
-            }else{
+            } else {
                 //Update list
-                setTransList([...transList.filter(item => item.trans.transportationId != trans.transportationId), item])
+                setTransList([...transList.filter(item => item.trans != trans), item])
             }
         }
     }
@@ -208,7 +228,6 @@ function SelectTrans() {
                     {
                         selectedTransportation.map((t, idx) => {
                             var item = transList.find(i => i.trans.transportationId == t.transportationId)
-                            console.log(item)
 
                             return <div key={idx}>
                                 <p>{t.transportationName}</p>
@@ -220,7 +239,8 @@ function SelectTrans() {
                                 </select>
 
                                 <label>Specify the number of times it will be used:</label>
-                                <input type="number" min={0} value={item != undefined ? item.num: ""} onChange={(e) => setTimes(t, item.useType, e.target.value)}></input>
+                                <input type="number" min={0} value={item != undefined ? item.num : ""} onChange={(e) => setTimes(t, item.useType, e.target.value)}></input>
+                                <p className="error-msg" id={"t" + t.transportationId} style={{ margin: "0px", marginBottom: "8px" }}></p>
                             </div>
                         })
                     }

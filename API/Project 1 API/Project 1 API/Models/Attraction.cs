@@ -17,7 +17,7 @@ public partial class Attraction
 
     public double AttractionPricePerPerson { get; set; }
 
-    public ulong AttractionTimeLimited { get; set; }
+    public bool AttractionTimeLimited { get; set; }
 
     public string AttractionDescription { get; set; } = null!;
 

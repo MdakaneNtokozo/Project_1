@@ -9,6 +9,8 @@ public partial class SelectedAttraction
 
     public int VacationId { get; set; }
 
+    public int SelectedExperienceType { get; set; }
+
     public int NumOfTimes { get; set; }
 
     public double AttractionBudget { get; set; }

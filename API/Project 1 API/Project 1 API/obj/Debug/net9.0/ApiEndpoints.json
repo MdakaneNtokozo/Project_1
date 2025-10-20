@@ -224,22 +224,6 @@
   },
   {
     "ContainingType": "Project_1_API.Controllers.DestinationsController",
-    "Method": "GetPlanInfo",
-    "RelativePath": "api/Destinations/getPlanInfo/{userId}",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "userId",
-        "Type": "System.Int32",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "Project_1_API.Controllers.DestinationsController",
     "Method": "GetSuggestedAccommodation",
     "RelativePath": "api/Destinations/getSuggestedAccommodation",
     "HttpMethod": "GET",
@@ -390,22 +374,6 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "Project_1_API.Controllers.DestinationsController",
-    "Method": "GetVacayPlans",
-    "RelativePath": "api/Destinations/getVacayPlans/{userId}",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "userId",
-        "Type": "System.Int32",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
     "ContainingType": "Project_1_API.Controllers.LoginSignupController",
     "Method": "DeleteUser",
     "RelativePath": "api/LoginSignup/{id}",
@@ -492,6 +460,142 @@
     "IsController": true,
     "Order": 0,
     "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Project_1_API.Controllers.VacayPlansControllerr",
+    "Method": "GetAccommodations",
+    "RelativePath": "api/VacayPlansControllerr/getAccommodations",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "vacationId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "destId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "currencyId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Project_1_API.Controllers.VacayPlansControllerr",
+    "Method": "GetAttractions",
+    "RelativePath": "api/VacayPlansControllerr/getAttractions",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "vacationId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "destId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "currencyId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Project_1_API.Controllers.VacayPlansControllerr",
+    "Method": "GetFoodSpots",
+    "RelativePath": "api/VacayPlansControllerr/getFoodSpots",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "vacationId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "destId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "currencyId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Project_1_API.Controllers.VacayPlansControllerr",
+    "Method": "GetPlanInfo",
+    "RelativePath": "api/VacayPlansControllerr/getPlanInfo/{userId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "userId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Project_1_API.Controllers.VacayPlansControllerr",
+    "Method": "GetTransportation",
+    "RelativePath": "api/VacayPlansControllerr/getTransportations",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "vacationId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "destId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "currencyId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Project_1_API.Controllers.VacayPlansControllerr",
+    "Method": "GetVacayPlans",
+    "RelativePath": "api/VacayPlansControllerr/getVacayPlans/{userId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "userId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
     "ReturnTypes": []
   }
 ]
