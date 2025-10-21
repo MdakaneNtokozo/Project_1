@@ -1,7 +1,20 @@
 {
   "Version": 1,
   "WorkspaceRootPath": "C:\\Users\\Ntokozo\\Downloads\\Project_1\\API\\Project 1 API\\",
-  "Documents": [],
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{AEC27EA4-B971-4839-989C-1748E9CE5B24}|Project 1 API\\Project 1 API.csproj|c:\\users\\ntokozo\\downloads\\project_1\\api\\project 1 api\\project 1 api\\controllers\\vacayplanscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{AEC27EA4-B971-4839-989C-1748E9CE5B24}|Project 1 API\\Project 1 API.csproj|solutionrelative:project 1 api\\controllers\\vacayplanscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AEC27EA4-B971-4839-989C-1748E9CE5B24}|Project 1 API\\Project 1 API.csproj|c:\\users\\ntokozo\\downloads\\project_1\\api\\project 1 api\\project 1 api\\vacayinfo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{AEC27EA4-B971-4839-989C-1748E9CE5B24}|Project 1 API\\Project 1 API.csproj|solutionrelative:project 1 api\\vacayinfo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AEC27EA4-B971-4839-989C-1748E9CE5B24}|Project 1 API\\Project 1 API.csproj|c:\\users\\ntokozo\\downloads\\project_1\\api\\project 1 api\\project 1 api\\controllers\\destinationscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{AEC27EA4-B971-4839-989C-1748E9CE5B24}|Project 1 API\\Project 1 API.csproj|solutionrelative:project 1 api\\controllers\\destinationscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
@@ -9,11 +22,50 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": -1,
+          "SelectedChildIndex": 3,
           "Children": [
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{6324226f-61b6-4f28-92ee-18d4b5fe1e48}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "DestinationsController.cs",
+              "DocumentMoniker": "C:\\Users\\Ntokozo\\Downloads\\Project_1\\API\\Project 1 API\\Project 1 API\\Controllers\\DestinationsController.cs",
+              "RelativeDocumentMoniker": "Project 1 API\\Controllers\\DestinationsController.cs",
+              "ToolTip": "C:\\Users\\Ntokozo\\Downloads\\Project_1\\API\\Project 1 API\\Project 1 API\\Controllers\\DestinationsController.cs",
+              "RelativeToolTip": "Project 1 API\\Controllers\\DestinationsController.cs",
+              "ViewState": "AgIAABgAAAAAAAAAAAAUwCQAAAAUAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-21T11:06:10.381Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "VacayInfo.cs",
+              "DocumentMoniker": "C:\\Users\\Ntokozo\\Downloads\\Project_1\\API\\Project 1 API\\Project 1 API\\VacayInfo.cs",
+              "RelativeDocumentMoniker": "Project 1 API\\VacayInfo.cs",
+              "ToolTip": "C:\\Users\\Ntokozo\\Downloads\\Project_1\\API\\Project 1 API\\Project 1 API\\VacayInfo.cs",
+              "RelativeToolTip": "Project 1 API\\VacayInfo.cs",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAAAwAAAAxAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-21T10:25:00.899Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "VacayPlansController.cs",
+              "DocumentMoniker": "C:\\Users\\Ntokozo\\Downloads\\Project_1\\API\\Project 1 API\\Project 1 API\\Controllers\\VacayPlansController.cs",
+              "RelativeDocumentMoniker": "Project 1 API\\Controllers\\VacayPlansController.cs",
+              "ToolTip": "C:\\Users\\Ntokozo\\Downloads\\Project_1\\API\\Project 1 API\\Project 1 API\\Controllers\\VacayPlansController.cs",
+              "RelativeToolTip": "Project 1 API\\Controllers\\VacayPlansController.cs",
+              "ViewState": "AgIAAGQAAAAAAAAAAAAkwHEAAAAgAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-21T09:48:08.023Z",
+              "EditorCaption": ""
             }
           ]
         }

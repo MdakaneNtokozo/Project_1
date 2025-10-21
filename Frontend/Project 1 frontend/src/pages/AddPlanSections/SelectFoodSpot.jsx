@@ -216,9 +216,9 @@ function SelectFoodSpot() {
                 <div className="more-details">
                     <h3>Fill in details below</h3>
                     {
-                        selectedFoodSpots.map((s) => {
+                        selectedFoodSpots.map((s, idx) => {
                             var item = spotsList.find(i => i.spot.foodSpotId == s.foodSpotId)
-                            return <div >
+                            return <div key={idx} >
                                 <p>{s.foodSpotName}</p>
 
                                 <label>Type of food experience:</label>

@@ -47,6 +47,16 @@ namespace Project_1_API.Controllers
         }
 
         [HttpGet]
+        [Route("getDestinationById/{destId}")]
+        public async Task<Object> GetDestinationById(int destId)
+        {
+            var destinations = await _context.Destinations.ToListAsync();
+            var dest = destinations.Find(d => d.DestinationId == destId);
+
+            return Ok();
+        }
+
+        [HttpGet]
         [Route("getTopDestinations")]
         public async Task<Object> GetRandomTopDestinations()
         {
@@ -445,7 +455,7 @@ namespace Project_1_API.Controllers
             vcl.spotsSelected.ForEach((i) =>
             {
                 var selectedSpot = new SelectedFoodSpot();
-                selectedSpot.FoodSpotIdId = i.spot.FoodSpotId;
+                selectedSpot.FoodSpotId = i.spot.FoodSpotId;
                 selectedSpot.VacationId = vacay.VacationId;
                 selectedSpot.SelectedExperienceType = i.useType;
 

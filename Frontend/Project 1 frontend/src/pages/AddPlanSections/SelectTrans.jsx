@@ -146,8 +146,6 @@ function SelectTrans() {
         }
     }
 
-    console.log(transList)
-
     const determineClassName = (t) => {
         if (selectedTransportation.length != 0) {
             if (selectedTransportation.find(trans => trans.transportationId == t.transportationId)) {
@@ -161,7 +159,6 @@ function SelectTrans() {
     }
 
     const setTimes = (trans, useType, num) => {
-        console.log(trans)
         if (useType != 0) {
             var item = {
                 trans: trans,

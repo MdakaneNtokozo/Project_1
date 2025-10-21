@@ -52,6 +52,8 @@ function Login() {
                         }
 
                     })
+                }else {
+                    setError(await res.text())
                 }
             })
 

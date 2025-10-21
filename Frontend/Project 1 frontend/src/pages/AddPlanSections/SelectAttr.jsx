@@ -139,7 +139,6 @@ function SelectAttr() {
     }
 
     const setTimes = (attr, useType, num) => {
-        console.log(useType)
         if (useType != 0) {
             var item = {
                 attr: attr,

@@ -172,7 +172,7 @@ function AddDetails() {
                                 {selectedBuddies.length != 0 ?
                                     <>
                                         {selectedBuddies.map((b, idx) => {
-                                            return <div className="buddy-card" >
+                                            return <div key={idx} className="buddy-card" >
                                                 <div>
                                                     <h2>Travel buddy {idx + 1}</h2>
                                                     <h4>Name: {b.userName} {b.userSurname}</h4>

@@ -377,7 +377,7 @@ public partial class Project1DatabaseContext : DbContext
 
         modelBuilder.Entity<SelectedFoodSpot>(entity =>
         {
-            entity.HasKey(e => new { e.FoodSpotIdId, e.VacationId })
+            entity.HasKey(e => new { e.FoodSpotId, e.VacationId })
                 .HasName("PRIMARY")
                 .HasAnnotation("MySql:IndexPrefixLength", new[] { 0, 0 });
 
@@ -385,7 +385,7 @@ public partial class Project1DatabaseContext : DbContext
 
             entity.HasIndex(e => e.VacationId, "vacation_id");
 
-            entity.Property(e => e.FoodSpotIdId).HasColumnName("food_spot_id_id");
+            entity.Property(e => e.FoodSpotId).HasColumnName("food_spot_id");
             entity.Property(e => e.VacationId).HasColumnName("vacation_id");
             entity.Property(e => e.FoodSpotBudget).HasColumnName("food_spot_budget");
             entity.Property(e => e.NumOfTimes).HasColumnName("Num_of_times");

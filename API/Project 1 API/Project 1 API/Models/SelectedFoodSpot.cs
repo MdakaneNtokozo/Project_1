@@ -5,7 +5,7 @@ namespace Project_1_API.Models;
 
 public partial class SelectedFoodSpot
 {
-    public int FoodSpotIdId { get; set; }
+    public int FoodSpotId { get; set; }
 
     public int VacationId { get; set; }
 

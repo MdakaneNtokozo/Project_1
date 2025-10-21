@@ -8,19 +8,23 @@ function VacayPlanPreview() {
         token,
         user,
         currency,
-        selectedDestination,
-        startDate,
-        endDate,
-        selectedSpenderType,
-        selectedBuddies,
-        selectedTransportation,
-        selectedAccommodations,
-        selectedFoodSpots,
-        selectedAttractions,
-        transTotal, transList,
-        accommTotal, accommList,
-        spotsTotal, spotsList,
-        attrsTotal, attrsList
+        selectedDestination, setSelectedDestination,
+        startDate, setStartDate,
+        endDate, setEndDate,
+        selectedSpenderType, setSelectedSpenderType,
+        selectedBuddies, setSelectedBuddies,
+        selectedTransportation, setSelectedTransportations,
+        selectedAccommodations, setSelectedAccommodations,
+        selectedFoodSpots, setSelectedFoodSpots,
+        selectedAttractions, setSelectedAttractions,
+        transList, setTransList,
+        transTotal, setTransTotal,
+        accommList, setAccommList,
+        accommTotal, setAccommTotal,
+        spotsList, setSpotsList,
+        spotsTotal, setSpotsTotal,
+        attrsList, setAttrsList,
+        attrsTotal, setAttrsTotal
     } = useContext(MyContext)
     const navigate = useNavigate()
 
@@ -86,7 +90,24 @@ function VacayPlanPreview() {
             },
             body: JSON.stringify(vacayList)
         }).then(async res => {
-            console.log(res.status)
+            setSelectedDestination(null)
+            setStartDate(null)
+            setEndDate(null)
+            setSelectedSpenderType(null)
+            setSelectedBuddies([])
+            setSelectedTransportations([])
+            setSelectedAccommodations([])
+            setSelectedFoodSpots([])
+            setSelectedAttractions([])
+            setTransList([])
+            setTransTotal([])
+            setAccommList([])
+            setAccommTotal([])
+            setSpotsList([])
+            setSpotsTotal([])
+            setAttrsList([])
+            setAttrsTotal([])
+
             navigate('/home')
         })
     }
@@ -135,10 +156,9 @@ function VacayPlanPreview() {
                                     {
                                         selectedTransportation.map(t => {
                                             let item = transList.find(i => i.trans == t)
-                                            console.log(item)
                                             return <tr>
                                                 <td className="td1">{t.transportationName}</td>
-                                                <td className="td2">{item.num} {item.useType == "1"? "times only" : "times everday"}</td>
+                                                <td className="td2">{item.num} {item.useType == "1" ? "times only" : "times everday"}</td>
                                                 <td className="td3">{t.transportationPricePerPerson}</td>
                                             </tr>
 
@@ -183,8 +203,8 @@ function VacayPlanPreview() {
 
                                             return <tr key={idx}>
                                                 <td className="td1">{f.foodSpotName}</td>
-                                                <td className="td2">{spot.num} {spot.useType == "1"? " times only" : "times everyday"}</td>
-                                                <tr className="td3">{f.foodSpotMinMenuPrice} - {f.foodSpotMaxMenuPrice}</tr>
+                                                <td className="td2">{spot.num} {spot.useType == "1" ? " times only" : "times everyday"}</td>
+                                                <td className="td3">{f.foodSpotMinMenuPrice} - {f.foodSpotMaxMenuPrice}</td>
                                             </tr>
                                         })
                                     }
@@ -208,7 +228,7 @@ function VacayPlanPreview() {
 
                                             return <tr key={idx}>
                                                 <td className="td1">{a.attractionName}</td>
-                                                <td className="td2">{attr.num} {attr.useType == "1"? " times only" : "times everyday"}</td>
+                                                <td className="td2">{attr.num} {attr.useType == "1" ? " times only" : "times everyday"}</td>
                                                 <td className="td3">{a.attractionEntranceFee}</td>
                                             </tr>
                                         })
@@ -238,22 +258,22 @@ function VacayPlanPreview() {
                                     <tr>
                                         <td className="td1">Transportation</td>
                                         <td className="td2">{currency.currencySymbol}</td>
-                                        <tr className="td3">{transTotal}</tr>
+                                        <td className="td3">{transTotal}</td>
                                     </tr>
                                     <tr>
                                         <td className="td1">Accommodation</td>
                                         <td className="td2">{currency.currencySymbol}</td>
-                                        <tr className="td3">{accommTotal}</tr>
+                                        <td className="td3">{accommTotal}</td>
                                     </tr>
                                     <tr>
                                         <td className="td1">Food spot</td>
                                         <td className="td2">{currency.currencySymbol}</td>
-                                        <tr className="td3">{spotsTotal}</tr>
+                                        <td className="td3">{spotsTotal}</td>
                                     </tr>
                                     <tr>
                                         <td className="td1">Attraction</td>
                                         <td className="td2">{currency.currencySymbol}</td>
-                                        <tr className="td3">{attrsTotal}</tr>
+                                        <td className="td3">{attrsTotal}</td>
                                     </tr>
                                 </tbody>
 
@@ -265,7 +285,7 @@ function VacayPlanPreview() {
                                     <tr>
                                         <td className="td1">Budget total</td>
                                         <td className="td2">{currency.currencySymbol}</td>
-                                        <tr className="td3">{transTotal + accommTotal + spotsTotal + attrsTotal}</tr>
+                                        <td className="td3">{transTotal + accommTotal + spotsTotal + attrsTotal}</td>
                                     </tr>
                                 </tbody>
 

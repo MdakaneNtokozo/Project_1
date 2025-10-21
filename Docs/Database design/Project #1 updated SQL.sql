@@ -153,13 +153,13 @@ CREATE TABLE selected_accommodation(
 );
 
 CREATE TABLE selected_food_spot(
-	food_spot_id_id int NOT NULL,
+	food_spot_id int NOT NULL,
 	vacation_id INT NOT NULL,
 	selected_experience_type INT NOT NULL,
     Num_of_times int NOT NULL,
     food_spot_budget DOUBLE NOT NULL,
-	PRIMARY KEY (food_spot_id_id, vacation_id),
-	FOREIGN KEY (food_spot_id_id) REFERENCES food_spot(food_spot_id),
+	PRIMARY KEY (food_spot_id, vacation_id),
+	FOREIGN KEY (food_spot_id) REFERENCES food_spot(food_spot_id),
 	FOREIGN KEY (vacation_id) REFERENCES vacation(vacation_id)
 );
 

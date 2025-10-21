@@ -8,12 +8,10 @@ import Loading from "../Loading"
 
 function Home() {
     const [plans, setPlans] = useState([])
-    const [info, setInfo] = useState([])
     const [top3Destinations, setTop3Destinations] = useState([])
     const { role, user, api, token, setCurrency } = useContext(MyContext)
     const navigate = useNavigate()
-    const [isLoading1, setIsLoading1] = useState(true)
-    const [isLoading2, setIsLoading2] = useState(true)
+    const [isLoading, setIsLoading] = useState(true)
 
     useEffect(() => {
         // //Top 3 destinations
@@ -54,33 +52,22 @@ function Home() {
                 "Content-Type": "application/json"
             },
         }).then(async res => {
-            setInfo(await res.json())
-            setIsLoading1(false)
+            setPlans(await res.json())
+            setIsLoading(false)
         })
 
-        //Plans
-        api_call = api + "VacayPlansControllerr/getVacayPlans/" + user.userId
-        fetch(api_call, {
-            method: "GET",
-            headers: {
-                "Authorization": "Bearer " + token,
-                "Content-Type": "application/json"
-            },
-        }).then(async res => {
-            setPlans(await res.json())
-            setIsLoading2(false)
-        })
 
     }, [])
 
-    while (isLoading1 == true || isLoading1 == true) {
+    while (isLoading == true ) {
         return <Loading />
     }
 
-    const viewPlan = (plan, planInfo) => {
-        console.log(plan)
-        navigate('/viewVacayPlan', {state:{plan: plan, planInfo: planInfo}})
+    const viewPlan = (plan) => {
+        navigate('/viewVacayPlan', {state:{plan: plan}})
     }
+
+    console.log(plans)
 
     return (
         <>
@@ -99,9 +86,7 @@ function Home() {
                             </div> :
                             <div className="home-plans">
                                 {plans.map((plan, idx) => {
-                                    var planInfo = info.find(i => i.vacationId == plan.vacationId)
-
-                                    return <div key={idx} onClick={() => viewPlan(plan, planInfo)}><p>Vacation plan for {planInfo.vacayDestName}</p><p>{planInfo.vacayDaysLeft} days left</p></div>
+                                    return <div key={idx} onClick={() => viewPlan(plan)}><p>Vacation plan for {plan.destination.destinationName}</p><p>{plan.vacayDaysLeft} days left</p></div>
                                 })}
                             </div>
                         }

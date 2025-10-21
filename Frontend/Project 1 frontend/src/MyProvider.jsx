@@ -17,7 +17,6 @@ export function MyProvider({ children }) {
     const [selectedAccommodations, setSelectedAccommodations] = useState([])
     const [selectedFoodSpots, setSelectedFoodSpots] = useState([])
     const [selectedAttractions, setSelectedAttractions] = useState([])
-    const [exchangeRate, setExchangeRate] = useState([])
     const [currency, setCurrency] = useState(null)
     const [transList, setTransList] = useState([])
     const [transTotal, setTransTotal] = useState(0.0)
@@ -26,7 +25,7 @@ export function MyProvider({ children }) {
     const [spotsList, setSpotsList] = useState([])
     const [spotsTotal, setSpotsTotal] = useState(0.0)
     const [attrsList, setAttrsList] = useState([])
-    const [attrsTotal, setAttrsTotal] = useState()
+    const [attrsTotal, setAttrsTotal] = useState(0.0)
 
     return ( 
         <MyContext.Provider value={{
@@ -43,7 +42,6 @@ export function MyProvider({ children }) {
                 selectedAccommodations, setSelectedAccommodations,
                 selectedFoodSpots, setSelectedFoodSpots,
                 selectedAttractions, setSelectedAttractions,
-                exchangeRate, setExchangeRate,
                 currency, setCurrency,
                 transList, setTransList,
                 transTotal, setTransTotal,
