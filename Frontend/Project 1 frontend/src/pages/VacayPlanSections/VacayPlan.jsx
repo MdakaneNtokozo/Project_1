@@ -1,8 +1,8 @@
-import Footer from "../Footer"
-import Header from "../Header"
+import Footer from "../../Footer"
+import Header from "../../Header"
 import { Outlet } from "react-router-dom"
 
-function AddVacayPlan() {
+function VacayPlan() {
     const stopReload = (event) => {
         //to stop the form from reloading when submitting
         event.preventDefault()
@@ -25,4 +25,4 @@ function AddVacayPlan() {
     )
 }
 
-export default AddVacayPlan
+export default VacayPlan

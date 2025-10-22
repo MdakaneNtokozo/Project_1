@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from "react"
-import Footer from "../Footer"
-import Header from "../Header"
-import { MyContext } from "../MyProvider"
+import { MyContext } from "../../MyProvider"
+import Header from "../../Header"
+import Footer from "../../Footer"
 
 function Profile() {
     const { api, token, user } = useContext(MyContext)
@@ -25,6 +25,8 @@ function Profile() {
         
     }, [])
 
+    console.log(currency)
+
     return (
         <>
             <Header />
@@ -33,7 +35,7 @@ function Profile() {
                 <div className="profile">
                     <h2>Profile</h2>
                     <div className="profile-details">
-                        <img src="\src\assets\profile icon.png" alt="profile picture" ></img>
+                        <img src="\src\assets\profile.jpg" alt="profile picture" ></img>
 
                         <div>
                             <p>Name: {user.userName} </p>
@@ -46,7 +48,7 @@ function Profile() {
                     <button onClick={() => setEdit("Email")}>Edit email</button>
                     <p>Password: ******</p>
                     <button onClick={() => setEdit("Password")}>Edit password</button>
-                    <p>Currency preference: {currency != null ? currency.currName + " (" + currency.currSymbol + ")": ""} </p>
+                    <p>Currency preference: {currency != null ? currency.currencyName + " (" + currency.currencySymbol + ")": ""} </p>
                     <button >Set preference</button>
                     <p>Notifications: {user.notificationOn == 1 ? "On" : "Off"}</p>
                     <button >Turn on/off</button>

@@ -27,6 +27,22 @@
   },
   {
     "ContainingType": "Project_1_API.Controllers.DestinationsController",
+    "Method": "DeleteVacayBudget",
+    "RelativePath": "api/Destinations/deleteVacayBudget",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "vacayPlan",
+        "Type": "Project_1_API.Models.CreatedPlan",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Project_1_API.Controllers.DestinationsController",
     "Method": "GetAccommodations",
     "RelativePath": "api/Destinations/getAccommodations",
     "HttpMethod": "GET",
@@ -385,6 +401,32 @@
         "Name": "list",
         "Type": "System.Collections.Generic.List\u00601[[Project_1_API.TransNum, Project 1 API, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
         "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Project_1_API.Controllers.DestinationsController",
+    "Method": "UpdateVacayBudget",
+    "RelativePath": "api/Destinations/updateVacayBudget",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "vcl",
+        "Type": "Project_1_API.Classes_for_totals.VacayLists",
+        "IsRequired": true
+      },
+      {
+        "Name": "start",
+        "Type": "System.DateTime",
+        "IsRequired": false
+      },
+      {
+        "Name": "end",
+        "Type": "System.DateTime",
+        "IsRequired": false
       }
     ],
     "ReturnTypes": []

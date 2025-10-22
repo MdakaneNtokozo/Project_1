@@ -145,7 +145,8 @@ CREATE TABLE selected_transportation(
 CREATE TABLE selected_accommodation(
 	accommodation_id int NOT NULL,
 	vacation_id INT NOT NULL,
-    num_of_days int NOT NULL,
+    check_in_date DATETIME NOT NULL,
+    check_out_date DATETIME NOT NULL,
     accommodation_budget DOUBLE NOT NULL,
 	PRIMARY KEY (accommodation_id, vacation_id),
 	FOREIGN KEY (accommodation_id) REFERENCES accommodation(accommodation_id),

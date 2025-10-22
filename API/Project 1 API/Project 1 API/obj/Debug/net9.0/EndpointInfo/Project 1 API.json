@@ -637,6 +637,86 @@
         }
       }
     },
+    "/api/Destinations/updateVacayBudget": {
+      "put": {
+        "tags": [
+          "Destinations"
+        ],
+        "parameters": [
+          {
+            "name": "start",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "end",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/VacayLists"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/VacayLists"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/VacayLists"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Destinations/deleteVacayBudget": {
+      "delete": {
+        "tags": [
+          "Destinations"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreatedPlan"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreatedPlan"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreatedPlan"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/LoginSignup/signUp": {
       "post": {
         "tags": [
@@ -925,6 +1005,36 @@
         },
         "additionalProperties": false
       },
+      "CreatedPlan": {
+        "type": "object",
+        "properties": {
+          "vacationId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "userId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "planBudget": {
+            "type": "number",
+            "format": "double"
+          },
+          "planCreatedDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "planModifiedDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "spenderTypeId": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
       "FoodSpot": {
         "type": "object",
         "properties": {
@@ -1109,6 +1219,9 @@
       "VacayLists": {
         "type": "object",
         "properties": {
+          "plan": {
+            "$ref": "#/components/schemas/CreatedPlan"
+          },
           "user": {
             "$ref": "#/components/schemas/User"
           },

@@ -1,9 +1,7 @@
-import { useContext, useEffect, useRef, useState } from "react"
-import Header from "../Header"
-import Footer from "../Footer"
-import { Link, useNavigate } from "react-router-dom"
-import { MyContext } from "../MyProvider"
+import { useContext, useRef, useState } from "react"
+import { useNavigate } from "react-router-dom"
 import SignUp from "./Signup"
+import { MyContext } from "../../MyProvider"
 
 function Login() {
     const emailRef = useRef(null)

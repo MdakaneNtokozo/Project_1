@@ -1,8 +1,9 @@
 import { useContext, useState } from "react"
 import { MyContext } from "./MyProvider"
 import { useNavigate } from "react-router-dom"
-import Login from "./pages/Login"
-import SignUp from "./pages/Signup"
+import Login from "./pages/UserSections/Login"
+import SignUp from "./pages/UserSections/Signup"
+
 
 function Header() {
     const { role } = useContext(MyContext)
@@ -17,7 +18,7 @@ function Header() {
                 {role == 1 ?
                     <nav>
                         <p>Vacation plans</p>
-                        <p>Profile</p>
+                        <p onClick={() => navigate('/profile')}>Profile</p>
                     </nav> :
                     <></>
                 }

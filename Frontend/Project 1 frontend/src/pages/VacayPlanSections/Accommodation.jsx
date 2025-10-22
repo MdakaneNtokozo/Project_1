@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom"
 import DatePicker from "react-multi-date-picker"
 import Loading from "../../Loading"
 
-function SelectAccomm() {
+function Accommodation() {
 
     const [accommodations, setAccommodations] = useState([])
     const [accommodationTypes, setAccommodationTypes] = useState([])
@@ -116,7 +116,7 @@ function SelectAccomm() {
                 body: JSON.stringify(sendList)
             }).then(async res => {
                 setAccommTotal(await res.json())
-                navigate('/addVacayPlan/selectFoodSpot')
+                navigate('/vacayPlan/foodSpots')
             })
 
         }
@@ -228,8 +228,8 @@ function SelectAccomm() {
 
                             return <div key={idx}>
                                 <p>{a.accommodationName}</p>
-                                <label>Select days for accommodation:</label>
-                                <DatePicker mode="range" value={item != undefined ? [item.dates[0], item.dates[1]] : undefined} range onChange={(dates) => setDates(a, dates)} style={{ width: "100vh" }} minDate={startDate} maxDate={endDate}
+                                <label>Select check in and check out dates for accommodation:</label>
+                                <DatePicker mode="range" value={item != undefined ? [formatDate(item.dates[0]), formatDate(item.dates[1])] : undefined} range onChange={(dates) => setDates(a, dates)} style={{ width: "100vh" }} minDate={startDate} maxDate={endDate}
                                     mapDays={({ date }) => {
                                         var props = {}
 
@@ -279,4 +279,4 @@ function SelectAccomm() {
 
 }
 
-export default SelectAccomm
+export default Accommodation

@@ -5,7 +5,7 @@ import { BiCheckCircle } from "react-icons/bi"
 import { useNavigate } from "react-router-dom"
 import Loading from "../../Loading"
 
-function SelectTrans() {
+function Transportation() {
 
     const [transportations, setTransportations] = useState([])
     const [transportationTypes, setTransportationTypes] = useState([])
@@ -122,7 +122,7 @@ function SelectTrans() {
                     body: JSON.stringify(transList)
                 }).then(async res => {
                     setTransTotal(await res.json())
-                    navigate('/addVacayPlan/selectAccomm')
+                    navigate('/vacayPlan/accommodation')
                 })
             }
         }
@@ -259,4 +259,4 @@ function SelectTrans() {
 
 }
 
-export default SelectTrans
+export default Transportation

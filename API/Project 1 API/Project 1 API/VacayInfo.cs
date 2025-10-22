@@ -4,7 +4,8 @@ namespace Project_1_API
 {
     public class VacayInfo
     {
-        public CreatedPlan vacayPlan {  get; set; } 
+        public CreatedPlan vacayPlan {  get; set; }
+        public SpenderType spenderType { get; set; }
         public Vacation vacation { get; set; }
         public Destination destination { get; set; }
         public int vacayDaysLeft { get; set; }

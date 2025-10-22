@@ -26,6 +26,7 @@ export function MyProvider({ children }) {
     const [spotsTotal, setSpotsTotal] = useState(0.0)
     const [attrsList, setAttrsList] = useState([])
     const [attrsTotal, setAttrsTotal] = useState(0.0)
+    const [vacayPlan, setVacayPlan] = useState(null)
 
     return ( 
         <MyContext.Provider value={{
@@ -50,7 +51,8 @@ export function MyProvider({ children }) {
                 spotsList, setSpotsList,
                 spotsTotal, setSpotsTotal,
                 attrsList, setAttrsList,
-                attrsTotal, setAttrsTotal
+                attrsTotal, setAttrsTotal,
+                vacayPlan, setVacayPlan
             }}> 
             {children} 
         </MyContext.Provider> 

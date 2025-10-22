@@ -9,7 +9,9 @@ public partial class SelectedAccommodation
 
     public int VacationId { get; set; }
 
-    public int NumOfDays { get; set; }
+    public DateTime CheckInDate { get; set; }
+
+    public DateTime CheckOutDate { get; set; }
 
     public double AccommodationBudget { get; set; }
 

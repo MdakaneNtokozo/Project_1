@@ -56,16 +56,28 @@ namespace Project_1_API.Controllers
                 var vacayInfo = new VacayInfo();
                 vacayInfo.vacayPlan = plan;
 
+                //Get the spender type for the created plan
+                var spenderTypes = _context.SpenderTypes.ToList();
+                var spenderType = spenderTypes.Find(type => type.SpenderTypeId == plan.SpenderTypeId);
+                vacayInfo.spenderType = spenderType;
+
                 //Get the vacation details for the created plan
                 var vacations = _context.Vacations.ToList();
                 var vacation = vacations.Find(v => v.VacationId == plan.VacationId);
                 vacayInfo.vacation = vacation;
 
                 //Get the number of days left before the vacation
-                TimeSpan dateDiff = vacation.VacationEndDate - vacation.VacationStartDate;
-                var days = dateDiff.Days + 1;
-                vacayInfo.vacayDaysLeft = days;
-
+                if (vacation.VacationStartDate == DateTime.Today)
+                {
+                    vacayInfo.vacayDaysLeft = 0;
+                }
+                else
+                {
+                    TimeSpan dateDiff = vacation.VacationStartDate - DateTime.Now;
+                    var days = dateDiff.Days + 1;
+                    vacayInfo.vacayDaysLeft = days;
+                }
+                    
                 GetBuddiesDetails(vacation, vacayInfo);
                 GetTransportationDetails(vacation, vacayInfo, userPrefferedCurrencyId);
                 GetAccommodationDetails(vacation, vacayInfo, userPrefferedCurrencyId);

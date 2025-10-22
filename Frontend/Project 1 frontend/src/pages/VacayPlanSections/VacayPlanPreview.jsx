@@ -1,5 +1,5 @@
-import { useContext, useEffect, useState } from "react"
-import { MyContext } from "../MyProvider"
+import { useContext } from "react"
+import { MyContext } from "../../MyProvider"
 import { useNavigate } from "react-router-dom"
 
 function VacayPlanPreview() {
@@ -24,7 +24,8 @@ function VacayPlanPreview() {
         spotsList, setSpotsList,
         spotsTotal, setSpotsTotal,
         attrsList, setAttrsList,
-        attrsTotal, setAttrsTotal
+        attrsTotal, setAttrsTotal,
+        vacayPlan, setVacayPlan
     } = useContext(MyContext)
     const navigate = useNavigate()
 
@@ -71,7 +72,17 @@ function VacayPlanPreview() {
             sendList.push(item)
         });
 
+        const nullVacapPlan = {
+            vacationId: -1,
+            userId: -1,
+            planBudget: -1,
+            planCreatedDate: Date.now,
+            planModifiedDate: Date.now,
+            spenderTypeId: -1
+        }
+
         var vacayList = {
+            plan: vacayPlan == null ? nullVacapPlan : vacayPlan,
             user: user,
             type: selectedSpenderType,
             travelBuddies: selectedBuddies,
@@ -81,35 +92,79 @@ function VacayPlanPreview() {
             attrSelected: attrsList
         }
 
-        var api_call = api + "Destinations/calVacayBudget?start=" + formatDate(startDate) + "&end=" + formatDate(endDate)
-        fetch(api_call, {
-            method: "POST",
-            headers: {
-                "Authorization": "Bearer " + token,
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(vacayList)
-        }).then(async res => {
-            setSelectedDestination(null)
-            setStartDate(null)
-            setEndDate(null)
-            setSelectedSpenderType(null)
-            setSelectedBuddies([])
-            setSelectedTransportations([])
-            setSelectedAccommodations([])
-            setSelectedFoodSpots([])
-            setSelectedAttractions([])
-            setTransList([])
-            setTransTotal([])
-            setAccommList([])
-            setAccommTotal([])
-            setSpotsList([])
-            setSpotsTotal([])
-            setAttrsList([])
-            setAttrsTotal([])
+        if (vacayPlan == null) {
+            var api_call = api + "Destinations/calVacayBudget?start=" + formatDate(startDate) + "&end=" + formatDate(endDate)
+            fetch(api_call, {
+                method: "POST",
+                headers: {
+                    "Authorization": "Bearer " + token,
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(vacayList)
+            }).then(async res => {
+                if (res.ok) {
+                    setSelectedDestination(null)
+                    setStartDate(null)
+                    setEndDate(null)
+                    setSelectedSpenderType(null)
+                    setSelectedBuddies([])
+                    setSelectedTransportations([])
+                    setSelectedAccommodations([])
+                    setSelectedFoodSpots([])
+                    setSelectedAttractions([])
+                    setTransList([])
+                    setTransTotal([])
+                    setAccommList([])
+                    setAccommTotal([])
+                    setSpotsList([])
+                    setSpotsTotal([])
+                    setAttrsList([])
+                    setAttrsTotal([])
+                    alert("Vacay plan has been added.")
 
-            navigate('/home')
-        })
+                    navigate('/home')
+                }
+
+            })
+        }else{
+
+            var api_call = api + "Destinations/updateVacayBudget?start=" + formatDate(startDate) + "&end=" + formatDate(endDate)
+            fetch(api_call, {
+                method: "PUT",
+                headers: {
+                    "Authorization": "Bearer " + token,
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(vacayList)
+            }).then(async res => {
+                if (res.ok) {
+                    setVacayPlan(null)
+                    setSelectedDestination(null)
+                    setStartDate(null)
+                    setEndDate(null)
+                    setSelectedSpenderType(null)
+                    setSelectedBuddies([])
+                    setSelectedTransportations([])
+                    setSelectedAccommodations([])
+                    setSelectedFoodSpots([])
+                    setSelectedAttractions([])
+                    setTransList([])
+                    setTransTotal([])
+                    setAccommList([])
+                    setAccommTotal([])
+                    setSpotsList([])
+                    setSpotsTotal([])
+                    setAttrsList([])
+                    setAttrsTotal([])
+                    alert("Vacay plan has been updated.")
+
+                    navigate('/home')
+                }
+
+            })
+        }
+
+
     }
 
     return (
@@ -154,9 +209,9 @@ function VacayPlanPreview() {
                             <table>
                                 <tbody>
                                     {
-                                        selectedTransportation.map(t => {
+                                        selectedTransportation.map((t, idx) => {
                                             let item = transList.find(i => i.trans == t)
-                                            return <tr>
+                                            return <tr key={idx}>
                                                 <td className="td1">{t.transportationName}</td>
                                                 <td className="td2">{item.num} {item.useType == "1" ? "times only" : "times everday"}</td>
                                                 <td className="td3">{t.transportationPricePerPerson}</td>
@@ -179,9 +234,11 @@ function VacayPlanPreview() {
                             <table>
                                 <tbody>
                                     {selectedAccommodations.map((a, idx) => {
+                                        var accom = accommList.find(sa => sa.accomm.accommodationId == a.accommodationId)
+
                                         return <tr key={idx}>
                                             <td className="td1">{a.accommodationName}</td>
-                                            <td className="td2"></td>
+                                            <td className="td2">{formatDate2(accom.dates[0])} - {formatDate2(accom.dates[1])}</td>
                                             <td className="td3"> {a.accommodationPricePerPerson}</td>
                                         </tr>
                                     })}

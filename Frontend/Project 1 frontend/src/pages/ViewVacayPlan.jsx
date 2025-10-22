@@ -10,7 +10,22 @@ function ViewVacayPlan() {
         api,
         token,
         user,
-        currency
+        currency,
+        setSelectedDestination,
+        setStartDate,
+        setEndDate,
+        setSelectedSpenderType,
+        setSelectedBuddies,
+        setSelectedTransportations,
+        setSelectedAccommodations,
+        setSelectedFoodSpots,
+        setSelectedAttractions,
+        setTransList,
+        setAccommList,
+        setSpotsList,
+        setAttrsList,
+        setVacayPlan
+
     } = useContext(MyContext)
     const navigate = useNavigate()
     const location = useLocation()
@@ -62,7 +77,88 @@ function ViewVacayPlan() {
     }
 
     const edit = () => {
-        console.log("will navigate to edit page")
+
+        setVacayPlan(plan.vacayPlan)
+        setSelectedDestination(plan.destination)
+        setStartDate(plan.vacation.vacationStartDate)
+        setEndDate(plan.vacation.vacationEndDate)
+        setSelectedSpenderType(plan.spenderType)
+        setSelectedBuddies(plan.users)
+        setSelectedTransportations(plan.transportations)
+        setSelectedAccommodations(plan.accommodations)
+        setSelectedFoodSpots(plan.foodSpots)
+        setSelectedAttractions(plan.attractions)
+
+        var transList = []
+        selectedTrans.forEach(i => {
+            var trans = transportations.find(t => t.transportationId == i.transportationId)
+            var item = {
+                trans: trans,
+                useType: i.selectedUseType,
+                num: i.numOfTimes
+            }
+
+            transList.push(item)
+        })
+        setTransList(transList)
+
+        var accommsList = []
+        selectedAccomm.forEach(i => {
+            var accomm = accommodations.find(a => a.accommodationId == i.accommodationId)
+            console.log(new Date(i.checkInDate))
+            var item = {
+                accomm: accomm,
+                dates: [new Date(i.checkInDate), new Date(i.checkOutDate)]
+            }
+            accommsList.push(item)
+        })
+        setAccommList(accommsList)
+
+        var spotsList = []
+        selectedSpots.forEach(i => {
+            var spot = foodSpots.find(s => s.foodSpotId == i.foodSpotId)
+            var item = {
+                spot: spot,
+                useType: i.selectedExperienceType,
+                num: i.numOfTimes
+            }
+
+            spotsList.push(item)
+        })
+        setSpotsList(spotsList)
+
+        var attrsList = []
+        selectedAttrs.forEach(i => {
+            var attr = attractions.find(a => a.attractionId == i.attractionId)
+            var item = {
+                attr: attr,
+                useType: i.selectedExperienceType,
+                num: i.numOfTimes
+            }
+
+            attrsList.push(item)
+        })
+        setAttrsList(attrsList)
+
+        navigate('/vacayPlan/vacayDetails')
+    }
+
+    const deletePlan = () => {
+        var api_call = api + "Destinations/deleteVacayBudget"
+        fetch(api_call, {
+            method: "DELETE",
+            headers: {
+                "Authorization": "Bearer " + token,
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(plan.vacayPlan)
+        }).then(async res => {
+            if (res.ok) {
+                alert("Vacay plan has been deleted.")
+                navigate('/home')
+            }
+
+        })
     }
 
     const stopReload = (event) => {
@@ -70,9 +166,43 @@ function ViewVacayPlan() {
         event.preventDefault()
     }
 
-    const calcTransTotal = (stList) => {
+    const calcTransTotal = (tList) => {
         var total = 0.0
-        console.log(stList)
+
+        tList.forEach(t => {
+            total += t.transportationBudget
+        })
+
+        return total
+    }
+
+    const calcAccommTotal = (aList) => {
+        var total = 0.0
+
+        aList.forEach(a => {
+            total += a.accommodationBudget
+        })
+
+        return total
+    }
+
+    const calcSpotsTotal = (sList) => {
+        var total = 0.0
+
+        sList.forEach(s => {
+            total += s.foodSpotBudget
+        })
+
+        return total
+    }
+
+    const calcAttrTotal = (atList) => {
+        var total = 0.0
+
+        atList.forEach(at => {
+            total += at.attractionBudget
+        })
+
         return total
     }
 
@@ -151,11 +281,13 @@ function ViewVacayPlan() {
                                     <table>
                                         <tbody>
                                             {accommodations.map((a, idx) => {
-                                                var accomm = selectedAccomm.find(a => a.accommodationId == a.accommodationId)
+                                                var accomm = selectedAccomm.find(sa => sa.accommodationId == a.accommodationId)
+                                                var checkInDate = new Date(accomm.checkInDate)
+                                                var checkOutDate = new Date(accomm.checkOutDate)
 
                                                 return <tr key={idx}>
                                                     <td className="td1">{a.accommodationName}</td>
-                                                    <td className="td2">{accomm.numOfDays} days</td>
+                                                    <td className="td2">{formatDate2(checkInDate)} - {formatDate2(checkOutDate)}</td>
                                                     <td className="td3">{a.accommodationPricePerPerson}</td>
                                                 </tr>
                                             })}
@@ -232,17 +364,17 @@ function ViewVacayPlan() {
                                             <tr>
                                                 <td className="td1">Accommodation</td>
                                                 <td className="td2">{currency.currencySymbol}</td>
-                                                <td className="td3"></td>
+                                                <td className="td3">{calcAccommTotal(selectedAccomm)}</td>
                                             </tr>
                                             <tr>
                                                 <td className="td1">Food spot</td>
                                                 <td className="td2">{currency.currencySymbol}</td>
-                                                <td className="td3"></td>
+                                                <td className="td3">{calcSpotsTotal(selectedSpots)}</td>
                                             </tr>
                                             <tr>
                                                 <td className="td1">Attraction</td>
                                                 <td className="td2">{currency.currencySymbol}</td>
-                                                <td className="td3"></td>
+                                                <td className="td3">{calcAttrTotal(selectedAttrs)}</td>
                                             </tr>
                                         </tbody>
 
@@ -264,7 +396,7 @@ function ViewVacayPlan() {
 
                                 <div style={{ display: "flex", flexDirection: "row", justifyContent: "space-between" }}>
                                     <button type="button" onClick={() => edit()}>Edit</button>
-                                    <button type="button" onClick={() => console.log("will delete plan")}>Delete</button>
+                                    <button type="button" onClick={() => deletePlan()}>Delete</button>
                                 </div>
 
                             </div>

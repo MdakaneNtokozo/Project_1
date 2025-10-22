@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Project_1_API.Classes_for_totals;
 using Project_1_API.Models;
+using System;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -419,84 +420,27 @@ namespace Project_1_API.Controllers
             //add the selected transportations
             vcl.transSelected.ForEach((i) =>
             {
-                var selectedTrans = new SelectedTransportation();
-                selectedTrans.TransportationId = i.trans.TransportationId;
-                selectedTrans.VacationId = vacay.VacationId;
-                selectedTrans.SelectedUseType = i.useType;
-
-                var days = DaysCalculator(start, end);
-                selectedTrans.NumOfTimes = selectedTrans.SelectedUseType == 1 ? i.num : i.num * days;
-
-                var transTotal = TransTotalCalculation(i, start, end);
-                vacayTotal += transTotal;
-                selectedTrans.TransportationBudget = transTotal;
-
-                _context.SelectedTransportations.Add(selectedTrans);
-                _context.SaveChanges();
+                AddSelectedTrans(i, vacay, start, end, vacayTotal);
             });
 
             vcl.accommSelected.ForEach((i) =>
             {
-                var selectedAccom = new SelectedAccommodation();
-                selectedAccom.AccommodationId = i.accomm.AccommodationId;
-                selectedAccom.VacationId = vacay.VacationId;
-
-                var days = DaysCalculator(i.dates[0], i.dates[1]);
-                selectedAccom.NumOfDays = days;
-
-                var accomTotal = AccomsTotalCalculation(i);
-                vacayTotal += accomTotal;
-                selectedAccom.AccommodationBudget = accomTotal;
-
-                _context.SelectedAccommodations.Add(selectedAccom);
-                _context.SaveChanges();
+                AddSelectedAccomm(i, vacay, start, end, vacayTotal);
             });
 
             vcl.spotsSelected.ForEach((i) =>
             {
-                var selectedSpot = new SelectedFoodSpot();
-                selectedSpot.FoodSpotId = i.spot.FoodSpotId;
-                selectedSpot.VacationId = vacay.VacationId;
-                selectedSpot.SelectedExperienceType = i.useType;
-
-                var days = DaysCalculator(start, end);
-                selectedSpot.NumOfTimes = selectedSpot.SelectedExperienceType == 1 ? i.num : i.num * days; ;
-
-                var spotTotal = SpotTotalCalculation(i, start, end);
-                vacayTotal += spotTotal;
-                selectedSpot.FoodSpotBudget = spotTotal;
-
-                _context.SelectedFoodSpots.Add(selectedSpot);
-                _context.SaveChanges();
+                AddSelectedSpot(i, vacay, start, end, vacayTotal);
             });
 
             vcl.attrSelected.ForEach((i) =>
             {
-                var selectedAttr = new SelectedAttraction();
-                selectedAttr.AttractionId = i.attr.AttractionId;
-                selectedAttr.VacationId = vacay.VacationId;
-                selectedAttr.SelectedExperienceType = i.useType;
-
-                var days = DaysCalculator(start, end);
-                selectedAttr.NumOfTimes = selectedAttr.SelectedExperienceType == 1 ? i.num : i.num * days;
-
-                var attrTotal = AttrTotalCalculation(i, start, end);
-                vacayTotal += attrTotal;
-                selectedAttr.AttractionBudget = attrTotal;
-
-                _context.SelectedAttractions.Add(selectedAttr);
-                _context.SaveChanges();
+                AddSelectedAttr(i, vacay, start, end, vacayTotal);
             });
 
             vcl.travelBuddies.ForEach((b) =>
             {
-                var travelBuddy = new TravelBuddy();
-                travelBuddy.UserId = b.UserId;
-                travelBuddy.VacationId = vacay.VacationId;
-                travelBuddy.ViewedPlan = false;
-
-                _context.TravelBuddies.Add(travelBuddy);
-                _context.SaveChanges();
+                AddTravelBuddy(b, vacay);
             });
 
             //Finally, add the created vacation plan
@@ -515,7 +459,402 @@ namespace Project_1_API.Controllers
             return Ok("Vacay plan has been saved");
         }
 
-        
+        private void AddSelectedTrans(TransNum i, Vacation vacay, DateTime start, DateTime end, double vacayTotal)
+        {
+            var selectedTrans = new SelectedTransportation();
+            selectedTrans.TransportationId = i.trans.TransportationId;
+            selectedTrans.VacationId = vacay.VacationId;
+            selectedTrans.SelectedUseType = i.useType;
+            selectedTrans.NumOfTimes = i.num;
 
+            var transTotal = TransTotalCalculation(i, start, end);
+            vacayTotal += transTotal;
+            selectedTrans.TransportationBudget = transTotal;
+
+            _context.SelectedTransportations.Add(selectedTrans);
+            _context.SaveChanges();
+        }
+
+        private void AddSelectedAccomm(AccommDates i, Vacation vacay, DateTime start, DateTime end, double vacayTotal)
+        {
+            var selectedAccom = new SelectedAccommodation();
+            selectedAccom.AccommodationId = i.accomm.AccommodationId;
+            selectedAccom.VacationId = vacay.VacationId;
+            selectedAccom.CheckInDate = i.dates[0];
+            selectedAccom.CheckOutDate = i.dates[1];
+
+            var accomTotal = AccomsTotalCalculation(i);
+            vacayTotal += accomTotal;
+            selectedAccom.AccommodationBudget = accomTotal;
+
+            _context.SelectedAccommodations.Add(selectedAccom);
+            _context.SaveChanges();
+        }
+
+        private void AddSelectedSpot(SpotNum i, Vacation vacay, DateTime start, DateTime end, double vacayTotal)
+        {
+            var selectedSpot = new SelectedFoodSpot();
+            selectedSpot.FoodSpotId = i.spot.FoodSpotId;
+            selectedSpot.VacationId = vacay.VacationId;
+            selectedSpot.SelectedExperienceType = i.useType;
+            selectedSpot.NumOfTimes = i.num;
+
+            var spotTotal = SpotTotalCalculation(i, start, end);
+            vacayTotal += spotTotal;
+            selectedSpot.FoodSpotBudget = spotTotal;
+
+            _context.SelectedFoodSpots.Add(selectedSpot);
+            _context.SaveChanges();
+        }
+
+        private void AddSelectedAttr(AttrNum i, Vacation vacay, DateTime start, DateTime end, double vacayTotal)
+        {
+            var selectedAttr = new SelectedAttraction();
+            selectedAttr.AttractionId = i.attr.AttractionId;
+            selectedAttr.VacationId = vacay.VacationId;
+            selectedAttr.SelectedExperienceType = i.useType;
+            selectedAttr.NumOfTimes = i.num;
+
+            var attrTotal = AttrTotalCalculation(i, start, end);
+            vacayTotal += attrTotal;
+            selectedAttr.AttractionBudget = attrTotal;
+
+            _context.SelectedAttractions.Add(selectedAttr);
+            _context.SaveChanges();
+        }
+
+        private void AddTravelBuddy(User b, Vacation vacay)
+        {
+            var travelBuddy = new TravelBuddy();
+            travelBuddy.UserId = b.UserId;
+            travelBuddy.VacationId = vacay.VacationId;
+            travelBuddy.ViewedPlan = false;
+
+            _context.TravelBuddies.Add(travelBuddy);
+            _context.SaveChanges();
+        }
+
+        [HttpPut]
+        [Route("updateVacayBudget")]
+        public Object UpdateVacayBudget(VacayLists vcl, DateTime start, DateTime end)
+        {
+            var createdPlan = vcl.plan;
+            var vacations = _context.Vacations.ToList();
+            var vacation = vacations.Find(v => v.VacationId == createdPlan.VacationId);
+            var vacayTotal = 0.0;
+
+            //Check if vacation needs to be updated
+            if (start != vacation.VacationStartDate)
+            {
+                vacation.VacationStartDate = start;
+            }
+
+            if (end != vacation.VacationEndDate)
+            {
+                vacation.VacationEndDate = end;
+            }
+
+            //Check if transportations have changed
+            vacayTotal = UpdateSelectedTrans(vacation, vcl, start, end, vacayTotal);
+
+            //Check if accommodations have changed
+            vacayTotal = UpdateSelectedAccomm(vacation, vcl, start, end, vacayTotal);
+
+            //Check if food spots have changed
+            vacayTotal = UpdateSelectedSpots(vacation, vcl, start, end, vacayTotal);
+
+            //Check if attractions have changed
+            vacayTotal = UpdateSelectedAttrs(vacation, vcl, start, end, vacayTotal);
+
+            //Check if travel buddies have changed
+            UpdateTravelBuddies(vacation, vcl);
+
+            //Now update the estimated budget for the vacation plan
+            createdPlan.PlanBudget = vacayTotal;
+            _context.CreatedPlans.Update(createdPlan);
+            _context.SaveChanges();
+
+            return Ok("Vacay plan has been updated");
+        }
+
+        private double UpdateSelectedTrans(Vacation vacation, VacayLists vcl, DateTime start, DateTime end, double vacayTotal)
+        {
+            var selectedTrans = _context.SelectedTransportations.ToList();
+            selectedTrans = selectedTrans.FindAll(st => st.VacationId == vacation.VacationId);
+            vcl.transSelected.ForEach(i =>
+            {
+                var selected = selectedTrans.Find(t => t.TransportationId == i.trans.TransportationId);
+
+                if (selected != null)
+                {
+                    //Updating selected transportation that was previously added for the vacation plan
+
+                    //Update the details for the selected transportation
+                    if (selected.SelectedUseType != i.useType)
+                    {
+                        selected.SelectedUseType = i.useType;
+                    }
+
+                    if (selected.NumOfTimes != i.num)
+                    {
+                        selected.NumOfTimes = i.num;
+                    }
+
+                    //Update the budget calculated for the selected transportation
+                    var transTotal = TransTotalCalculation(i, start, end);
+                    selected.TransportationBudget = transTotal;
+                    vacayTotal += transTotal;
+
+                    //Update the databse
+                    _context.SelectedTransportations.Update(selected);
+                    _context.SaveChanges();
+
+                    //Remove the checked selected transportation from the list
+                    selectedTrans.Remove(selected);
+                }
+                else
+                {
+                    //New selected transportation has been found. Add it to the database
+                    AddSelectedTrans(i, vacation, start, end, vacayTotal);
+                }
+            });
+
+            if (selectedTrans.Count != 0)
+            {
+                //Not all previousy selected transportations have been added to the update
+                _context.SelectedTransportations.RemoveRange(selectedTrans);
+                _context.SaveChanges();
+            }
+
+            return vacayTotal;
+        }
+
+        private double UpdateSelectedAccomm(Vacation vacation, VacayLists vcl, DateTime start, DateTime end, double vacayTotal)
+        {
+            var selectedAccomm = _context.SelectedAccommodations.ToList();
+            selectedAccomm = selectedAccomm.FindAll(sa => sa.VacationId == vacation.VacationId);
+            vcl.accommSelected.ForEach(i =>
+            {
+                var selected = selectedAccomm.Find(a => a.AccommodationId == i.accomm.AccommodationId);
+
+                if (selected != null)
+                {
+                    //Updating selected accommodated that was previously added for the vacation plan
+
+                    //Update the details for the selected accommodation
+                    if (selected.CheckInDate != i.dates[0])
+                    {
+                        selected.CheckInDate = i.dates[0];
+                    }
+
+                    if (selected.CheckOutDate != i.dates[1])
+                    {
+                        selected.CheckOutDate = i.dates[1];
+                    }
+
+                    //Update the budget calculated for the selected accommodation
+                    var accommTotal = AccomsTotalCalculation(i);
+                    selected.AccommodationBudget = accommTotal;
+                    vacayTotal += accommTotal;
+
+                    //Update the databse
+                    _context.SelectedAccommodations.Update(selected);
+                    _context.SaveChanges();
+
+                    //Remove the checked selected accommodation from the list
+                    selectedAccomm.Remove(selected);
+                }
+                else
+                {
+                    //New selected accommodation has been found. Add it to the database
+                    AddSelectedAccomm(i, vacation, start, end, vacayTotal);
+                }
+            });
+
+            if (selectedAccomm.Count != 0)
+            {
+                //Not all previousy selected accommodation have been added to the update
+                _context.SelectedAccommodations.RemoveRange(selectedAccomm);
+                _context.SaveChanges();
+            }
+
+            return vacayTotal;
+        }
+
+        private double UpdateSelectedSpots(Vacation vacation, VacayLists vcl, DateTime start, DateTime end, double vacayTotal)
+        {
+            var selectedSpots = _context.SelectedFoodSpots.ToList();
+            selectedSpots = selectedSpots.FindAll(ss => ss.VacationId == vacation.VacationId);
+            vcl.spotsSelected.ForEach(i =>
+            {
+                var selected = selectedSpots.Find(s => s.FoodSpotId == i.spot.FoodSpotId);
+
+                if (selected != null)
+                {
+                    //Updating selected food spot that was previously added for the vacation plan
+
+                    //Update the details for the selected food spot
+                    if (selected.SelectedExperienceType != i.useType)
+                    {
+                        selected.SelectedExperienceType = i.useType;
+                    }
+
+                    if (selected.NumOfTimes != i.num)
+                    {
+                        selected.NumOfTimes = i.num;
+                    }
+
+                    //Update the budget calculated for the selected food spot
+                    var spotTotal = SpotTotalCalculation(i, start, end);
+                    selected.FoodSpotBudget = spotTotal;
+                    vacayTotal += spotTotal;
+
+                    //Update the databse
+                    _context.SelectedFoodSpots.Update(selected);
+                    _context.SaveChanges();
+
+                    //Remove the checked selected food spot from the list
+                    selectedSpots.Remove(selected);
+                }
+                else
+                {
+                    //New selected food spot has been found. Add it to the database
+                    AddSelectedSpot(i, vacation, start, end, vacayTotal);
+                }
+            });
+
+            if (selectedSpots.Count != 0)
+            {
+                //Not all previousy selected food spot have been added to the update
+                _context.SelectedFoodSpots.RemoveRange(selectedSpots);
+                _context.SaveChanges();
+            }
+
+            return vacayTotal;
+        }
+
+        private double UpdateSelectedAttrs(Vacation vacation, VacayLists vcl, DateTime start, DateTime end, double vacayTotal)
+        {
+            var selectedAttrs = _context.SelectedAttractions.ToList();
+            selectedAttrs = selectedAttrs.FindAll(at => at.VacationId == vacation.VacationId);
+            vcl.attrSelected.ForEach(i =>
+            {
+                var selected = selectedAttrs.Find(at => at.AttractionId == i.attr.AttractionId);
+
+                if (selected != null)
+                {
+                    //Updating selected attraction that was previously added for the vacation plan
+
+                    //Update the details for the selected attraction
+                    if (selected.SelectedExperienceType != i.useType)
+                    {
+                        selected.SelectedExperienceType = i.useType;
+                    }
+
+                    if (selected.NumOfTimes != i.num)
+                    {
+                        selected.NumOfTimes = i.num;
+                    }
+
+                    //Update the budget calculated for the selected attraction
+                    var attrTotal = AttrTotalCalculation(i, start, end);
+                    selected.AttractionBudget = attrTotal;
+                    vacayTotal += attrTotal;
+
+                    //Update the databse
+                    _context.SelectedAttractions.Update(selected);
+                    _context.SaveChanges();
+
+                    //Remove the checked selected attraction from the list
+                    selectedAttrs.Remove(selected);
+                }
+                else
+                {
+                    //New selected attraction has been found. Add it to the database
+                    AddSelectedAttr(i, vacation, start, end, vacayTotal);
+                }
+            });
+
+            if (selectedAttrs.Count != 0)
+            {
+                //Not all previousy selected attraction have been added to the update
+                _context.SelectedAttractions.RemoveRange(selectedAttrs);
+                _context.SaveChanges();
+            }
+
+            return vacayTotal;
+        }
+
+        private void UpdateTravelBuddies(Vacation vacation, VacayLists vcl)
+        {
+            var selectedBuddies = _context.TravelBuddies.ToList();
+            selectedBuddies = selectedBuddies.FindAll(tb => tb.VacationId == vacation.VacationId);
+            vcl.travelBuddies.ForEach(i =>
+            {
+                var selected = selectedBuddies.Find(b => b.UserId == i.UserId);
+
+                if (selected != null)
+                {
+                    //Updating selected transportation that was previously added for the vacation plan
+
+                    //Remove the travel buddy from the list
+                    selectedBuddies.Remove(selected);
+                }
+                else
+                {
+                    //New selected travel buddy has been found. Add them to the database
+                    AddTravelBuddy(i, vacation);
+                }
+            });
+
+            if (selectedBuddies.Count != 0)
+            {
+                //Not all previousy selected travel buddies have been added to the update
+                _context.TravelBuddies.RemoveRange(selectedBuddies);
+                _context.SaveChanges();
+            }
+        }
+
+        [HttpDelete]
+        [Route("deleteVacayBudget")]
+        public Object DeleteVacayBudget(CreatedPlan vacayPlan)
+        {
+            //Remove the selected transportations
+            var selectedTrans = _context.SelectedTransportations.ToList();
+            selectedTrans = selectedTrans.FindAll(st => st.VacationId == vacayPlan.VacationId);
+            _context.SelectedTransportations.RemoveRange(selectedTrans);
+            _context.SaveChanges();
+
+            //Remove the selected accommodations
+            var selectedAccomm = _context.SelectedAccommodations.ToList();
+            selectedAccomm = selectedAccomm.FindAll(ac => ac.VacationId == vacayPlan.VacationId);
+            _context.SelectedAccommodations.RemoveRange(selectedAccomm);
+            _context.SaveChanges();
+
+            //Remove the selected food spots
+            var selectedSpots = _context.SelectedFoodSpots.ToList();
+            selectedSpots = selectedSpots.FindAll(sp => sp.VacationId == vacayPlan.VacationId);
+            _context.SelectedFoodSpots.RemoveRange(selectedSpots);
+            _context.SaveChanges();
+
+            //Remove the selected attractions
+            var selectedAttrs = _context.SelectedAttractions.ToList();
+            selectedAttrs = selectedAttrs.FindAll(sa => sa.VacationId == vacayPlan.VacationId);
+            _context.SelectedAttractions.RemoveRange(selectedAttrs);
+            _context.SaveChanges();
+
+            //Remove travel buddies
+            var buddies = _context.TravelBuddies.ToList();
+            buddies = buddies.FindAll(b => b.VacationId == vacayPlan.VacationId);
+            _context.TravelBuddies.RemoveRange(buddies);
+            _context.SaveChanges();
+
+            //Finally, remove the created vaaction plan
+            _context.CreatedPlans.Remove(vacayPlan);
+            _context.SaveChanges();
+
+            return Ok("Vacation plan has been deelted");
+        }
+
+        }
     }
-}

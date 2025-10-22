@@ -3,7 +3,7 @@ import { MyContext } from "../../MyProvider"
 import { useNavigate } from "react-router-dom"
 import { Rating } from "react-simple-star-rating"
 
-function SelectDest() {
+function Destination() {
     const [countries, setCountries] = useState([])
     const [destinations, setDestinations] = useState([])
     const [searchedDestiations, setSearchedDestiations] = useState([])
@@ -72,7 +72,7 @@ function SelectDest() {
 
     const next = (dest) => {
         setSelectedDestination(dest)
-        navigate('addDetails')
+        navigate('vacayDetails')
     }
 
     return (
@@ -105,4 +105,4 @@ function SelectDest() {
 
 }
 
-export default SelectDest
+export default Destination

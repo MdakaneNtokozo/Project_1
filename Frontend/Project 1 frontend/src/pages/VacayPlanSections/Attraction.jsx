@@ -5,7 +5,7 @@ import { BiCheckCircle } from "react-icons/bi"
 import { useNavigate } from "react-router-dom"
 import Loading from "../../Loading"
 
-function SelectAttr() {
+function Attraction() {
     const [attractions, setAttractions] = useState([])
     const [suggestedAttractions, setSuggestedAttractions] = useState([])
     const [spenderTypes, setSpenderTypes] = useState([])
@@ -103,7 +103,7 @@ function SelectAttr() {
                     body: JSON.stringify(attrsList)
                 }).then(async res => {
                     setAttrsTotal(await res.json())
-                    navigate('/addVacayPlan/preview')
+                    navigate('/vacayPlan/preview')
                 })
             }
         }
@@ -202,9 +202,9 @@ function SelectAttr() {
                 <div className="more-details">
                     <h3>Fill in details below</h3>
                     {
-                        selectedAttractions.map((a) => {
+                        selectedAttractions.map((a, idx) => {
                             var item = attrsList.find(i => i.attr.attractionId == a.attractionId)
-                            return <div >
+                            return <div key={idx}>
                                 <p>{a.attractionName}</p>
                                 <label>Type of use for attraction expereince:</label>
                                 <select value={item != undefined ? item.useType : 0} onChange={(e) => setTimes(a, e.target.value, undefined)}>
@@ -236,4 +236,4 @@ function SelectAttr() {
 
 }
 
-export default SelectAttr
+export default Attraction

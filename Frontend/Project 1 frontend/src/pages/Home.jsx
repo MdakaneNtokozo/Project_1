@@ -13,6 +13,7 @@ function Home() {
     const navigate = useNavigate()
     const [isLoading, setIsLoading] = useState(true)
 
+
     useEffect(() => {
         // //Top 3 destinations
         var api_call = api + "Destinations/getTopDestinations"
@@ -67,8 +68,6 @@ function Home() {
         navigate('/viewVacayPlan', {state:{plan: plan}})
     }
 
-    console.log(plans)
-
     return (
         <>
             <Header />
@@ -92,7 +91,7 @@ function Home() {
                         }
 
                         <div>
-                            <button onClick={() => navigate('/addVacayPlan')}>Add vacation plan</button>
+                            <button onClick={() => navigate('/vacayPlan')}>Add vacation plan</button>
                         </div>
 
                         <hr />

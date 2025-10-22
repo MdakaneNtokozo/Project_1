@@ -347,7 +347,12 @@ public partial class Project1DatabaseContext : DbContext
             entity.Property(e => e.AccommodationId).HasColumnName("accommodation_id");
             entity.Property(e => e.VacationId).HasColumnName("vacation_id");
             entity.Property(e => e.AccommodationBudget).HasColumnName("accommodation_budget");
-            entity.Property(e => e.NumOfDays).HasColumnName("num_of_days");
+            entity.Property(e => e.CheckInDate)
+                .HasColumnType("datetime")
+                .HasColumnName("check_in_date");
+            entity.Property(e => e.CheckOutDate)
+                .HasColumnType("datetime")
+                .HasColumnName("check_out_date");
 
             
 

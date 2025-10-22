@@ -5,7 +5,7 @@ import { BiCheckCircle } from "react-icons/bi"
 import { useNavigate } from "react-router-dom"
 import Loading from "../../Loading"
 
-function SelectFoodSpot() {
+function FoodSpots() {
     const [foodSpots, setFoodSpots] = useState([])
     const [foodSpotTypes, setFoodSpotTypes] = useState([])
     const [suggestedFoodSpots, setSuggestedFoodSpots] = useState([])
@@ -116,7 +116,7 @@ function SelectFoodSpot() {
                     body: JSON.stringify(spotsList)
                 }).then(async res => {
                     setSpotsTotal(await res.json())
-                    navigate('/addVacayPlan/selectAttr')
+                    navigate('/vacayPlan/attractions')
                 })
             }
         }
@@ -252,4 +252,4 @@ function SelectFoodSpot() {
 
 }
 
-export default SelectFoodSpot
+export default FoodSpots

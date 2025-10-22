@@ -3,10 +3,10 @@ import { MyContext } from "../../MyProvider";
 import { useNavigate } from "react-router-dom";
 import DatePicker from "react-multi-date-picker";
 
-function AddDetails() {
+function VacayDetails() {
 
-    const { 
-        api, 
+    const {
+        api,
         token,
         user,
         selectedDestination,
@@ -18,7 +18,7 @@ function AddDetails() {
 
     const [spenderTypes, setSpenderTypes] = useState([])
 
-    const [hasTravelBuddies, setHasTravelBuddies] = useState("")
+    const [hasTravelBuddies, setHasTravelBuddies] = useState(selectedBuddies.length == 0 ? "false" : "true")
     const [users, setUsers] = useState([])
 
     const [dateError, setDateError] = useState("")
@@ -55,23 +55,30 @@ function AddDetails() {
     }, [])
 
     const formatDate = (date) => {
-        if (date != "") {
-            const year = date.getFullYear()
-            const month = date.getMonth() + 1
-            const day = date.getDate()
+        if (date == null) {
+            return ""
+        } else {
+            var date = new Date(date)
+            if (date != "") {
+                const year = date.getFullYear()
+                const month = date.getMonth() + 1
+                const day = date.getDate()
 
-            return year + "-" + month + "-" + (day < 10 ? "0" + day : day)
+                return year + "-" + month + "-" + (day < 10 ? "0" + day : day)
+            }
         }
+
+
     }
 
     const allowNext = () => {
         setDateError("")
         setSpenderError("")
         setBuddyError("")
-        const today = new Date (formatDate(new Date()))
+        const today = new Date(formatDate(new Date()))
         today.setHours(0)
-        const start = new Date (startDate)
-        const end = new Date (endDate)
+        const start = new Date(startDate)
+        const end = new Date(endDate)
 
         if (startDate == undefined && endDate == undefined) {
             setDateError("Select start and end dates")
@@ -85,7 +92,7 @@ function AddDetails() {
         else if (hasTravelBuddies == "true" && selectedBuddies.length == 0) {
             setBuddyError("Select buddies who will travel with you")
         } else {
-            navigate('/addVacayPlan/selectTrans')
+            navigate('/vacayPlan/transportation')
         }
     }
 
@@ -94,7 +101,7 @@ function AddDetails() {
     }
 
     const addSelectedSpenderType = (e) => {
-        var spenderType= spenderTypes.find(t => t.spenderTypeName == e.target.value)
+        var spenderType = spenderTypes.find(t => t.spenderTypeName == e.target.value)
         setSelectedSpenderType(spenderType)
 
     }
@@ -110,12 +117,12 @@ function AddDetails() {
 
     const removeTheSelectedTravelBuddies = (value) => {
         const user = users.find(u => u.userId == value)
-        setSelectedBuddies([...selectedBuddies.filter(b => b != user)])
+        setSelectedBuddies([...selectedBuddies.filter(b => b.userId != user.userId)])
 
     }
 
     const setDates = (dates) => {
-        if(dates.length == 2){
+        if (dates.length == 2) {
             setStartDate(dates[0])
             setEndDate(dates[1])
         }
@@ -126,9 +133,9 @@ function AddDetails() {
             <div className="adding-details-container">
                 <div>
                     <h2>Vacation plan creation for {selectedDestination.destinationName}</h2>
-                    
+
                     <label>Select date range</label><br />
-                    <DatePicker mode="range" range value={[startDate, endDate]} onChange={(dates) => setDates(dates)} style={{width:"100vh"}}></DatePicker><br />
+                    <DatePicker mode="range" range value={[formatDate(startDate), formatDate(endDate)]} onChange={(dates) => setDates(dates)} style={{ width: "100vh" }}></DatePicker><br />
                     {dateError != "" ?
                         <p className="error-msg" style={{ margin: "0px", marginBottom: "8px" }}>{dateError}</p> :
                         <></>
@@ -208,4 +215,4 @@ function AddDetails() {
     );
 }
 
-export default AddDetails
+export default VacayDetails

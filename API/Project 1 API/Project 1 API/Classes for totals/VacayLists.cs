@@ -4,6 +4,7 @@ namespace Project_1_API.Classes_for_totals
 {
     public class VacayLists
     {
+        public CreatedPlan plan { get; set; }
         public User user { get; set; }
         public SpenderType type { get; set; }
         public List<User> travelBuddies { get; set; }    
