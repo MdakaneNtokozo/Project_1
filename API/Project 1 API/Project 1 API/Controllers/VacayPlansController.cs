@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Project_1_API.Models;
@@ -7,6 +8,7 @@ using System.Numerics;
 
 namespace Project_1_API.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class VacayPlansControllerr(Project1DatabaseContext context) : ControllerBase
@@ -106,6 +108,10 @@ namespace Project_1_API.Controllers
                 var dest = destinations.Find(d => d.DestinationId == destId);
                 vacayInfo.destination = dest;
 
+                //return created plan's budget in user's preffered currency
+                var exchangeRate = GetExchangeRate(destId, userPrefferedCurrencyId);
+                plan.PlanBudget = Math.Round(plan.PlanBudget * exchangeRate, 2); 
+
                 //Store the vacation plan info
                 info.Add(vacayInfo);
             });
@@ -136,7 +142,6 @@ namespace Project_1_API.Controllers
             //Get the selected transportations
             var selectedTrans = _context.SelectedTransportations.ToList();
             selectedTrans = selectedTrans.FindAll(st => st.VacationId == vacation.VacationId);
-            vacayInfo.selectedTrans = selectedTrans;
 
             //Get the details for the selected transportation
             var allTransportaion = _context.Transportations.ToList();
@@ -149,17 +154,25 @@ namespace Project_1_API.Controllers
             });
 
             //return transportations in the user's preffered currency
+            double exchangeRate = -1;
             if (plansTransportation.Count != 0)
             {
                 var destId = plansTransportation[0].DestinationId;
-                var exchangeRate = GetExchangeRate(destId, currencyId);
-
-                plansTransportation.ForEach(p =>
-                {
-                    p.TransportationPricePerPerson = Math.Round(p.TransportationPricePerPerson * exchangeRate, 2);
-                });
+                exchangeRate = GetExchangeRate(destId, currencyId);
             }
-            
+
+            //return details in user's preffered currency
+            selectedTrans.ForEach(i =>
+            {
+                i.TransportationBudget = Math.Round(i.TransportationBudget * exchangeRate, 2);
+            });
+
+            plansTransportation.ForEach(p =>
+            {
+                p.TransportationPricePerPerson = Math.Round(p.TransportationPricePerPerson * exchangeRate, 2);
+            });
+
+            vacayInfo.selectedTrans = selectedTrans;
             vacayInfo.transportations = plansTransportation;
         }
 
@@ -168,7 +181,6 @@ namespace Project_1_API.Controllers
             //Get the selected accommodations
             var selectedAccoms = _context.SelectedAccommodations.ToList();
             selectedAccoms = selectedAccoms.FindAll(a => a.VacationId == vacation.VacationId);
-            vacayInfo.selectedAccoms = selectedAccoms;
 
             //Get the details for the selected accommodation
             var allAccommodation = _context.Accommodations.ToList();
@@ -180,17 +192,24 @@ namespace Project_1_API.Controllers
             });
 
             //return accommodations in the user's preffered currency
+            double exchangeRate = -1;
             if (plansAccommodation.Count != 0)
             {
                 var destId = plansAccommodation[0].DestinationId;
-                var exchangeRate = GetExchangeRate(destId, currencyId);
-
-                plansAccommodation.ForEach(p =>
-                {
-                    p.AccommodationPricePerPerson = Math.Round(p.AccommodationPricePerPerson * exchangeRate);
-                });
+                exchangeRate = GetExchangeRate(destId, currencyId);
             }
 
+            selectedAccoms.ForEach(i =>
+            {
+                i.AccommodationBudget = Math.Round(i.AccommodationBudget * exchangeRate, 2);
+            });
+
+            plansAccommodation.ForEach(p =>
+            {
+                p.AccommodationPricePerPerson = Math.Round(p.AccommodationPricePerPerson * exchangeRate, 2);
+            });
+
+            vacayInfo.selectedAccoms = selectedAccoms;
             vacayInfo.accommodations = plansAccommodation;
         }
 
@@ -199,7 +218,6 @@ namespace Project_1_API.Controllers
             //Get the selected food spots
             var selectedSpots = _context.SelectedFoodSpots.ToList();
             selectedSpots = selectedSpots.FindAll(s => s.VacationId == vacation.VacationId);
-            vacayInfo.selectedSpots = selectedSpots;
 
             //Get the details for the selected food spots
             var AllFoodSpots = _context.FoodSpots.ToList();
@@ -211,18 +229,25 @@ namespace Project_1_API.Controllers
             });
 
             //return food spots in the user's preffered currency
+            double exchangeRate = -1;
             if (plansFoodSpots.Count != 0)
             {
                 var destId = plansFoodSpots[0].DestinationId;
-                var exchangeRate = GetExchangeRate(destId, currencyId);
-
-                plansFoodSpots.ForEach(p =>
-                {
-                    p.FoodSpotMinMenuPrice = Math.Round(p.FoodSpotMinMenuPrice * exchangeRate, 2);
-                    p.FoodSpotMaxMenuPrice = Math.Round(p.FoodSpotMaxMenuPrice * exchangeRate, 2);
-                });
+                exchangeRate = GetExchangeRate(destId, currencyId);
             }
 
+            selectedSpots.ForEach(i =>
+            {
+                i.FoodSpotBudget = Math.Round(i.FoodSpotBudget * exchangeRate, 2);
+            });
+
+            plansFoodSpots.ForEach(p =>
+            {
+                p.FoodSpotMinMenuPrice = Math.Round(p.FoodSpotMinMenuPrice * exchangeRate, 2);
+                p.FoodSpotMaxMenuPrice = Math.Round(p.FoodSpotMaxMenuPrice * exchangeRate, 2);
+            });
+
+            vacayInfo.selectedSpots = selectedSpots;
             vacayInfo.foodSpots = plansFoodSpots;
         }
 
@@ -231,7 +256,6 @@ namespace Project_1_API.Controllers
             //Get the selected attractions
             var selectedAttrs = _context.SelectedAttractions.ToList();
             selectedAttrs = selectedAttrs.FindAll(s => s.VacationId == vacation.VacationId);
-            vacayInfo.selectedAttrs = selectedAttrs;
 
             //Get the details for the selected attractions
             var AllAttractions = _context.Attractions.ToList();
@@ -243,17 +267,25 @@ namespace Project_1_API.Controllers
             });
 
             //return attractions in the user's preffered currency
+            double exchangeRate = -1;
             if (plansAttractions.Count != 0)
             {
                 var destId = plansAttractions[0].DestinationId;
-                var exchangeRate = GetExchangeRate(destId, currencyId);
+                exchangeRate = GetExchangeRate(destId, currencyId);
 
-                plansAttractions.ForEach(p =>
-                {
-                    p.AttractionEntranceFee = Math.Round(p.AttractionEntranceFee * exchangeRate, 2);
-                });
             }
 
+            selectedAttrs.ForEach(i =>
+            {
+                i.AttractionBudget = Math.Round(i.AttractionBudget * exchangeRate, 2);
+            });
+
+            plansAttractions.ForEach(p =>
+            {
+                p.AttractionEntranceFee = Math.Round(p.AttractionEntranceFee * exchangeRate, 2);
+            });
+
+            vacayInfo.selectedAttrs = selectedAttrs;
             vacayInfo.attractions = plansAttractions;
         }
 

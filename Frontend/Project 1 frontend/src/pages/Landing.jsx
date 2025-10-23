@@ -25,6 +25,8 @@ function Landing() {
             </div>
 
             <Footer />
+
+            
         </div>
 
     );

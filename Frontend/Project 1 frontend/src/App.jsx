@@ -1,6 +1,7 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom"
 import { MyProvider } from "./MyProvider"
 import { lazy, Suspense } from "react"
+import ViewVacayPlans from "./pages/ViewVacayPlans"
 
 
 
@@ -42,6 +43,7 @@ function App() {
               </Route>
 
               <Route path="/viewVacayPlan" element={<ViewVacayPlan />}></Route>
+              <Route path="/viewVacayPlans" element={<ViewVacayPlans />}></Route>
 
             </Routes>
           </Suspense>

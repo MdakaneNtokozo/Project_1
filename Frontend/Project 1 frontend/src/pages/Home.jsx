@@ -8,11 +8,12 @@ import Loading from "../Loading"
 
 function Home() {
     const [plans, setPlans] = useState([])
+    const [countries, setCountries] = useState([])
     const [top3Destinations, setTop3Destinations] = useState([])
     const { role, user, api, token, setCurrency } = useContext(MyContext)
     const navigate = useNavigate()
-    const [isLoading, setIsLoading] = useState(true)
-
+    const [loading1, setLoading1] = useState(true)
+    const [loading2, setLoading2] = useState(true)
 
     useEffect(() => {
         // //Top 3 destinations
@@ -29,10 +30,26 @@ function Home() {
                 navigate('/')
             } else {
                 setTop3Destinations(await res.json())
+                if (res.ok) {
+                    //Countries
+                    var api_call = api + "Destinations/getCountries"
+                    fetch(api_call, {
+                        method: "GET",
+                        headers: {
+                            "Authorization": "Bearer " + token,
+                            "Content-Type": "application/json"
+                        },
+                    }).then(async res => {
+                        setCountries(await res.json())
+                        setLoading1(false)
+                    })
+
+                }
+
             }
         })
 
-        // //Currency
+        //Currency
         api_call = api + "Destinations/getCurrency?currencyId=" + user.currencyId
         fetch(api_call, {
             method: "GET",
@@ -54,18 +71,32 @@ function Home() {
             },
         }).then(async res => {
             setPlans(await res.json())
-            setIsLoading(false)
+            setLoading2(false)
         })
-
 
     }, [])
 
-    while (isLoading == true ) {
+    while (loading1 == true || loading2 == true) {
         return <Loading />
     }
 
     const viewPlan = (plan) => {
-        navigate('/viewVacayPlan', {state:{plan: plan}})
+        navigate('/viewVacayPlan', { state: { plan: plan } })
+    }
+
+    const formatDate = (date) => {
+        if (date == null) {
+            return ""
+        } else {
+            var date = new Date(date)
+            if (date != "") {
+                const year = date.getFullYear()
+                const month = date.getMonth() + 1
+                const day = date.getDate()
+
+                return year + "-" + month + "-" + (day < 10 ? "0" + day : day)
+            }
+        }
     }
 
     return (
@@ -85,7 +116,14 @@ function Home() {
                             </div> :
                             <div className="home-plans">
                                 {plans.map((plan, idx) => {
-                                    return <div key={idx} onClick={() => viewPlan(plan)}><p>Vacation plan for {plan.destination.destinationName}</p><p>{plan.vacayDaysLeft} days left</p></div>
+                                    var today = new Date(formatDate(Date.now()))
+                                    var planDate = new Date(formatDate(plans[0].vacation.vacationStartDate))
+
+                                    if (planDate >= today) {
+                                        return <div className="plan" key={idx} onClick={() => viewPlan(plan)}>
+                                            <p className="planLeft">Vacation plan for {plan.destination.destinationName}</p><p className="planRight">{plan.vacayDaysLeft} days left</p>
+                                        </div>
+                                    }
                                 })}
                             </div>
                         }
@@ -108,7 +146,7 @@ function Home() {
 
                                         </div>
                                         <p>{dest.destinationName}</p>
-                                        <p>country</p>
+                                        <p>{countries.find(c => c.countryId == dest.countryId).countryName}</p>
                                         <p>{dest.destinationDescription}</p>
                                     </div>
                                 }) :

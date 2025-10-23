@@ -310,12 +310,12 @@ namespace Project_1_API.Controllers
 
             if (t.useType == 1)
             {
-                total += t.trans.TransportationPricePerPerson * t.num;
+                total += Math.Round(t.trans.TransportationPricePerPerson * t.num, 2);
             }
             else if(t.useType == 2)
             {
                 var days = DaysCalculator(start, end);
-                total += t.trans.TransportationPricePerPerson * t.num * days;
+                total += Math.Round(t.trans.TransportationPricePerPerson * t.num * days, 2);
             }
 
             return total;
@@ -335,7 +335,7 @@ namespace Project_1_API.Controllers
         {
             var total = 0.0;
             var days = DaysCalculator(a.dates[0], a.dates[1]);
-            total = a.accomm.AccommodationPricePerPerson * days;
+            total = Math.Round(a.accomm.AccommodationPricePerPerson * days, 2);
 
             return total;
         }
@@ -356,12 +356,12 @@ namespace Project_1_API.Controllers
 
             if (s.useType == 1)
             {
-                total += s.spot.FoodSpotMaxMenuPrice * s.num;
+                total += Math.Round(s.spot.FoodSpotMaxMenuPrice * s.num, 2);
             }
             else if (s.useType == 2)
             {
                 var days = DaysCalculator(start, end);
-                total += s.spot.FoodSpotMaxMenuPrice * s.num * days;
+                total += Math.Round(s.spot.FoodSpotMaxMenuPrice * s.num * days, 2);
             }
 
             return total;
@@ -383,12 +383,12 @@ namespace Project_1_API.Controllers
 
             if (a.useType == 1)
             {
-                total += a.attr.AttractionEntranceFee * a.num;
+                total += Math.Round(a.attr.AttractionEntranceFee * a.num, 2);
             }
             else if (a.useType == 2)
             {
                 var days = DaysCalculator(start, end);
-                total += a.attr.AttractionEntranceFee * a.num * days;
+                total += Math.Round(a.attr.AttractionEntranceFee * a.num * days, 2);
             }
 
             return total;
@@ -418,24 +418,36 @@ namespace Project_1_API.Controllers
             _context.SaveChanges();
 
             //add the selected transportations
+            var transportations = _context.Transportations.ToList();
             vcl.transSelected.ForEach((i) =>
             {
-                AddSelectedTrans(i, vacay, start, end, vacayTotal);
+                var transport = transportations.Find(t => t.TransportationId == i.trans.TransportationId);
+                i.trans = transport;
+                vacayTotal = AddSelectedTrans(i, vacay, start, end, vacayTotal);
             });
 
+            var accommodations = _context.Accommodations.ToList();
             vcl.accommSelected.ForEach((i) =>
             {
-                AddSelectedAccomm(i, vacay, start, end, vacayTotal);
+                var accommodation = accommodations.Find(a => a.AccommodationId == i.accomm.AccommodationId);
+                i.accomm = accommodation;
+                vacayTotal = AddSelectedAccomm(i, vacay, start, end, vacayTotal);
             });
 
+            var foodSpots = _context.FoodSpots.ToList();
             vcl.spotsSelected.ForEach((i) =>
             {
-                AddSelectedSpot(i, vacay, start, end, vacayTotal);
+                var foodSpot = foodSpots.Find(s => s.FoodSpotId == i.spot.FoodSpotId);
+                i.spot = foodSpot;
+                vacayTotal = AddSelectedSpot(i, vacay, start, end, vacayTotal);
             });
 
+            var attractions = _context.Attractions.ToList();
             vcl.attrSelected.ForEach((i) =>
             {
-                AddSelectedAttr(i, vacay, start, end, vacayTotal);
+                var attraction = attractions.Find(a => a.AttractionId == i.attr.AttractionId);
+                i.attr = attraction;
+                vacayTotal = AddSelectedAttr(i, vacay, start, end, vacayTotal);
             });
 
             vcl.travelBuddies.ForEach((b) =>
@@ -459,7 +471,7 @@ namespace Project_1_API.Controllers
             return Ok("Vacay plan has been saved");
         }
 
-        private void AddSelectedTrans(TransNum i, Vacation vacay, DateTime start, DateTime end, double vacayTotal)
+        private double AddSelectedTrans(TransNum i, Vacation vacay, DateTime start, DateTime end, double vacayTotal)
         {
             var selectedTrans = new SelectedTransportation();
             selectedTrans.TransportationId = i.trans.TransportationId;
@@ -473,9 +485,11 @@ namespace Project_1_API.Controllers
 
             _context.SelectedTransportations.Add(selectedTrans);
             _context.SaveChanges();
+
+            return vacayTotal;
         }
 
-        private void AddSelectedAccomm(AccommDates i, Vacation vacay, DateTime start, DateTime end, double vacayTotal)
+        private double AddSelectedAccomm(AccommDates i, Vacation vacay, DateTime start, DateTime end, double vacayTotal)
         {
             var selectedAccom = new SelectedAccommodation();
             selectedAccom.AccommodationId = i.accomm.AccommodationId;
@@ -489,9 +503,11 @@ namespace Project_1_API.Controllers
 
             _context.SelectedAccommodations.Add(selectedAccom);
             _context.SaveChanges();
+
+            return vacayTotal;
         }
 
-        private void AddSelectedSpot(SpotNum i, Vacation vacay, DateTime start, DateTime end, double vacayTotal)
+        private double AddSelectedSpot(SpotNum i, Vacation vacay, DateTime start, DateTime end, double vacayTotal)
         {
             var selectedSpot = new SelectedFoodSpot();
             selectedSpot.FoodSpotId = i.spot.FoodSpotId;
@@ -505,9 +521,11 @@ namespace Project_1_API.Controllers
 
             _context.SelectedFoodSpots.Add(selectedSpot);
             _context.SaveChanges();
+
+            return vacayTotal;
         }
 
-        private void AddSelectedAttr(AttrNum i, Vacation vacay, DateTime start, DateTime end, double vacayTotal)
+        private double AddSelectedAttr(AttrNum i, Vacation vacay, DateTime start, DateTime end, double vacayTotal)
         {
             var selectedAttr = new SelectedAttraction();
             selectedAttr.AttractionId = i.attr.AttractionId;
@@ -521,6 +539,8 @@ namespace Project_1_API.Controllers
 
             _context.SelectedAttractions.Add(selectedAttr);
             _context.SaveChanges();
+
+            return vacayTotal;
         }
 
         private void AddTravelBuddy(User b, Vacation vacay)
@@ -579,6 +599,7 @@ namespace Project_1_API.Controllers
 
         private double UpdateSelectedTrans(Vacation vacation, VacayLists vcl, DateTime start, DateTime end, double vacayTotal)
         {
+            var transportations = _context.Transportations.ToList();
             var selectedTrans = _context.SelectedTransportations.ToList();
             selectedTrans = selectedTrans.FindAll(st => st.VacationId == vacation.VacationId);
             vcl.transSelected.ForEach(i =>
@@ -601,6 +622,8 @@ namespace Project_1_API.Controllers
                     }
 
                     //Update the budget calculated for the selected transportation
+                    var transportation = transportations.Find(t => t.TransportationId == i.trans.TransportationId);
+                    i.trans = transportation;
                     var transTotal = TransTotalCalculation(i, start, end);
                     selected.TransportationBudget = transTotal;
                     vacayTotal += transTotal;
@@ -631,6 +654,7 @@ namespace Project_1_API.Controllers
 
         private double UpdateSelectedAccomm(Vacation vacation, VacayLists vcl, DateTime start, DateTime end, double vacayTotal)
         {
+            var accommodations = _context.Accommodations.ToList();
             var selectedAccomm = _context.SelectedAccommodations.ToList();
             selectedAccomm = selectedAccomm.FindAll(sa => sa.VacationId == vacation.VacationId);
             vcl.accommSelected.ForEach(i =>
@@ -653,6 +677,8 @@ namespace Project_1_API.Controllers
                     }
 
                     //Update the budget calculated for the selected accommodation
+                    var accommodation = accommodations.Find(a => a.AccommodationId == i.accomm.AccommodationId);
+                    i.accomm = accommodation;
                     var accommTotal = AccomsTotalCalculation(i);
                     selected.AccommodationBudget = accommTotal;
                     vacayTotal += accommTotal;
@@ -683,6 +709,7 @@ namespace Project_1_API.Controllers
 
         private double UpdateSelectedSpots(Vacation vacation, VacayLists vcl, DateTime start, DateTime end, double vacayTotal)
         {
+            var foodSpots = _context.FoodSpots.ToList();
             var selectedSpots = _context.SelectedFoodSpots.ToList();
             selectedSpots = selectedSpots.FindAll(ss => ss.VacationId == vacation.VacationId);
             vcl.spotsSelected.ForEach(i =>
@@ -705,6 +732,8 @@ namespace Project_1_API.Controllers
                     }
 
                     //Update the budget calculated for the selected food spot
+                    var foodSpot = foodSpots.Find(s => s.FoodSpotId == i.spot.FoodSpotId);
+                    i.spot = foodSpot;
                     var spotTotal = SpotTotalCalculation(i, start, end);
                     selected.FoodSpotBudget = spotTotal;
                     vacayTotal += spotTotal;
@@ -735,6 +764,7 @@ namespace Project_1_API.Controllers
 
         private double UpdateSelectedAttrs(Vacation vacation, VacayLists vcl, DateTime start, DateTime end, double vacayTotal)
         {
+            var attractions = _context.Attractions.ToList();
             var selectedAttrs = _context.SelectedAttractions.ToList();
             selectedAttrs = selectedAttrs.FindAll(at => at.VacationId == vacation.VacationId);
             vcl.attrSelected.ForEach(i =>
@@ -757,6 +787,8 @@ namespace Project_1_API.Controllers
                     }
 
                     //Update the budget calculated for the selected attraction
+                    var attraction = attractions.Find(a => a.AttractionId == i.attr.AttractionId);
+                    i.attr = attraction;
                     var attrTotal = AttrTotalCalculation(i, start, end);
                     selected.AttractionBudget = attrTotal;
                     vacayTotal += attrTotal;

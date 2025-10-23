@@ -136,5 +136,39 @@ namespace Project_1_API.Controllers
             return NoContent();
         }
 
+        [Authorize]
+        [HttpPut]
+        [Route("updateProfile")]
+        public Object UpdateProfile(User user) {
+            _context.Users.Update(user);
+            _context.SaveChanges();
+            return Ok(user);
+        }
+
+        [HttpPut]
+        [Route("updatePassword")]
+        public async Task<Object> UpdatePassowrd(int userId, String oldPassword, String newPassword)
+        {
+            var users = await _context.Users.ToListAsync();
+            var user = users.Find(u => u.UserId == userId);
+            var result = _passwordHasher.VerifyHashedPassword(user, user.UserPassword, oldPassword);
+
+            if (result == PasswordVerificationResult.Success)
+            {
+                var newPasswordHash = _passwordHasher.HashPassword(null, newPassword);
+                user.UserPassword = newPasswordHash;
+                _context.Users.Update(user);
+                await _context.SaveChangesAsync();
+
+                return NoContent();
+            }
+            else
+            {
+                return BadRequest("The old password is incorrect");
+            }
+        }
+
+
+
     }
 }

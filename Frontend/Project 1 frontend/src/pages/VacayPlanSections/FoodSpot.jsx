@@ -26,20 +26,12 @@ function FoodSpots() {
     } = useContext(MyContext)
     const navigate = useNavigate()
     const [isLoading, setIsLoading] = useState(true);
+    const [filter, setFilter] = useState(1)
 
     useEffect(() => {
         //Food spot types
-        var api_call = api + "Destinations/getFoodSpotTypes"
-        fetch(api_call, {
-            method: "GET",
-            headers: {
-                "Authorization": "Bearer " + token,
-                "Content-Type": "application/json"
-            },
-        }).then(async res => {
-            setFoodSpotTypes(await res.json())
-            //Food spots
-            api_call = api + "Destinations/getFoodSpots?destId=" + selectedDestination.destinationId + "&currencyId= " + user.currencyId
+        if (foodSpots.length == 0) {
+            var api_call = api + "Destinations/getFoodSpotTypes"
             fetch(api_call, {
                 method: "GET",
                 headers: {
@@ -47,9 +39,13 @@ function FoodSpots() {
                     "Content-Type": "application/json"
                 },
             }).then(async res => {
-                setFoodSpots(await res.json())
-                //Spender types
-                api_call = api + "LoginSignup/getSpenderTypes"
+                if (res.status == 401) {
+                    console.log("unauthorized")
+                    navigate('/')
+                }
+                setFoodSpotTypes(await res.json())
+                //Food spots
+                api_call = api + "Destinations/getFoodSpots?destId=" + selectedDestination.destinationId + "&currencyId= " + user.currencyId
                 fetch(api_call, {
                     method: "GET",
                     headers: {
@@ -57,21 +53,33 @@ function FoodSpots() {
                         "Content-Type": "application/json"
                     },
                 }).then(async res => {
-                    setSpenderTypes(await res.json())
-
-                    api_call = api + "Destinations/getSuggestedFoodSpot?spenderTypeId=" + selectedSpenderType.spenderTypeId + "&destinationId= " + selectedDestination.destinationId
+                    setFoodSpots(await res.json())
+                    //Spender types
+                    api_call = api + "LoginSignup/getSpenderTypes"
                     fetch(api_call, {
                         method: "GET",
                         headers: {
                             "Authorization": "Bearer " + token,
                             "Content-Type": "application/json"
                         },
-                    }).then(async res => setSuggestedFoodSpots(await res.json()))
-                    setIsLoading(false)
+                    }).then(async res => {
+                        setSpenderTypes(await res.json())
+
+                        api_call = api + "Destinations/getSuggestedFoodSpot?spenderTypeId=" + selectedSpenderType.spenderTypeId + "&destinationId= " + selectedDestination.destinationId
+                        fetch(api_call, {
+                            method: "GET",
+                            headers: {
+                                "Authorization": "Bearer " + token,
+                                "Content-Type": "application/json"
+                            },
+                        }).then(async res => setSuggestedFoodSpots(await res.json()))
+                        setIsLoading(false)
+                    })
                 })
             })
-        })
-    }, [])
+        }
+
+    }, [filter])
 
     while (isLoading) {
         return <Loading />
@@ -172,10 +180,28 @@ function FoodSpots() {
         }
     }
 
+    const filterItems = (filter) => {
+        if (filter == 2) {
+            setFoodSpots(foodSpots.sort((a, b) => a.foodSpotMinMenuPrice - b.foodSpotMinMenuPrice))
+        } else if (filter == 3) {
+            setFoodSpots(foodSpots.sort((a, b) => b.foodSpotMaxMenuPrice - a.foodSpotMaxMenuPrice))
+        } else if (filter == 4) {
+            setFoodSpots(foodSpots.sort((a, b) => b.foodSpotRating - a.foodSpotRating))
+        }
+        setFilter(filter)
+    }
+
     return (
         <>
             <div>
                 <h2>Select food spots from {selectedDestination.destinationName}</h2>
+
+                <select value={filter} onChange={(e) => filterItems(e.target.value)}>
+                    <option value={1}>Filter by:</option>
+                    <option value={2}>Lowest - highest</option>
+                    <option value={3}>Highest - lowest</option>
+                    <option value={4}>Rating</option>
+                </select>
 
                 <div className="cards-section">
                     {foodSpots.length.length != 0 ?
@@ -211,35 +237,37 @@ function FoodSpots() {
 
             </div>
 
-            {selectedFoodSpots.length != 0 ?
+            <div className="more-details">
+                <h3>Fill in details below</h3>
+                {selectedFoodSpots.length != 0 ?
 
-                <div className="more-details">
-                    <h3>Fill in details below</h3>
-                    {
-                        selectedFoodSpots.map((s, idx) => {
-                            var item = spotsList.find(i => i.spot.foodSpotId == s.foodSpotId)
-                            return <div key={idx} >
-                                <p>{s.foodSpotName}</p>
+                    <>
+                        {
+                            selectedFoodSpots.map((s, idx) => {
+                                var item = spotsList.find(i => i.spot.foodSpotId == s.foodSpotId)
+                                return <div key={idx} >
+                                    <p>{s.foodSpotName}</p>
 
-                                <label>Type of food experience:</label>
-                                <select value={item != undefined ? item.useType : 0} onChange={(e) => setTimes(s, e.target.value, undefined)}>
-                                    <option value={0}>What type of food experience best describes the above food spot?</option>
-                                    <option value={1}>Limited experience throughout the trip</option>
-                                    <option value={2}>Every day experience during the trip</option>
-                                </select>
+                                    <label>Type of food experience:</label>
+                                    <select value={item != undefined ? item.useType : 0} onChange={(e) => setTimes(s, e.target.value, undefined)}>
+                                        <option value={0}>What type of food experience best describes the above food spot?</option>
+                                        <option value={1}>Limited experience throughout the trip</option>
+                                        <option value={2}>Every day experience during the trip</option>
+                                    </select>
 
-                                <label>Specify the number of times it will be experienced:</label>
-                                <input type="number" min={0} value={item != undefined ? item.num : ""} onChange={(e) => setTimes(s, item.useType, e.target.value)}></input>
-                                <p className="error-msg" id={"s" + s.foodSpotId} style={{ margin: "0px", marginBottom: "8px" }}></p>
+                                    <label>Specify the number of times it will be experienced:</label>
+                                    <input type="number" min={0} value={item != undefined ? item.num : ""} onChange={(e) => setTimes(s, item.useType, e.target.value)}></input>
+                                    <p className="error-msg" id={"s" + s.foodSpotId} style={{ margin: "0px", marginBottom: "8px" }}></p>
 
-                            </div>
-                        })
-                    }
+                                </div>
+                            })
+                        }
 
-                </div>
+                    </>
 
-                : <></>
-            }
+                    : <p>No food spots selected</p>
+                }
+            </div>
 
             <div style={{ display: "flex", flexDirection: "row", justifyContent: "space-between" }}>
                 <button onClick={back} type="button">Back</button>

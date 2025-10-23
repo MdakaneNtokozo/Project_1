@@ -46,22 +46,6 @@ function ViewVacayPlan() {
     const [selectedAttrs] = useState(plan.selectedAttrs)
     const [attractions] = useState(plan.attractions)
 
-    const [transTotal, setTransTotal] = useState(0.0)
-    const [accommTotal, setAccommTotal] = useState(0.0)
-    const [spotsTotal, setSpotsTotal] = useState(0.0)
-    const [attrsTotal, setAttrsTotal] = useState(0.0)
-
-    const formatDate = (date) => {
-        var date = new Date(date)
-        if (date != undefined) {
-            const year = date.getFullYear()
-            const month = date.getMonth() + 1
-            const day = date.getDate()
-
-            return year + "-" + month + "-" + (day < 10 ? "0" + day : day)
-        }
-    }
-
     const formatDate2 = (date) => {
         var date = new Date(date)
         if (date != undefined) {
@@ -105,7 +89,6 @@ function ViewVacayPlan() {
         var accommsList = []
         selectedAccomm.forEach(i => {
             var accomm = accommodations.find(a => a.accommodationId == i.accommodationId)
-            console.log(new Date(i.checkInDate))
             var item = {
                 accomm: accomm,
                 dates: [new Date(i.checkInDate), new Date(i.checkOutDate)]
@@ -175,6 +158,7 @@ function ViewVacayPlan() {
 
         return total
     }
+
 
     const calcAccommTotal = (aList) => {
         var total = 0.0
@@ -385,7 +369,7 @@ function ViewVacayPlan() {
                                         <tbody>
                                             <tr>
                                                 <td className="td1">Budget total</td>
-                                                <td className="td2"></td>
+                                                <td className="td2">{currency.currencySymbol}</td>
                                                 <td className="td3">{createdPlan.planBudget}</td>
                                             </tr>
                                         </tbody>

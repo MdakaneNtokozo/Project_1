@@ -27,20 +27,12 @@ function Accommodation() {
     } = useContext(MyContext)
     const navigate = useNavigate()
     const [isLoading, setIsLoading] = useState(true);
+    const [filter, setFilter] = useState(1)
 
     useEffect(() => {
         //Accommodation types
-        var api_call = api + "Destinations/getAccommodationTypes"
-        fetch(api_call, {
-            method: "GET",
-            headers: {
-                "Authorization": "Bearer " + token,
-                "Content-Type": "application/json"
-            },
-        }).then(async res => {
-            setAccommodationTypes(await res.json())
-            //Accommodations
-            api_call = api + "Destinations/getAccommodations?destId=" + selectedDestination.destinationId + "&currencyId= " + user.currencyId
+        if (accommodations.length == 0) {
+            var api_call = api + "Destinations/getAccommodationTypes"
             fetch(api_call, {
                 method: "GET",
                 headers: {
@@ -48,9 +40,14 @@ function Accommodation() {
                     "Content-Type": "application/json"
                 },
             }).then(async res => {
-                setAccommodations(await res.json())
-                //Spender types
-                api_call = api + "LoginSignup/getSpenderTypes"
+                if (res.status == 401) {
+                    console.log("unauthorized")
+                    navigate('/')
+                }
+
+                setAccommodationTypes(await res.json())
+                //Accommodations
+                api_call = api + "Destinations/getAccommodations?destId=" + selectedDestination.destinationId + "&currencyId= " + user.currencyId
                 fetch(api_call, {
                     method: "GET",
                     headers: {
@@ -58,20 +55,31 @@ function Accommodation() {
                         "Content-Type": "application/json"
                     },
                 }).then(async res => {
-                    setSpenderTypes(await res.json())
-                    api_call = api + "Destinations/getSuggestedAccommodation?spenderTypeId=" + selectedSpenderType.spenderTypeId + "&destinationId= " + selectedDestination.destinationId
+                    setAccommodations(await res.json())
+                    //Spender types
+                    api_call = api + "LoginSignup/getSpenderTypes"
                     fetch(api_call, {
                         method: "GET",
                         headers: {
                             "Authorization": "Bearer " + token,
                             "Content-Type": "application/json"
                         },
-                    }).then(async res => setSuggestedAccommodations(await res.json()))
-                    setIsLoading(false)
+                    }).then(async res => {
+                        setSpenderTypes(await res.json())
+                        api_call = api + "Destinations/getSuggestedAccommodation?spenderTypeId=" + selectedSpenderType.spenderTypeId + "&destinationId= " + selectedDestination.destinationId
+                        fetch(api_call, {
+                            method: "GET",
+                            headers: {
+                                "Authorization": "Bearer " + token,
+                                "Content-Type": "application/json"
+                            },
+                        }).then(async res => setSuggestedAccommodations(await res.json()))
+                        setIsLoading(false)
+                    })
                 })
             })
-        })
-    }, [])
+        }
+    }, [filter])
 
     while (isLoading) {
         return <Loading />
@@ -153,6 +161,8 @@ function Accommodation() {
     }
 
     const setDates = (a, dates) => {
+        console.log(dates)
+
         if (dates.length == 2) {
 
             var isFound = accommList.find(i => i.accomm.accommodationId == a.accommodationId) != undefined
@@ -177,10 +187,30 @@ function Accommodation() {
         }
     }
 
+    console.log(accommList)
+
+    const filterItems = (filter) => {
+        if (filter == 2) {
+            setAccommodations(accommodations.sort((a, b) => a.accommodationPricePerPerson - b.accommodationPricePerPerson))
+        } else if (filter == 3) {
+            setAccommodations(accommodations.sort((a, b) => b.accommodationPricePerPerson - a.accommodationPricePerPerson))
+        } else if (filter == 4) {
+            setAccommodations(accommodations.sort((a, b) => b.accommodationRating - a.accommodationRating))
+        }
+        setFilter(filter)
+    }
+
     return (
         <>
             <div>
                 <h2>Select accommodations for {selectedDestination.destinationName}</h2>
+
+                <select value={filter} onChange={(e) => filterItems(e.target.value)}>
+                    <option value={1}>Filter by:</option>
+                    <option value={2}>Lowest - highest</option>
+                    <option value={3}>Highest - lowest</option>
+                    <option value={4}>Rating</option>
+                </select>
 
                 <div className="cards-section">
                     {accommodations.length.length != 0 ?
@@ -218,55 +248,61 @@ function Accommodation() {
 
             </div>
 
-            {selectedAccommodations.length != 0 ?
+            <div className="more-details">
+                <h3>Fill in details below</h3>
+                {selectedAccommodations.length != 0 ?
+                    <>
+                        {
+                            selectedAccommodations.map((a, idx) => {
+                                var item = accommList.find(i => i.accomm.accommodationId == a.accommodationId)
 
-                <div className="more-details">
-                    <h3>Fill in details below</h3>
-                    {
-                        selectedAccommodations.map((a, idx) => {
-                            var item = accommList.find(i => i.accomm.accommodationId == a.accommodationId)
+                                return <div key={idx}>
+                                    <p>{a.accommodationName}</p>
+                                    <label>Select check in and check out dates for accommodation:</label>
+                                    <DatePicker mode="range"
+                                        value={item != undefined ? [formatDate(item.dates[0]), formatDate(item.dates[1])] : undefined} 
+                                        range
+                                        onChange={(dates) => setDates(a, dates)}
+                                        mapDays={({ date }) => {
+                                            var props = {}
 
-                            return <div key={idx}>
-                                <p>{a.accommodationName}</p>
-                                <label>Select check in and check out dates for accommodation:</label>
-                                <DatePicker mode="range" value={item != undefined ? [formatDate(item.dates[0]), formatDate(item.dates[1])] : undefined} range onChange={(dates) => setDates(a, dates)} style={{ width: "100vh" }} minDate={startDate} maxDate={endDate}
-                                    mapDays={({ date }) => {
-                                        var props = {}
+                                            accommList.map((i) => {
+                                                if (i != item) {
+                                                    var d = formatDate(date)
+                                                    var start = formatDate(i.dates[0])
+                                                    var end = formatDate(i.dates[1])
+                                                    var dateNum = new Date(d)
+                                                    var startNum = new Date(start)
+                                                    var endNum = new Date(end)
 
-                                        accommList.map((i) => {
-                                            if (i != item) {
-                                                var d = formatDate(date)
-                                                var start = formatDate(i.dates[0])
-                                                var end = formatDate(i.dates[1])
-                                                var dateNum = new Date(d)
-                                                var startNum = new Date(start)
-                                                var endNum = new Date(end)
-
-                                                if (dateNum >= startNum && dateNum <= endNum) {
-                                                    props.style = {
-                                                        backgroundColor: "#71c7f1ff"
+                                                    if (dateNum >= startNum && dateNum <= endNum) {
+                                                        props.style = {
+                                                            backgroundColor: "#71c7f1ff"
+                                                        }
+                                                        props.disabled = true
                                                     }
-                                                    props.disabled = true
                                                 }
-                                            }
-                                        })
+                                            })
 
-                                        return props
-                                    }}
+                                            return props
+                                        }}
 
+                                        minDate={startDate}
+                                        maxDate={endDate}
 
-                                ></DatePicker><br />
-                                <p className="error-msg" id={"a" + a.accommodationId} style={{ margin: "0px", marginBottom: "8px" }}></p>
+                                    ></DatePicker><br />
+                                    <p className="error-msg" id={"a" + a.accommodationId} style={{ margin: "0px", marginBottom: "8px" }}></p>
 
-                            </div>
-                        })
+                                </div>
+                            })
 
-                    }
+                        }
 
-                </div>
+                    </>
 
-                : <></>
-            }
+                    : <p>No accommodation selected</p>
+                }
+            </div>
 
             <div style={{ display: "flex", flexDirection: "row", justifyContent: "space-between" }}>
                 <button onClick={back} type="button">Back</button>

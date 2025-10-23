@@ -512,6 +512,48 @@
   },
   {
     "ContainingType": "Project_1_API.Controllers.LoginSignupController",
+    "Method": "UpdatePassowrd",
+    "RelativePath": "api/LoginSignup/updatePassword",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "userId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "oldPassword",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "newPassword",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Project_1_API.Controllers.LoginSignupController",
+    "Method": "UpdateProfile",
+    "RelativePath": "api/LoginSignup/updateProfile",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "user",
+        "Type": "Project_1_API.Models.User",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Project_1_API.Controllers.LoginSignupController",
     "Method": "GetUsers",
     "RelativePath": "api/LoginSignup/users",
     "HttpMethod": "GET",
