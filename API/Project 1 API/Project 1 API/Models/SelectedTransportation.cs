@@ -15,7 +15,4 @@ public partial class SelectedTransportation
 
     public double TransportationBudget { get; set; }
 
-    
-
-    
 }

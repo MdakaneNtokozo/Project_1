@@ -50,7 +50,7 @@ function Login() {
                         }
 
                     })
-                }else {
+                } else {
                     setError(await res.text())
                 }
             })
@@ -65,25 +65,27 @@ function Login() {
 
     return (
         <>
-            <form className="form" onSubmit={stopReload} onClick={(e) => e.stopPropagation()}>
-                <div>
-                    <h2 style={{ textAlign: "center" }}>Login</h2>
-                </div>
+            {page == "" ?
+                <form className="form" onSubmit={stopReload} onClick={(e) => e.stopPropagation()}>
+                    <div>
+                        <h2 style={{ textAlign: "center" }}>Login</h2>
+                    </div>
 
-                <div>
-                    <label>Email</label>
-                    <input ref={emailRef} placeholder="email" type="email" required></input>
-                    <label>Password</label>
-                    <input ref={passwordRef} placeholder="password" type="password" required></input>
-                </div>
+                    <div>
+                        <label>Email</label>
+                        <input ref={emailRef} placeholder="email" type="email" required></input>
+                        <label>Password</label>
+                        <input ref={passwordRef} placeholder="password" type="password" required></input>
+                    </div>
 
-                <div>
-                    {error != "" ? <p className="error-msg">{error}</p> : <></>}
-                    <button onClick={Login}>Login</button>
-                    <div>Don't have an account? <div onClick={() => setPage("Sign up")}>Sign up</div></div>
-                    <a href="/">Forgot password</a>
-                </div>
-            </form>
+                    <div>
+                        {error != "" ? <p className="error-msg">{error}</p> : <></>}
+                        <button onClick={Login}>Login</button>
+                        <div>Don't have an account? <div onClick={() => setPage("Sign up")}>Sign up</div></div>
+                    </div>
+                </form>
+                : <></>
+            }
 
             {page == "Sign up" ?
                 <div className="container-popup" onClick={() => setPage("")}>

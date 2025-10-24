@@ -24,10 +24,4 @@ public partial class FoodSpot
     public int DestinationId { get; set; }
 
     public string? FoodSpotImage { get; set; }
-
-    
-
-    
-
-    
 }

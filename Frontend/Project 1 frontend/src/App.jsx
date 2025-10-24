@@ -1,9 +1,6 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom"
 import { MyProvider } from "./MyProvider"
 import { lazy, Suspense } from "react"
-import ViewVacayPlans from "./pages/ViewVacayPlans"
-
-
 
 const Loading = lazy(() => import(  "./Loading" ))
 const Landing = lazy(() => import( "./pages/Landing"))
@@ -19,6 +16,7 @@ const Accommodation = lazy(() => import( "./pages/VacayPlanSections/Accommodatio
 const FoodSpots = lazy(() => import( "./pages/VacayPlanSections/FoodSpot" ))
 const Attraction = lazy(() => import( "./pages/VacayPlanSections/Attraction" ))
 const VacayPlanPreview = lazy(() => import( "./pages/VacayPlanSections/VacayPlanPreview" ))
+const ViewVacayPlans = lazy(() => import( "./pages/ViewVacayPlans" ))
 
 function App() {
   return (

@@ -14,8 +14,4 @@ public partial class SelectedFoodSpot
     public int NumOfTimes { get; set; }
 
     public double FoodSpotBudget { get; set; }
-
-    
-
-    
 }

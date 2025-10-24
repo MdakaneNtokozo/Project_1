@@ -11,11 +11,4 @@ public partial class Currency
 
     public string CurrencySymbol { get; set; } = null!;
 
-    
-
-    
-
-    
-
-    
 }

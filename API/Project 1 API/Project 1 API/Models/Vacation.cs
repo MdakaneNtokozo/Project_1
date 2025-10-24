@@ -10,16 +10,4 @@ public partial class Vacation
     public DateTime VacationStartDate { get; set; }
 
     public DateTime VacationEndDate { get; set; }
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
 }

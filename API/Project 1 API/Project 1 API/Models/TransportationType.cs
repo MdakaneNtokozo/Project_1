@@ -8,6 +8,4 @@ public partial class TransportationType
     public int TransportationTypeId { get; set; }
 
     public string TransportationTypeName { get; set; } = null!;
-
-    
 }

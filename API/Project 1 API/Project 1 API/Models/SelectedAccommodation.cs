@@ -14,8 +14,4 @@ public partial class SelectedAccommodation
     public DateTime CheckOutDate { get; set; }
 
     public double AccommodationBudget { get; set; }
-
-    
-
-    
 }

@@ -10,8 +10,4 @@ public partial class TravelBuddy
     public int UserId { get; set; }
 
     public bool ViewedPlan { get; set; }
-
-    
-
-    
 }

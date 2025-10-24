@@ -16,10 +16,4 @@ public partial class CreatedPlan
     public DateTime PlanModifiedDate { get; set; }
 
     public int SpenderTypeId { get; set; }
-
-    
-
-    
-
-    
 }

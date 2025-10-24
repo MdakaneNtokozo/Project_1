@@ -16,12 +16,12 @@
     font-family: 'Playfair Display';
 }
 
-header h1 span {
+.title {
     font-family: 'Playwrite DE SAS';
-}
-
-header h1,p:hover{
-    cursor: pointer;
+    font-size: 1.6rem;
+    text-shadow: none;
+    width: 150px;
+    padding-top: 5px;
 }
 
 .playwrite-de-sas-beautiful-font {
@@ -86,7 +86,7 @@ button:hover {
     transition: background-color 1s ease;
 }
 
-select{
+select {
     height: fit-content;
     width: 100%;
     padding: 8px;
@@ -110,7 +110,6 @@ textarea {
 }
 
 body {
-    /* background-image: url("\src\assets\landing page background.jpg"); */
     background-image: url("\src\assets\landing page background 2.png");
     background-size: cover;
 }
@@ -125,20 +124,66 @@ header {
     justify-content: space-between;
 }
 
-header img {
+.nav-bar {
     height: 50px;
-    border-radius: 30px;
+    width: 200px;
+    position: absolute;
+    right: 2px;
 }
 
-header nav {
+.nav-bar nav {
+    width: 100%;
+    height: 100%;
     display: flex;
     flex-direction: row;
+    align-items: center;
 }
 
-header nav p {
+.nav-bar nav p,
+a {
     margin: 5px;
     color: white;
+    text-shadow: #259bd4 2px 2px 3px;
     font-weight: bold;
+    width: 100px;
+    height: 60%;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    text-align: center;
+    text-decoration: none;
+    transition: background-color 1s ease;
+}
+
+.nav-bar nav p:hover {
+    background-color: #5cc9ff;
+    transition: background-color 1s ease;
+}
+
+.nav-bar nav a:not(.active):hover {
+    background-color: #5cc9ff;
+    transition: background-color 1s ease;
+}
+
+.active {
+    background-color: var(--blue);
+}
+
+.hamburger-nav {
+    width: 45px;
+    height: 65%;
+    padding: 5px;
+    position: absolute;
+    right: 5px;
+    flex-direction: column;
+    justify-content: space-between;
+    display: none;
+}
+
+.hamburger-nav span {
+    width: 100%;
+    height: 4px;
+    background-color: white;
+    border-radius: 10px;
 }
 
 footer {
@@ -168,7 +213,7 @@ footer {
 .landing {
     text-shadow: #259bd4 2px 5px 3px;
     max-width: 650px;
-    max-height: 600px;
+    min-height: 600px;
     font-size: 2.5rem;
     display: flex;
     flex-direction: column;
@@ -189,6 +234,7 @@ footer {
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
+    box-shadow: 5px 5px 15px rgb(5, 89, 216);
 }
 
 .form div {
@@ -204,6 +250,7 @@ footer {
 .home {
     width: 100%;
     margin: 10px;
+
 }
 
 .home-no-plans {
@@ -213,14 +260,13 @@ footer {
 
 .home-plans {
     height: 200px;
-    padding: 10px;
     margin-bottom: 5px;
 }
 
-.plan{
+.plan {
     background-color: var(--blue);
     transition: background-color 1s ease;
-    width: 100%;
+    width: 98%;
     height: 35px;
     padding: 5px;
     margin-bottom: 10px;
@@ -230,18 +276,18 @@ footer {
     align-items: center;
 }
 
-.plan:hover{
+.plan:hover {
     background-color: #88cff3;
     transition: background-color 1s ease;
     cursor: point;
 }
 
-.planLeft{
+.planLeft {
     font-weight: 600;
     margin-left: 10px;
 }
 
-.planRight{
+.planRight {
     font-weight: 600;
     margin-Right: 10px;
     padding: 8px;
@@ -251,10 +297,12 @@ footer {
 
 .home-top-destinations {
     height: 275px;
+    width: 92vw;
     display: flex;
     flex-direction: row;
-    justify-content: center;
+    /* justify-content: center; */
     gap: 10px;
+    overflow-x: auto;
 }
 
 .add-plan-form {
@@ -287,7 +335,7 @@ footer {
 
 .card-ui {
     width: 240px;
-    height: auto ;
+    height: auto;
     padding: 10px;
     border-radius: 20px;
     border: var(--blue) 1px solid;
@@ -334,8 +382,10 @@ footer {
 
 .card-rating {
     position: relative;
+    width: fit-content;
     bottom: 25px;
     left: 130px;
+    overflow: hidden;
 }
 
 .suggested {
@@ -352,7 +402,7 @@ footer {
     justify-content: space-between;
 }
 
-.more-details{
+.more-details {
     background-color: #71c7f1ff;
     padding: 5px;
     height: 500px;
@@ -420,32 +470,32 @@ footer {
 
 .preview-detail-side {
     width: 70%;
-    padding: 10px;
+    padding: 1.5%;
     background-color: #71c7f1ff
 }
 
 .preview-total-side {
-    width: 30%; 
-    padding: 10px;
+    width: 30%;
+    padding: 1.5%;
     background-color: #a3d8f3ff;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
 }
 
-table{
+table {
     width: 100%;
 }
 
-.td1{
+.td1 {
     width: 60%;
 }
 
-.td2{
+.td2 {
     width: 25%;
 }
 
-.td3{
+.td3 {
     width: 15%;
 }
 
@@ -456,7 +506,7 @@ table{
     margin-bottom: 10px;
     border-radius: 20px;
     overflow-y: auto;
-} 
+}
 
 .profile-details {
     height: 130px;
@@ -491,17 +541,17 @@ table{
     border-radius: 50px;
 }
 
-.search{
+.search {
     position: relative;
     display: flex;
     align-items: center;
 }
 
-.search input{
+.search input {
     padding-left: 35px
 }
 
-.search-icon{
+.search-icon {
     position: absolute;
     height: 20px;
     width: 20px;
@@ -510,11 +560,11 @@ table{
     color: grey;
 }
 
-.rmdp-container{
+.rmdp-container {
     width: 100%;
 }
 
-.loading-screen{
+.loading-screen {
     position: absolute;
     z-index: 100;
     top: 0px;
@@ -526,4 +576,128 @@ table{
     justify-content: center;
     align-items: center;
     border-radius: 30px;
+}
+
+@media (max-width: 950px) {
+    .add-plan-form {
+        margin-left: 10px;
+        margin-right: 10px;
+    }
+
+    .preview-lower-section {
+        flex-direction: column;
+    }
+
+    .preview-detail-side {
+        width: 97%;
+    }
+
+    .preview-total-side {
+        width: 97%;
+    }
+}
+
+@media (max-width: 760px) {
+    .landing {
+        max-width: 80%;
+        font-size: 1.9rem;
+    }
+}
+
+@media (max-width: 540px) {
+    .landing {
+        max-width: 80%;
+        height: 70%;
+        font-size: 1.5em;
+    }
+
+    header {
+        padding-right: 0px;
+    }
+
+    .hamburger-nav {
+        display: flex;
+        cursor: pointer;
+    }
+
+    .title {
+        color: white;
+    }
+
+    .nav-bar nav {
+        background-color: white;
+        flex-direction: column;
+        position: absolute;
+        top: 99%;
+        right: 1px;
+        width: 300px;
+        height: fit-content;
+        display: none;
+    }
+
+    nav.open {
+        display: flex;
+    }
+
+    .nav-bar nav p,
+    a {
+        width: 95%;
+        color: var(--blue);
+        transition: color 0.5s ease;
+        text-shadow: none;
+    }
+
+    .nav-bar nav p:hover {
+        color: white;
+        transition: color 0.5s ease;
+    }
+
+    .nav-bar nav a:hover {
+        color: white;
+        transition: color 0.5s ease;
+    }
+
+    .active {
+        color: white;
+    }
+
+    .form {
+        width: 75%;
+    }
+
+    .planLeft {
+        width: 70%;
+    }
+
+    .planRight {
+        width: 30%;
+    }
+
+    .profile-details{
+        flex-direction: column;
+        height: fit-content;
+        gap: 10px;
+    }
+
+    .profile-details img{
+        width: 60%;
+        align-self: center;
+    }
+}
+
+@media (max-width: 350px) {
+
+    .landing {
+        max-width: 80%;
+        max-height: 70%;
+        font-size: 1.34em;
+    }
+
+    .planLeft {
+        width: 65%;
+    }
+
+    .planRight {
+        width: 35%;
+    }
 }

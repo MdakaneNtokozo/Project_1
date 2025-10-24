@@ -9,5 +9,4 @@ public partial class AccomodationType
 
     public string AccomodationTypeName { get; set; } = null!;
 
-    
 }

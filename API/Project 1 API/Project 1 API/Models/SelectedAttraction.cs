@@ -14,8 +14,4 @@ public partial class SelectedAttraction
     public int NumOfTimes { get; set; }
 
     public double AttractionBudget { get; set; }
-
-    
-
-    
 }

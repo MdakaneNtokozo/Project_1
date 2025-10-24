@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from "react"
 import { MyContext } from "./MyProvider"
-import { useNavigate } from "react-router-dom"
+import { Link, NavLink, useNavigate } from "react-router-dom"
 import Login from "./pages/UserSections/Login"
 import SignUp from "./pages/UserSections/Signup"
 
@@ -28,8 +28,9 @@ function Header() {
     } = useContext(MyContext)
     const [page, setPage] = useState("")
     const navigate = useNavigate()
+    const [menuVisible, setMenuVisible] = useState(false)
 
-    useEffect(()=>{
+    useEffect(() => {
         setSelectedDestination(null)
         setStartDate(null)
         setEndDate(null)
@@ -53,23 +54,39 @@ function Header() {
     return (
         <>
             <header>
-                <h1><span onClick={() => navigate('/home')}>VacayPay</span></h1>
+                {/* <h1><span onClick={() => navigate('/home')}>VacayPay</span></h1> */}
+                <Link className="title" to='/home'>VacayPay</Link>
 
-                {role == 1 ?
-                    <nav>
-                        <p onClick={() => navigate('/viewVacayPlans')}>View plans</p>
-                        <p onClick={() => navigate('/profile')}>Profile</p>
-                    </nav> :
-                    <></>
-                }
+                <div className="nav-bar">
+                    <div className="hamburger-nav" onClick={() => setMenuVisible(!menuVisible)}>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                    {role == 1 ?
+                        <nav className={menuVisible == true ? "open": ""}>
+                            <NavLink to='/viewVacayPlans'>View plans</NavLink>
+                            <NavLink to='/profile'>Profile</NavLink>
+                        </nav> :
+                        <></>
+                    }
 
-                {role == "" ?
-                    <nav>
-                        <button onClick={() => setPage("Sign up")}>Sign up</button>
-                        <button onClick={() => setPage("Login")}>Login</button>
-                    </nav> :
-                    <></>
-                }
+                    {role == "" ?
+                        <nav className={menuVisible == true ? "open": ""}>
+                            <p onClick={() => { 
+                                setPage("Sign up")
+                                setMenuVisible(false)
+                            }}>Sign up</p>
+                            <p onClick={() => {
+                                setPage("Login")
+                                setMenuVisible(false)
+                            }}>Login</p>
+                        </nav> :
+                        <></>
+                    }
+
+                </div>
+
             </header>
 
             {page == "Login" ?

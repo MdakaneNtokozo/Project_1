@@ -18,14 +18,4 @@ public partial class Destination
     public int CountryId { get; set; }
 
     public string? DestinationImage { get; set; }
-
-    
-
-    
-
-    
-
-    
-
-    
 }

@@ -64,7 +64,6 @@ create table accommodation(
 	accommodation_min_num_of_people INT NOT NULL,
 	accommodation_max_num_of_people INT NOT NULL,
 	accommodation_amenities CHAR(100) NOT NULL,
-	accommodation_type_id INT NOT NULL,
 	destination_id INT NOT NULL,
     accomodation_type_id INT NOT NULL,
 	accommodation_image CHAR(100),
@@ -87,7 +86,7 @@ create table food_spot(
 	food_spot_menu_items TEXT NOT NULL,
 	food_spot_type_id INT NOT NULL,
 	destination_id INT NOT NULL,
-	food_spot_image TEXT,
+	food_spot_image char(100),
 	FOREIGN KEY (food_spot_type_id) REFERENCES food_spot_type(food_spot_type_id),
 	FOREIGN KEY (destination_id) REFERENCES destination(destination_id)
 );
@@ -98,11 +97,10 @@ create table attraction(
 	attraction_address CHAR(100) NOT NULL,
 	attraction_rating CHAR(100) NOT NULL,
 	attraction_entrance_fee DOUBLE NOT NULL,
-	attraction_price_per_person DOUBLE NOT NULL,
 	attraction_time_limited BOOLEAN NOT NULL,
 	attraction_description TEXT NOT NULL,
 	destination_id int NOT NULL,
-	attraction_image TEXT,
+	attraction_image char(100),
 	FOREIGN KEY (destination_id) REFERENCES destination(destination_id)
 );
 
@@ -114,7 +112,6 @@ create table user(
 	user_bio CHAR(100) NOT NULL,
 	user_password TEXT NOT NULL,
 	user_created_date DATETIME NOT NULL,
-	user_notification_on BOOLEAN NOT NULL,
 	currency_id INT NOT NULL,
 	FOREIGN KEY(currency_id) REFERENCES currency(currency_id)
 );

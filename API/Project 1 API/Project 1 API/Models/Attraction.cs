@@ -15,8 +15,6 @@ public partial class Attraction
 
     public double AttractionEntranceFee { get; set; }
 
-    public double AttractionPricePerPerson { get; set; }
-
     public bool AttractionTimeLimited { get; set; }
 
     public string AttractionDescription { get; set; } = null!;
@@ -24,8 +22,4 @@ public partial class Attraction
     public int DestinationId { get; set; }
 
     public string? AttractionImage { get; set; }
-
-    
-
-    
 }

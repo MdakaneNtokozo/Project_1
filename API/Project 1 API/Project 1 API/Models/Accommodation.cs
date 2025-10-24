@@ -21,17 +21,9 @@ public partial class Accommodation
 
     public string AccommodationAmenities { get; set; } = null!;
 
-    public int AccommodationTypeId { get; set; }
-
     public int DestinationId { get; set; }
 
     public int AccomodationTypeId { get; set; }
 
     public string? AccommodationImage { get; set; }
-
-    
-
-    
-
-    
 }

@@ -10,8 +10,4 @@ public partial class Country
     public string CountryName { get; set; } = null!;
 
     public int CurrencyId { get; set; }
-
-    
-
-    
 }

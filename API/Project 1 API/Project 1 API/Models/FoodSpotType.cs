@@ -9,5 +9,4 @@ public partial class FoodSpotType
 
     public string FoodSpotTypeName { get; set; } = null!;
 
-    
 }

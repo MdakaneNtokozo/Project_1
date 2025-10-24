@@ -22,10 +22,4 @@ public partial class Transportation
     public int DestinationId { get; set; }
 
     public string? TransportationImage { get; set; }
-
-    
-
-    
-
-    
 }

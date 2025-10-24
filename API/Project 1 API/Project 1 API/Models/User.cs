@@ -19,13 +19,5 @@ public partial class User
 
     public DateTime UserCreatedDate { get; set; }
 
-    public bool UserNotificationOn { get; set; }
-
     public int CurrencyId { get; set; }
-
-    
-
-    
-
-    
 }

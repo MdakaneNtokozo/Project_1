@@ -991,10 +991,6 @@
             "type": "string",
             "nullable": true
           },
-          "accommodationTypeId": {
-            "type": "integer",
-            "format": "int32"
-          },
           "destinationId": {
             "type": "integer",
             "format": "int32"
@@ -1047,10 +1043,6 @@
             "nullable": true
           },
           "attractionEntranceFee": {
-            "type": "number",
-            "format": "double"
-          },
-          "attractionPricePerPerson": {
             "type": "number",
             "format": "double"
           },
@@ -1272,9 +1264,6 @@
           "userCreatedDate": {
             "type": "string",
             "format": "date-time"
-          },
-          "userNotificationOn": {
-            "type": "boolean"
           },
           "currencyId": {
             "type": "integer",

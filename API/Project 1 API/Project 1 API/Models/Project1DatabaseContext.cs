@@ -99,7 +99,6 @@ public partial class Project1DatabaseContext : DbContext
                 .HasColumnName("accommodation_name");
             entity.Property(e => e.AccommodationPricePerPerson).HasColumnName("accommodation_price_per_person");
             entity.Property(e => e.AccommodationRating).HasColumnName("accommodation_rating");
-            entity.Property(e => e.AccommodationTypeId).HasColumnName("accommodation_type_id");
             entity.Property(e => e.AccomodationTypeId).HasColumnName("accomodation_type_id");
             entity.Property(e => e.DestinationId).HasColumnName("destination_id");
 
@@ -143,13 +142,13 @@ public partial class Project1DatabaseContext : DbContext
                 .HasColumnName("attraction_description");
             entity.Property(e => e.AttractionEntranceFee).HasColumnName("attraction_entrance_fee");
             entity.Property(e => e.AttractionImage)
-                .HasColumnType("text")
+                .HasMaxLength(100)
+                .IsFixedLength()
                 .HasColumnName("attraction_image");
             entity.Property(e => e.AttractionName)
                 .HasMaxLength(100)
                 .IsFixedLength()
                 .HasColumnName("attraction_name");
-            entity.Property(e => e.AttractionPricePerPerson).HasColumnName("attraction_price_per_person");
             entity.Property(e => e.AttractionRating)
                 .HasMaxLength(100)
                 .IsFixedLength()
@@ -300,7 +299,8 @@ public partial class Project1DatabaseContext : DbContext
                 .IsFixedLength()
                 .HasColumnName("food_spot_address");
             entity.Property(e => e.FoodSpotImage)
-                .HasColumnType("text")
+                .HasMaxLength(100)
+                .IsFixedLength()
                 .HasColumnName("food_spot_image");
             entity.Property(e => e.FoodSpotMaxMenuPrice).HasColumnName("food_spot_max_menu_price");
             entity.Property(e => e.FoodSpotMenuItems)
@@ -532,7 +532,6 @@ public partial class Project1DatabaseContext : DbContext
                 .HasMaxLength(100)
                 .IsFixedLength()
                 .HasColumnName("user_name");
-            entity.Property(e => e.UserNotificationOn).HasColumnName("user_notification_on");
             entity.Property(e => e.UserPassword)
                 .HasColumnType("text")
                 .HasColumnName("user_password");

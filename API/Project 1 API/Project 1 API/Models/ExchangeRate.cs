@@ -10,8 +10,4 @@ public partial class ExchangeRate
     public int TargetId { get; set; }
 
     public double ExchangeRate1 { get; set; }
-
-    
-
-    
 }
