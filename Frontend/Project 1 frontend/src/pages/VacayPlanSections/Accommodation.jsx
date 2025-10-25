@@ -161,8 +161,6 @@ function Accommodation() {
     }
 
     const setDates = (a, dates) => {
-        console.log(dates)
-
         if (dates.length == 2) {
 
             var isFound = accommList.find(i => i.accomm.accommodationId == a.accommodationId) != undefined
@@ -186,8 +184,6 @@ function Accommodation() {
 
         }
     }
-
-    console.log(accommList)
 
     const filterItems = (filter) => {
         if (filter == 2) {
@@ -232,12 +228,12 @@ function Accommodation() {
                                         <></>
                                     }
                                 </div>
-                                <p>{a.accommodationName}</p>
-                                <p>{a.accommodationAddress}</p>
-                                <p>Price per person: {currency.currencySymbol} {a.accommodationPricePerPerson}</p>
-                                <p>Num of people: {a.accommodationMinNumOfPeople} - {a.accommodationMaxNumOfPeople}</p>
+                                <p className="card-title">{a.accommodationName}</p>
+                                <p className="card-subtitle">{a.accommodationAddress}</p>
+                                <p>{currency.currencySymbol} {a.accommodationPricePerPerson} per person</p>
+                                <p>{a.accommodationMinNumOfPeople} - {a.accommodationMaxNumOfPeople} people</p>
                                 <p>{accommodationTypes.find(type => type.accomodationTypeId == a.accomodationTypeId).accommodationTypeName} </p>
-                                <p>{a.accommodationAmenities}</p>
+                                <p>Amenities: {a.accommodationAmenities}</p>
                             </div>
 
                         }) :
@@ -257,7 +253,7 @@ function Accommodation() {
                                 var item = accommList.find(i => i.accomm.accommodationId == a.accommodationId)
 
                                 return <div key={idx}>
-                                    <p>{a.accommodationName}</p>
+                                    <p className="card-title">{a.accommodationName}</p>
                                     <label>Select check in and check out dates for accommodation:</label>
                                     <DatePicker mode="range"
                                         value={item != undefined ? [formatDate(item.dates[0]), formatDate(item.dates[1])] : undefined} 

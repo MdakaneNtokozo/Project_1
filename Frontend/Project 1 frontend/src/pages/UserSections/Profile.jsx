@@ -2,9 +2,15 @@ import { useContext, useEffect, useRef, useState } from "react"
 import { MyContext } from "../../MyProvider"
 import Header from "../../Header"
 import Footer from "../../Footer"
+import { useNavigate } from "react-router-dom"
 
 function Profile() {
-    const { api, token, user, setUser, currency } = useContext(MyContext)
+    const {
+        api,
+        token, setToken,
+        user, setUser,
+        currency, setCurrency
+    } = useContext(MyContext)
     const [edit, setEdit] = useState("")
     const [currencies, setCurrencies] = useState([])
 
@@ -20,6 +26,8 @@ function Profile() {
     const [bio, setBio] = useState(user.userBio)
     const [email, setEmail] = useState(user.userEmail)
     const [selectedCurrencyId, setSelectedCurrencyId] = useState(currency.currencyId)
+
+    const navigate = useNavigate()
 
     useEffect(() => {
         var api_call = api + "Destinations/getCurrencies"
@@ -94,7 +102,7 @@ function Profile() {
         var newPassword = newPassowrdRef.current.value
         var retypePassword = retypePasswordRef.current.value
 
-        if(newPassword == retypePassword){
+        if (newPassword == retypePassword) {
             updatePassword(prevPassword, newPassword)
         }
     }
@@ -118,7 +126,25 @@ function Profile() {
     const updateCurrencyPref = () => {
         user.currencyId = selectedCurrencyId
         updateUser()
+
+        var api_call = api + "Destinations/getCurrency?currencyId=" + user.currencyId
+        fetch(api_call, {
+            method: "GET",
+            headers: {
+                "Authorization": "Bearer " + token,
+                "Content-Type": "application/json"
+            },
+        }).then(async res => {
+            setCurrency(await res.json())
+        })
+
         alert("New preffered currency has been set")
+    }
+
+    const LogOut = () => {
+        setToken("")
+        setUser(null)
+        navigate("/")
     }
 
     return (
@@ -142,13 +168,14 @@ function Profile() {
                     <button onClick={() => setEdit("Email")}>Edit email</button>
                     <p>Password: ******</p>
                     <button onClick={() => setEdit("Password")}>Edit password</button>
-                    <p>Currency preference:</p>   
-                    <select placeholder="Select a currency preference" value={selectedCurrencyId} onChange={(e) => setSelectedCurrencyId( e.target.value)} required>
+                    <p>Currency preference:</p>
+                    <select placeholder="Select a currency preference" value={selectedCurrencyId} onChange={(e) => setSelectedCurrencyId(e.target.value)} required>
                         {currencies.map((curr) => {
                             return <option key={curr.currencyId} value={curr.currencyId}>{curr.currencyName} ({curr.currencySymbol})</option>
                         })}
                     </select>
-                    <button onClick={() => updateCurrencyPref()}>Set preference</button>
+                    <button onClick={() => updateCurrencyPref()}>Set preference</button><br /><br />
+                    <button onClick={() => LogOut()}>Log out</button>
                 </div>
 
                 {edit == "Profile" ?

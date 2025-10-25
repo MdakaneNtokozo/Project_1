@@ -11,11 +11,17 @@ namespace Project_1_API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class LoginSignupController(Project1DatabaseContext context, JWTServices jwts) : ControllerBase
+    public class LoginSignupController : ControllerBase
     {
-        private readonly Project1DatabaseContext _context = context;
-        private readonly JWTServices _jwts = jwts;
+        private readonly Project1DatabaseContext _context;
+        private readonly JWTServices _jwts;
         private readonly PasswordHasher<User> _passwordHasher = new PasswordHasher<User>();
+
+        public LoginSignupController(Project1DatabaseContext context, JWTServices jwts)
+        {
+            _context = context;
+            _jwts = jwts;
+        }
 
         [HttpPost]
         [Route("signUp")]
@@ -39,33 +45,14 @@ namespace Project_1_API.Controllers
         [Route("login")]
         public async Task<Object> Login(String email, String password)
         {
-            int idxAtSymbol = email.IndexOf('@');
-            int idxFullStop = email.IndexOf('.', idxAtSymbol);
-            String emailUsed = email.Substring(idxAtSymbol + 1, idxFullStop - idxAtSymbol - 1);
-
-            if (emailUsed.Equals("work"))
-            {
-                //var admins = await _context.Admins.ToListAsync();
-                //return IsAdmin(admins, email, password);
-                return 0;
-            }
-            else
-            {
-                var users = await _context.Users.ToListAsync();
-                return IsUser(users, email, password);
-            }
-        }
-
-        private Object IsUser(List<User> users, String email, String password)
-        {
+            var users = await _context.Users.ToListAsync();
             User? user = users.Find(u => u.UserEmail.Equals(email));
             if (user != null)
             {
                 var result = _passwordHasher.VerifyHashedPassword(user, user.UserPassword, password);
                 if (result == PasswordVerificationResult.Success)
                 {
-                    //1 means they are an admin
-                    return Ok($"1 {jwts.GenerateToken(user.UserEmail)} {user.UserId}");
+                    return Ok($"{_jwts.GenerateToken(user.UserEmail)} {user.UserId}");
                 }
                 else
                 {
@@ -86,27 +73,6 @@ namespace Project_1_API.Controllers
 
             return Ok(user);
         }
-
-        //private Object IsAdmin(List<Admin> admins, String email, String password)
-        //{
-
-        //    Admin? admin = admins.Find(a => a.AdminEmail.Equals(email));
-
-        //    if (admin != null)
-        //    {
-        //        var result = _passwordHasher.VerifyHashedPassword(null, admin.AdminPassword, password);
-        //        if (result == PasswordVerificationResult.Success)
-        //        {
-        //            //2 means they are an admin
-        //            return Ok($"2 {jwts.GenerateToken(admin.AdminEmail)}");
-        //        }
-        //        else
-        //        {
-        //            return BadRequest("Incorrect details were entered. Please try again.");
-        //        }
-        //    }
-        //    return NotFound("This email does not exist.");
-        //}
 
         [Authorize]
         [HttpGet]
@@ -130,8 +96,12 @@ namespace Project_1_API.Controllers
         {
             var users = await _context.Users.ToListAsync();
             var user = users.Find(u => u.UserId == id);
-            _context.Users.Remove(user);
-            await _context.SaveChangesAsync();
+
+            if (user != null)
+            {
+                _context.Users.Remove(user);
+                await _context.SaveChangesAsync();
+            }
 
             return NoContent();
         }
@@ -147,28 +117,34 @@ namespace Project_1_API.Controllers
 
         [HttpPut]
         [Route("updatePassword")]
-        public async Task<Object> UpdatePassowrd(int userId, String oldPassword, String newPassword)
+        public async Task<Object> UpdatePassword(int userId, String oldPassword, String newPassword)
         {
             var users = await _context.Users.ToListAsync();
             var user = users.Find(u => u.UserId == userId);
-            var result = _passwordHasher.VerifyHashedPassword(user, user.UserPassword, oldPassword);
+            var result = new PasswordVerificationResult();
 
-            if (result == PasswordVerificationResult.Success)
+            if (user != null)
             {
-                var newPasswordHash = _passwordHasher.HashPassword(null, newPassword);
-                user.UserPassword = newPasswordHash;
-                _context.Users.Update(user);
-                await _context.SaveChangesAsync();
+                result = _passwordHasher.VerifyHashedPassword(user, user.UserPassword, oldPassword);
+                if (result == PasswordVerificationResult.Success)
+                {
+                    var newPasswordHash = _passwordHasher.HashPassword(new User(), newPassword);
+                    user.UserPassword = newPasswordHash;
+                    _context.Users.Update(user);
+                    await _context.SaveChangesAsync();
 
-                return NoContent();
+                    return NoContent();
+                }
+                else
+                {
+                    return BadRequest("The old password is incorrect");
+                }
             }
             else
             {
-                return BadRequest("The old password is incorrect");
+                return BadRequest("This user does not exist");
             }
         }
-
-
 
     }
 }

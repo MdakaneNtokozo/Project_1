@@ -10,7 +10,13 @@ function Home() {
     const [plans, setPlans] = useState([])
     const [countries, setCountries] = useState([])
     const [top3Destinations, setTop3Destinations] = useState([])
-    const { role, user, api, token, setCurrency } = useContext(MyContext)
+    const { 
+        user, 
+        api, 
+        token, 
+        setCurrency,
+        setSelectedDestination
+     } = useContext(MyContext)
     const navigate = useNavigate()
     const [loading1, setLoading1] = useState(true)
     const [loading2, setLoading2] = useState(true)
@@ -26,7 +32,6 @@ function Home() {
             },
         }).then(async res => {
             if (res.status == 401) {
-                console.log("unauthorized")
                 navigate('/')
             } else {
                 setTop3Destinations(await res.json())
@@ -103,65 +108,64 @@ function Home() {
         <>
             <Header />
 
-            {role == 1 ?
-                <div className="container">
-                    <div className="home">
-                        <h2>Welcome {user.userName}</h2>
-                        <hr />
-                        <h2>Upcoming vacations</h2>
+            <div className="container">
+                <div className="home">
+                    <h2>Welcome {user.userName}</h2>
+                    <hr />
+                    <h2>Upcoming vacations</h2>
 
-                        {plans.length == 0 ?
-                            <div className="home-no-plans">
-                                <h3>No upcoming vacations planned</h3>
-                            </div> :
-                            <div className="home-plans">
-                                {plans.map((plan, idx) => {
-                                    var today = new Date(formatDate(Date.now()))
-                                    var planDate = new Date(formatDate(plans[0].vacation.vacationStartDate))
+                    {plans.length == 0 ?
+                        <div className="home-no-plans">
+                            <h3>No upcoming vacations planned</h3>
+                        </div> :
+                        <div className="home-plans">
+                            {plans.map((plan, idx) => {
+                                var today = new Date(formatDate(Date.now()))
+                                var planDate = new Date(formatDate(plans[0].vacation.vacationStartDate))
 
-                                    if (planDate >= today) {
-                                        return <div className="plan" key={idx} onClick={() => viewPlan(plan)}>
-                                            <p className="planLeft">Vacation plan for {plan.destination.destinationName}</p><p className="planRight">{plan.vacayDaysLeft} days left</p>
+                                if (planDate >= today) {
+                                    return <div className="plan" key={idx} onClick={() => viewPlan(plan)}>
+                                        <p className="planLeft">Vacation plan for {plan.destination.destinationName}</p><p className="planRight">{plan.vacayDaysLeft} days left</p>
+                                    </div>
+                                }
+                            })}
+                        </div>
+                    }
+
+                    <div>
+                        <button onClick={() => navigate('/vacayPlan')}>Add vacation plan</button>
+                    </div>
+
+                    <hr />
+                    <h2>Explore destination</h2>
+                    <div className="home-top-destinations">
+                        {top3Destinations.length != 0 ?
+                            top3Destinations.map(dest => {
+                                return <div key={dest.destinationId} className="card-ui" onClick={() => {
+                                    setSelectedDestination(dest)
+                                    navigate('/vacayPlan/vacayDetails')
+                                }}>
+                                    <div className="card-img">
+                                        <img src={dest.destinationImage}></img>
+                                        <div className="card-rating">
+                                            <Rating initialValue={dest.destinationRating} readonly allowFraction size={"20px"}></Rating>
                                         </div>
-                                    }
-                                })}
-                            </div>
+
+                                    </div>
+                                    <p className="card-title">{dest.destinationName}</p>
+                                    <p className="card-subtitle">{countries.find(c => c.countryId == dest.countryId).countryName}</p>
+                                    <p>{dest.destinationDescription}</p>
+                                </div>
+                            }) :
+                            <p>No top destination</p>
                         }
 
-                        <div>
-                            <button onClick={() => navigate('/vacayPlan')}>Add vacation plan</button>
-                        </div>
-
-                        <hr />
-                        <h2>Explore destination</h2>
-                        <div className="home-top-destinations">
-                            {top3Destinations.length != 0 ?
-                                top3Destinations.map(dest => {
-                                    return <div key={dest.destinationId} className="card-ui">
-                                        <div className="card-img">
-                                            <img src={dest.destinationImage}></img>
-                                            <div className="card-rating">
-                                                <Rating initialValue={dest.destinationRating} readonly allowFraction size={"20px"}></Rating>
-                                            </div>
-
-                                        </div>
-                                        <p>{dest.destinationName}</p>
-                                        <p>{countries.find(c => c.countryId == dest.countryId).countryName}</p>
-                                        <p>{dest.destinationDescription}</p>
-                                    </div>
-                                }) :
-                                <p>No top destination</p>
-                            }
-
-
-                        </div>
 
                     </div>
 
                 </div>
-                :
-                <></>
-            }
+
+            </div>
 
             <Footer />
         </>

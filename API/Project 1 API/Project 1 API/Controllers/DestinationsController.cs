@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Project_1_API.Classes_for_totals;
 using Project_1_API.Models;
-using System;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -70,7 +69,7 @@ namespace Project_1_API.Controllers
                 var randomNum = new Random();
                 int count = 3;
 
-                while(count > 0)
+                while (count > 0)
                 {
                     var index = randomNum.Next(0, destinations.Count);
                     var dest = destinations[index];
@@ -85,7 +84,7 @@ namespace Project_1_API.Controllers
                 top3.AddRange(destinations);
             }
 
-                return Ok(top3);
+            return Ok(top3);
         }
 
         [HttpGet]
@@ -93,12 +92,13 @@ namespace Project_1_API.Controllers
         public async Task<Object> GetTransportaions(int destId, int currencyId)
         {
             var transportations = await _context.Transportations.ToListAsync();
-            transportations = transportations.FindAll(t => t.DestinationId  == destId);
+            transportations = transportations.FindAll(t => t.DestinationId == destId);
             var exchangeRateVal = await GetExchangeRate(destId, currencyId);
-            transportations.ForEach( t => {
-                    t.TransportationPricePerPerson = Math.Round( t.TransportationPricePerPerson * exchangeRateVal, 2);
-                }) ;
-            
+            transportations.ForEach(t =>
+            {
+                t.TransportationPricePerPerson = Math.Round(t.TransportationPricePerPerson * exchangeRateVal, 2);
+            });
+
             return Ok(transportations);
         }
 
@@ -123,11 +123,15 @@ namespace Project_1_API.Controllers
             var max = transInSpecifiedDestination.Max(p => p.TransportationPricePerPerson);
 
             var priceRange = max - min;
-            var level = spenderType.SpenderTypeLevel;
+            var level = 0;
+            if (spenderType != null)
+            {
+                level = spenderType.SpenderTypeLevel;
+            }
             var count = spenderTypes.Count;
-            var result = priceRange  / count;
+            var result = priceRange / count;
 
-            var list = transInSpecifiedDestination.FindAll(t => t.TransportationPricePerPerson >= (min + (result * (level - 1))) && t.TransportationPricePerPerson <= ( min + (result * level)) );
+            var list = transInSpecifiedDestination.FindAll(t => t.TransportationPricePerPerson >= (min + (result * (level - 1))) && t.TransportationPricePerPerson <= (min + (result * level)));
 
             return Ok(list);
         }
@@ -139,9 +143,10 @@ namespace Project_1_API.Controllers
             var accommodations = await _context.Accommodations.ToListAsync();
             accommodations = accommodations.FindAll(a => a.DestinationId == destId);
             var exchangeRateVal = await GetExchangeRate(destId, currencyId);
-            accommodations.ForEach(a => {
-                    a.AccommodationPricePerPerson = Math.Round(a.AccommodationPricePerPerson * exchangeRateVal, 2);
-                });
+            accommodations.ForEach(a =>
+            {
+                a.AccommodationPricePerPerson = Math.Round(a.AccommodationPricePerPerson * exchangeRateVal, 2);
+            });
 
             return Ok(accommodations);
         }
@@ -167,7 +172,11 @@ namespace Project_1_API.Controllers
             var max = accommsInSpecifiedDestination.Max(p => p.AccommodationPricePerPerson);
 
             var priceRange = max - min;
-            var level = spenderType.SpenderTypeLevel;
+            var level = 0;
+            if (spenderType != null)
+            {
+                level = spenderType.SpenderTypeLevel;
+            }
             var count = spenderTypes.Count;
             var result = priceRange / count;
 
@@ -184,10 +193,11 @@ namespace Project_1_API.Controllers
             foodSpots = foodSpots.FindAll(s => s.DestinationId == destId);
 
             var exchangeRateVal = await GetExchangeRate(destId, currencyId);
-            foodSpots.ForEach(s => {
-                    s.FoodSpotMinMenuPrice = Math.Round(s.FoodSpotMinMenuPrice * exchangeRateVal, 2);
-                    s.FoodSpotMaxMenuPrice = Math.Round(s.FoodSpotMaxMenuPrice * exchangeRateVal, 2);
-                });
+            foodSpots.ForEach(s =>
+            {
+                s.FoodSpotMinMenuPrice = Math.Round(s.FoodSpotMinMenuPrice * exchangeRateVal, 2);
+                s.FoodSpotMaxMenuPrice = Math.Round(s.FoodSpotMaxMenuPrice * exchangeRateVal, 2);
+            });
 
             return Ok(foodSpots);
         }
@@ -213,7 +223,11 @@ namespace Project_1_API.Controllers
             var max = spotsInSpecifiedDestination.Max(p => p.FoodSpotMinMenuPrice);
 
             var priceRange = max - min;
-            var level = spenderType.SpenderTypeLevel;
+            var level = 0;
+            if (spenderType != null)
+            {
+                level = spenderType.SpenderTypeLevel;
+            }
             var count = spenderTypes.Count;
             var result = priceRange / count;
 
@@ -230,7 +244,8 @@ namespace Project_1_API.Controllers
             attractions = attractions.FindAll(a => a.DestinationId == destId);
             var exchangeRateVal = await GetExchangeRate(destId, currencyId);
 
-            attractions.ForEach(a => {
+            attractions.ForEach(a =>
+            {
                 a.AttractionEntranceFee = Math.Round(a.AttractionEntranceFee * exchangeRateVal, 2);
             });
 
@@ -256,7 +271,10 @@ namespace Project_1_API.Controllers
                 //get the exchange rate between the two currencies
                 var rates = await _context.ExchangeRates.ToListAsync();
                 var rate = rates.Find(r => r.CurrentId == destinationCurrency?.CurrencyId && r.TargetId == prefferedCurreny?.CurrencyId);
-                er = rate.ExchangeRate1;
+                if (rate != null)
+                {
+                    er = rate.ExchangeRate1;
+                }
             }
 
             return er;
@@ -276,7 +294,11 @@ namespace Project_1_API.Controllers
             var max = attrInSpecifiedDestination.Max(a => a.AttractionEntranceFee);
 
             var priceRange = max - min;
-            var level = spenderType.SpenderTypeLevel;
+            var level = 0;
+            if (spenderType != null)
+            {
+                level = spenderType.SpenderTypeLevel;
+            }
             var count = spenderTypes.Count;
             var result = priceRange / count;
 
@@ -312,7 +334,7 @@ namespace Project_1_API.Controllers
             {
                 total += Math.Round(t.trans.TransportationPricePerPerson * t.num, 2);
             }
-            else if(t.useType == 2)
+            else if (t.useType == 2)
             {
                 var days = DaysCalculator(start, end);
                 total += Math.Round(t.trans.TransportationPricePerPerson * t.num * days, 2);
@@ -396,7 +418,7 @@ namespace Project_1_API.Controllers
 
         [HttpPost]
         [Route("calVacayBudget")]
-        public Object CalcVacayBudget( VacayLists vcl, DateTime start, DateTime end)
+        public Object CalcVacayBudget(VacayLists vcl, DateTime start, DateTime end)
         {
             var vacayTotal = 0.0;
 
@@ -422,7 +444,10 @@ namespace Project_1_API.Controllers
             vcl.transSelected.ForEach((i) =>
             {
                 var transport = transportations.Find(t => t.TransportationId == i.trans.TransportationId);
-                i.trans = transport;
+                if (transport != null)
+                {
+                    i.trans = transport;
+                }
                 vacayTotal = AddSelectedTrans(i, vacay, start, end, vacayTotal);
             });
 
@@ -430,7 +455,11 @@ namespace Project_1_API.Controllers
             vcl.accommSelected.ForEach((i) =>
             {
                 var accommodation = accommodations.Find(a => a.AccommodationId == i.accomm.AccommodationId);
-                i.accomm = accommodation;
+                if (accommodation != null)
+                {
+                    i.accomm = accommodation;
+                }
+
                 vacayTotal = AddSelectedAccomm(i, vacay, start, end, vacayTotal);
             });
 
@@ -438,7 +467,10 @@ namespace Project_1_API.Controllers
             vcl.spotsSelected.ForEach((i) =>
             {
                 var foodSpot = foodSpots.Find(s => s.FoodSpotId == i.spot.FoodSpotId);
-                i.spot = foodSpot;
+                if (foodSpot != null)
+                {
+                    i.spot = foodSpot;
+                }
                 vacayTotal = AddSelectedSpot(i, vacay, start, end, vacayTotal);
             });
 
@@ -446,7 +478,10 @@ namespace Project_1_API.Controllers
             vcl.attrSelected.ForEach((i) =>
             {
                 var attraction = attractions.Find(a => a.AttractionId == i.attr.AttractionId);
-                i.attr = attraction;
+                if (attraction != null)
+                {
+                    i.attr = attraction;
+                }
                 vacayTotal = AddSelectedAttr(i, vacay, start, end, vacayTotal);
             });
 
@@ -464,7 +499,7 @@ namespace Project_1_API.Controllers
             createdPlan.PlanModifiedDate = DateTime.Now;
             createdPlan.PlanBudget = vacayTotal;
             createdPlan.SpenderTypeId = vcl.type.SpenderTypeId;
-           
+
             _context.CreatedPlans.Add(createdPlan);
             _context.SaveChanges();
 
@@ -563,38 +598,46 @@ namespace Project_1_API.Controllers
             var vacation = vacations.Find(v => v.VacationId == createdPlan.VacationId);
             var vacayTotal = 0.0;
 
-            //Check if vacation needs to be updated
-            if (start != vacation.VacationStartDate)
+            if (vacation != null)
             {
-                vacation.VacationStartDate = start;
-            }
+                //Check if vacation needs to be updated
+                if (start != vacation.VacationStartDate)
+                {
+                    vacation.VacationStartDate = start;
+                }
 
-            if (end != vacation.VacationEndDate)
+                if (end != vacation.VacationEndDate)
+                {
+                    vacation.VacationEndDate = end;
+                }
+
+                //Check if transportations have changed
+                vacayTotal = UpdateSelectedTrans(vacation, vcl, start, end, vacayTotal);
+
+                //Check if accommodations have changed
+                vacayTotal = UpdateSelectedAccomm(vacation, vcl, start, end, vacayTotal);
+
+                //Check if food spots have changed
+                vacayTotal = UpdateSelectedSpots(vacation, vcl, start, end, vacayTotal);
+
+                //Check if attractions have changed
+                vacayTotal = UpdateSelectedAttrs(vacation, vcl, start, end, vacayTotal);
+
+                //Check if travel buddies have changed
+                UpdateTravelBuddies(vacation, vcl);
+
+                //Now update the estimated budget for the vacation plan
+                createdPlan.PlanBudget = vacayTotal;
+                _context.CreatedPlans.Update(createdPlan);
+                _context.SaveChanges();
+
+                return Ok("Vacay plan has been updated");
+
+            }
+            else
             {
-                vacation.VacationEndDate = end;
+                return BadRequest("This vacation does not exist");
             }
-
-            //Check if transportations have changed
-            vacayTotal = UpdateSelectedTrans(vacation, vcl, start, end, vacayTotal);
-
-            //Check if accommodations have changed
-            vacayTotal = UpdateSelectedAccomm(vacation, vcl, start, end, vacayTotal);
-
-            //Check if food spots have changed
-            vacayTotal = UpdateSelectedSpots(vacation, vcl, start, end, vacayTotal);
-
-            //Check if attractions have changed
-            vacayTotal = UpdateSelectedAttrs(vacation, vcl, start, end, vacayTotal);
-
-            //Check if travel buddies have changed
-            UpdateTravelBuddies(vacation, vcl);
-
-            //Now update the estimated budget for the vacation plan
-            createdPlan.PlanBudget = vacayTotal;
-            _context.CreatedPlans.Update(createdPlan);
-            _context.SaveChanges();
-
-            return Ok("Vacay plan has been updated");
         }
 
         private double UpdateSelectedTrans(Vacation vacation, VacayLists vcl, DateTime start, DateTime end, double vacayTotal)
@@ -623,7 +666,10 @@ namespace Project_1_API.Controllers
 
                     //Update the budget calculated for the selected transportation
                     var transportation = transportations.Find(t => t.TransportationId == i.trans.TransportationId);
-                    i.trans = transportation;
+                    if (transportation != null)
+                    {
+                        i.trans = transportation;
+                    }
                     var transTotal = TransTotalCalculation(i, start, end);
                     selected.TransportationBudget = transTotal;
                     vacayTotal += transTotal;
@@ -678,7 +724,10 @@ namespace Project_1_API.Controllers
 
                     //Update the budget calculated for the selected accommodation
                     var accommodation = accommodations.Find(a => a.AccommodationId == i.accomm.AccommodationId);
-                    i.accomm = accommodation;
+                    if (accommodation != null)
+                    {
+                        i.accomm = accommodation;
+                    }
                     var accommTotal = AccomsTotalCalculation(i);
                     selected.AccommodationBudget = accommTotal;
                     vacayTotal += accommTotal;
@@ -733,7 +782,10 @@ namespace Project_1_API.Controllers
 
                     //Update the budget calculated for the selected food spot
                     var foodSpot = foodSpots.Find(s => s.FoodSpotId == i.spot.FoodSpotId);
-                    i.spot = foodSpot;
+                    if (foodSpot != null)
+                    {
+                        i.spot = foodSpot;
+                    }
                     var spotTotal = SpotTotalCalculation(i, start, end);
                     selected.FoodSpotBudget = spotTotal;
                     vacayTotal += spotTotal;
@@ -788,7 +840,10 @@ namespace Project_1_API.Controllers
 
                     //Update the budget calculated for the selected attraction
                     var attraction = attractions.Find(a => a.AttractionId == i.attr.AttractionId);
-                    i.attr = attraction;
+                    if (attraction != null)
+                    {
+                        i.attr = attraction;
+                    }
                     var attrTotal = AttrTotalCalculation(i, start, end);
                     selected.AttractionBudget = attrTotal;
                     vacayTotal += attrTotal;
@@ -888,5 +943,5 @@ namespace Project_1_API.Controllers
             return Ok("Vacation plan has been deelted");
         }
 
-        }
     }
+}

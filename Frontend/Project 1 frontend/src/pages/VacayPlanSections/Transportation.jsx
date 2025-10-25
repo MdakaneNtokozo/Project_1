@@ -225,9 +225,9 @@ function Transportation() {
                                     }
 
                                 </div>
-                                <p>{t.transportationName}</p>
-                                <p>Price per person: {currency.currencySymbol} {t.transportationPricePerPerson}</p>
-                                <p>Num of people: {t.transportationMinPeople} - {t.transportationMaxPeople}</p>
+                                <p className="card-title">{t.transportationName}</p>
+                                <p>{currency.currencySymbol} {t.transportationPricePerPerson} per person</p>
+                                <p>{t.transportationMinPeople} - {t.transportationMaxPeople} people</p>
                                 <p>{transportationTypes.find(type => type.transportationTypeId == t.transportationTypeId).transportationTypeName} </p>
                             </div>
 
@@ -250,7 +250,7 @@ function Transportation() {
                                 var item = transList.find(i => i.trans.transportationId == t.transportationId)
 
                                 return <div key={idx}>
-                                    <p>{t.transportationName}</p>
+                                    <p className="card-title">{t.transportationName}</p>
                                     <label>Type of use for transportation:</label>
                                     <select value={item != undefined ? item.useType : 0} onChange={(e) => setTimes(t, e.target.value, undefined)}>
                                         <option value={0}>How many times will you use this transportation</option>

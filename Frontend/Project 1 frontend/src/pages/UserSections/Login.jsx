@@ -22,18 +22,17 @@ function Login() {
                 headers: { "Content-Type": "application/json" },
             }).then(async (res) => {
                 if (res.ok) {
-                    var role_and_token = await res.text()
-                    var l = role_and_token.split(' ')
+                    var token_and_userId = await res.text()
+                    var l = token_and_userId.split(' ')
 
-                    setRole(l[0])
-                    setToken(l[1])
+                    setToken(l[0])
 
-                    var id = l[2]
+                    var id = l[1]
                     api_call = api + "LoginSignup/getUserById/" + id
                     fetch(api_call, {
                         method: "GET",
                         headers: {
-                            "Authorization": "Bearer " + l[1],
+                            "Authorization": "Bearer " + l[0],
                             "Content-Type": "application/json"
                         },
                     }).then(async (res) => {

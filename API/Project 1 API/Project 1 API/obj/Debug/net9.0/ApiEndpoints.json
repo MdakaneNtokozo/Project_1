@@ -512,7 +512,7 @@
   },
   {
     "ContainingType": "Project_1_API.Controllers.LoginSignupController",
-    "Method": "UpdatePassowrd",
+    "Method": "UpdatePassword",
     "RelativePath": "api/LoginSignup/updatePassword",
     "HttpMethod": "PUT",
     "IsController": true,

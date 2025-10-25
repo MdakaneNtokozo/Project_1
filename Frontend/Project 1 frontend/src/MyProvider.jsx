@@ -3,15 +3,13 @@ import { createContext, useState } from "react";
 export const MyContext = createContext(); 
  
 export function MyProvider({ children }) {
-    //const api = "https://localhost:44353/api/"
     const api = "http://localhost:5017/api/"
-    const [role, setRole] = useState(""); 
     const [token, setToken] = useState(""); 
-    const [user, setUser] = useState("");
+    const [user, setUser] = useState(null);
     const [selectedDestination, setSelectedDestination] = useState(null)
     const [startDate, setStartDate] = useState(null)
     const [endDate, setEndDate] = useState(null)
-    const [selectedSpenderType, setSelectedSpenderType] = useState("")
+    const [selectedSpenderType, setSelectedSpenderType] = useState(null)
     const [selectedBuddies, setSelectedBuddies] = useState([])
     const [selectedTransportation, setSelectedTransportations] = useState([])
     const [selectedAccommodations, setSelectedAccommodations] = useState([])
@@ -31,7 +29,6 @@ export function MyProvider({ children }) {
     return ( 
         <MyContext.Provider value={{
                 api,
-                role, setRole,
                 token, setToken,
                 user, setUser,
                 selectedDestination, setSelectedDestination,

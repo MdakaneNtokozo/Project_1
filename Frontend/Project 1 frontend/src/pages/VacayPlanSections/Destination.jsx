@@ -86,10 +86,10 @@ function Destination() {
             <h2>Select a destination</h2>
 
             <div className="search">
-                <FaSearch className="search-icon"/>
+                <FaSearch className="search-icon" />
                 <input placeholder="Search for a destination" onChange={(e) => findDestination(e)}></input>
             </div>
-            
+
             <div className="cards-section">
                 {destinations.length != 0 ?
                     searchedDestiations.map((dest, idx) => {
@@ -101,8 +101,8 @@ function Destination() {
                                 </div>
 
                             </div>
-                            <p>{dest.destinationName}</p>
-                            <p>{countries.find(c => c.countryId == dest.countryId).countryName}</p>
+                            <p className="card-title">{dest.destinationName}</p>
+                            <p className="card-subtitle">{countries.find(c => c.countryId == dest.countryId).countryName}</p>
                             <p>{dest.destinationDescription}</p>
                         </div>
                     }) :

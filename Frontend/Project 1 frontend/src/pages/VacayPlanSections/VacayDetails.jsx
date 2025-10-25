@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import DatePicker from "react-multi-date-picker";
 import { FaSearch } from "react-icons/fa";
 import Loading from "../../Loading";
+import { FaXmark } from "react-icons/fa6";
 
 function VacayDetails() {
 
@@ -15,7 +16,7 @@ function VacayDetails() {
         startDate, setStartDate,
         endDate, setEndDate,
         selectedSpenderType, setSelectedSpenderType,
-        selectedBuddies, setSelectedBuddies
+        selectedBuddies, setSelectedBuddies,
     } = useContext(MyContext)
 
     const [spenderTypes, setSpenderTypes] = useState([])
@@ -150,7 +151,7 @@ function VacayDetails() {
             {spenderTypes.length != 0 ?
                 <div className="adding-details-container">
                     <div>
-                        <h2>Vacation plan creation for {selectedDestination.destinationName}</h2>
+                        <h2>Vacation plan for {selectedDestination.destinationName}</h2>
 
                         <label>Select date range</label><br />
                         <DatePicker mode="range" range value={[formatDate(startDate), formatDate(endDate)]} onChange={(dates) => setDates(dates)} className="date-picker"></DatePicker><br />
@@ -202,13 +203,15 @@ function VacayDetails() {
                                     {selectedBuddies.length != 0 ?
                                         <>
                                             {selectedBuddies.map((b, idx) => {
-                                                return <div key={idx} className="buddy-card" >
-                                                    <div>
-                                                        <h2>Travel buddy {idx + 1}</h2>
-                                                        <h4>Name: {b.userName} {b.userSurname}</h4>
-                                                        <h4>Email: {b.userEmail}</h4>
+                                                return <div key={idx} className="buddy-container" >
+                                                    <div className="buddy-details">
+                                                        <img src="\src\assets\profile.jpg"></img>
+                                                        <div>
+                                                            <h4>{b.userName} {b.userSurname}</h4>
+                                                            <h4>{b.userEmail}</h4>
+                                                        </div>
                                                     </div>
-                                                    <p onClick={() => removeTheSelectedTravelBuddies(b.userId)}>X</p>
+                                                    <FaXmark className="buddy-remove" onClick={() => removeTheSelectedTravelBuddies(b.userId)}></FaXmark>
                                                 </div>
                                             })}
 

@@ -11,6 +11,7 @@ function ViewVacayPlan() {
         token,
         user,
         currency,
+        selectedDestination,
         setSelectedDestination,
         setStartDate,
         setEndDate,
@@ -61,7 +62,6 @@ function ViewVacayPlan() {
     }
 
     const edit = () => {
-
         setVacayPlan(plan.vacayPlan)
         setSelectedDestination(plan.destination)
         setStartDate(plan.vacation.vacationStartDate)
@@ -210,9 +210,9 @@ function ViewVacayPlan() {
 
                         <div className="preview-lower-section">
                             <div className="preview-detail-side">
-                                <p>Vacation details</p>
+                                <p className="card-title">Vacation details</p>
 
-                                <p>Travel buddies:</p>
+                                <p className="card-title">Travel buddies:</p>
                                 {buddies.length != 0 ?
                                     <table>
                                         <tbody>
@@ -233,7 +233,7 @@ function ViewVacayPlan() {
                                 }
                                 <br />
 
-                                <p>Transportation:</p>
+                                <p className="card-title">Transportation:</p>
                                 {transportations.length != 0 ?
 
                                     <table>
@@ -260,7 +260,7 @@ function ViewVacayPlan() {
                                 }
                                 <br />
 
-                                <p>Selected accommodation:</p>
+                                <p className="card-title">Selected accommodation:</p>
                                 {accommodations.length != 0 ?
                                     <table>
                                         <tbody>
@@ -283,7 +283,7 @@ function ViewVacayPlan() {
                                 }
                                 <br />
 
-                                <p>Selected food spots:</p>
+                                <p className="card-title">Selected food spots:</p>
                                 {foodSpots.length != 0 ?
                                     <table>
                                         <tbody>
@@ -308,7 +308,7 @@ function ViewVacayPlan() {
                                 }
                                 <br />
 
-                                <p>Selected attractions:</p>
+                                <p className="card-title">Selected attractions:</p>
                                 {attractions.length != 0 ?
                                     <table>
                                         <tbody>

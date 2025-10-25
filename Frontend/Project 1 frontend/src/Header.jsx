@@ -1,12 +1,13 @@
 import { useContext, useEffect, useState } from "react"
 import { MyContext } from "./MyProvider"
-import { Link, NavLink, useNavigate } from "react-router-dom"
+import { Link, NavLink } from "react-router-dom"
 import Login from "./pages/UserSections/Login"
 import SignUp from "./pages/UserSections/Signup"
 
 
 function Header() {
-    const { role,
+    const { 
+        user,
         setSelectedDestination,
         setStartDate,
         setEndDate,
@@ -27,10 +28,30 @@ function Header() {
         setVacayPlan
     } = useContext(MyContext)
     const [page, setPage] = useState("")
-    const navigate = useNavigate()
     const [menuVisible, setMenuVisible] = useState(false)
 
-    useEffect(() => {
+    // useEffect(() => {
+    //     setSelectedDestination(null)
+    //     setStartDate(null)
+    //     setEndDate(null)
+    //     setSelectedSpenderType(null)
+    //     setSelectedBuddies([])
+    //     setSelectedTransportations([])
+    //     setSelectedAccommodations([])
+    //     setSelectedFoodSpots([])
+    //     setSelectedAttractions([])
+    //     setTransList([])
+    //     setTransTotal(0)
+    //     setAccommList([])
+    //     setAccommTotal(0)
+    //     setSpotsList([])
+    //     setSpotsTotal(0)
+    //     setAttrsList([])
+    //     setAttrsTotal(0)
+    //     setVacayPlan(null)
+    // }, [])
+
+    const clearData = () => {
         setSelectedDestination(null)
         setStartDate(null)
         setEndDate(null)
@@ -49,13 +70,13 @@ function Header() {
         setAttrsList([])
         setAttrsTotal(0)
         setVacayPlan(null)
-    }, [])
+    }
 
     return (
         <>
             <header>
                 {/* <h1><span onClick={() => navigate('/home')}>VacayPay</span></h1> */}
-                <Link className="title" to='/home'>VacayPay</Link>
+                <Link className="title" to='/home' onClick={() => clearData()}>VacayPay</Link>
 
                 <div className="nav-bar">
                     <div className="hamburger-nav" onClick={() => setMenuVisible(!menuVisible)}>
@@ -63,15 +84,15 @@ function Header() {
                         <span></span>
                         <span></span>
                     </div>
-                    {role == 1 ?
+                    {user != null ?
                         <nav className={menuVisible == true ? "open": ""}>
-                            <NavLink to='/viewVacayPlans'>View plans</NavLink>
-                            <NavLink to='/profile'>Profile</NavLink>
+                            <NavLink to='/viewVacayPlans' onClick={() => clearData()}>View plans</NavLink>
+                            <NavLink to='/profile' onClick={() => clearData()}>Profile</NavLink>
                         </nav> :
                         <></>
                     }
 
-                    {role == "" ?
+                    {user == null ?
                         <nav className={menuVisible == true ? "open": ""}>
                             <p onClick={() => { 
                                 setPage("Sign up")

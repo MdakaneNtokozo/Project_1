@@ -34,7 +34,11 @@ namespace Project_1_API.Controllers
                 //get the exchange rate between the two currencies
                 var rates =  _context.ExchangeRates.ToList();
                 var rate = rates.Find(r => r.CurrentId == destinationCurrency?.CurrencyId && r.TargetId == prefferedCurreny?.CurrencyId);
-                er = rate.ExchangeRate1;
+
+                if (rate != null)
+                {
+                    er = rate.ExchangeRate1;
+                }
             }
 
             return er;
@@ -46,7 +50,16 @@ namespace Project_1_API.Controllers
         {
             var info = new List<VacayInfo>();
             var users = _context.Users.ToList();
-            var userPrefferedCurrencyId = users.Find(u => u.UserId == userId).CurrencyId;
+            var userPrefferedCurrencyId = -1;
+
+            if (users != null)
+            {
+                var user = users.Find(u => u.UserId == userId);
+                if (user != null)
+                {
+                    userPrefferedCurrencyId = user.CurrencyId;
+                }
+            }
 
             //get the vacation plans created by the user
             var createdPlans = _context.CreatedPlans.ToList();
@@ -61,30 +74,36 @@ namespace Project_1_API.Controllers
                 //Get the spender type for the created plan
                 var spenderTypes = _context.SpenderTypes.ToList();
                 var spenderType = spenderTypes.Find(type => type.SpenderTypeId == plan.SpenderTypeId);
-                vacayInfo.spenderType = spenderType;
+                if (spenderType != null)
+                {
+                    vacayInfo.spenderType = spenderType;
+                }
 
                 //Get the vacation details for the created plan
                 var vacations = _context.Vacations.ToList();
                 var vacation = vacations.Find(v => v.VacationId == plan.VacationId);
-                vacayInfo.vacation = vacation;
+                if (vacation != null)
+                {
+                    vacayInfo.vacation = vacation;
 
-                //Get the number of days left before the vacation
-                if (vacation.VacationStartDate == DateTime.Today)
-                {
-                    vacayInfo.vacayDaysLeft = 0;
+                    //Get the number of days left before the vacation
+                    if (vacation.VacationStartDate == DateTime.Today)
+                    {
+                        vacayInfo.vacayDaysLeft = 0;
+                    }
+                    else
+                    {
+                        TimeSpan dateDiff = vacation.VacationStartDate - DateTime.Now;
+                        var days = dateDiff.Days + 1;
+                        vacayInfo.vacayDaysLeft = days;
+                    }
+
+                    GetBuddiesDetails(vacation, vacayInfo);
+                    GetTransportationDetails(vacation, vacayInfo, userPrefferedCurrencyId);
+                    GetAccommodationDetails(vacation, vacayInfo, userPrefferedCurrencyId);
+                    GetFoodSpotsDetails(vacation, vacayInfo, userPrefferedCurrencyId);
+                    GetAttractionsDetails(vacation, vacayInfo, userPrefferedCurrencyId);
                 }
-                else
-                {
-                    TimeSpan dateDiff = vacation.VacationStartDate - DateTime.Now;
-                    var days = dateDiff.Days + 1;
-                    vacayInfo.vacayDaysLeft = days;
-                }
-                    
-                GetBuddiesDetails(vacation, vacayInfo);
-                GetTransportationDetails(vacation, vacayInfo, userPrefferedCurrencyId);
-                GetAccommodationDetails(vacation, vacayInfo, userPrefferedCurrencyId);
-                GetFoodSpotsDetails(vacation, vacayInfo, userPrefferedCurrencyId);
-                GetAttractionsDetails(vacation, vacayInfo, userPrefferedCurrencyId);
 
                 //Get destination for the created plan
                 var destinations = _context.Destinations.ToList();
@@ -106,7 +125,10 @@ namespace Project_1_API.Controllers
                 }
 
                 var dest = destinations.Find(d => d.DestinationId == destId);
-                vacayInfo.destination = dest;
+                if (dest != null)
+                {
+                    vacayInfo.destination = dest;
+                }
 
                 //return created plan's budget in user's preffered currency
                 var exchangeRate = GetExchangeRate(destId, userPrefferedCurrencyId);
@@ -132,7 +154,10 @@ namespace Project_1_API.Controllers
             buddies.ForEach(b =>
             {
                 var buddy = users.Find(u => u.UserId == b.UserId);
-                buddyDetails.Add(buddy);
+                if (buddy != null)
+                {
+                    buddyDetails.Add(buddy);
+                }
             });
             vacayInfo.users = buddyDetails;
         }
@@ -150,7 +175,10 @@ namespace Project_1_API.Controllers
             selectedTrans.ForEach(st =>
             {
                 var transportation = allTransportaion.Find(t => t.TransportationId == st.TransportationId);
-                plansTransportation.Add(transportation);
+                if (transportation != null)
+                {
+                    plansTransportation.Add(transportation);
+                }
             });
 
             //return transportations in the user's preffered currency
@@ -188,7 +216,10 @@ namespace Project_1_API.Controllers
             selectedAccoms.ForEach(sa =>
             {
                 var accommodation = allAccommodation.Find(a => a.AccommodationId == sa.AccommodationId);
-                plansAccommodation.Add(accommodation);
+                if (accommodation != null)
+                {
+                    plansAccommodation.Add(accommodation);
+                }
             });
 
             //return accommodations in the user's preffered currency
@@ -225,7 +256,10 @@ namespace Project_1_API.Controllers
             selectedSpots.ForEach(ss =>
             {
                 var foodSpot = AllFoodSpots.Find(a => a.FoodSpotId == ss.FoodSpotId);
-                plansFoodSpots.Add(foodSpot);
+                if (foodSpot != null)
+                {
+                    plansFoodSpots.Add(foodSpot);
+                }
             });
 
             //return food spots in the user's preffered currency
@@ -263,7 +297,10 @@ namespace Project_1_API.Controllers
             selectedAttrs.ForEach(sa =>
             {
                 var attraction = AllAttractions.Find(a => a.AttractionId == sa.AttractionId);
-                plansAttractions.Add(attraction);
+                if (attraction != null)
+                {
+                    plansAttractions.Add(attraction);
+                }
             });
 
             //return attractions in the user's preffered currency

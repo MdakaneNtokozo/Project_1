@@ -12,10 +12,6 @@
     --container-height: calc(100vh - var(--header-height))
 }
 
-* {
-    font-family: 'Playfair Display';
-}
-
 .title {
     font-family: 'Playwrite DE SAS';
     font-size: 1.6rem;
@@ -30,15 +26,6 @@
     font-weight: 350;
     font-style: normal;
 }
-
-.playfair-display-website-font {
-    font-family: "Playfair Display", serif;
-    font-optical-sizing: auto;
-    font-weight: 400;
-    font-style: normal;
-}
-
-
 
 h1,
 h2,
@@ -78,7 +65,7 @@ button {
     border-style: none;
     background-color: var(--green);
     transition: background-color 1s ease;
-    font-weight: 600;
+    font-weight: 500;
 }
 
 button:hover {
@@ -147,7 +134,7 @@ a {
     font-weight: bold;
     width: 100px;
     height: 60%;
-    padding-top: 15px;
+    padding-top: 20px;
     padding-bottom: 15px;
     text-align: center;
     text-decoration: none;
@@ -249,7 +236,7 @@ footer {
 
 .home {
     width: 100%;
-    margin: 10px;
+    margin: 15px;
 
 }
 
@@ -270,7 +257,7 @@ footer {
     height: 35px;
     padding: 5px;
     margin-bottom: 10px;
-    border-radius: 30px;
+    border-radius: 10px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -292,7 +279,7 @@ footer {
     margin-Right: 10px;
     padding: 8px;
     background-color: var(--green);
-    border-radius: 25px;
+    border-radius: 10px;
 }
 
 .home-top-destinations {
@@ -312,7 +299,7 @@ footer {
     margin-bottom: 10px;
     padding: 30px;
     background-color: var(--blue);
-    border-radius: 30px;
+    border-radius: 15px;
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
@@ -388,6 +375,16 @@ footer {
     overflow: hidden;
 }
 
+.card-title{
+    font-weight: bold;
+}
+
+.card-subtitle{
+    font-weight: bold;
+    color: rgb(71, 80, 90);
+    font-size: 13px;
+}
+
 .suggested {
     position: relative;
     bottom: 160px;
@@ -421,18 +418,48 @@ footer {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
+    border-radius: 15px;
+    margin-bottom: 5px;
 }
 
-.buddy-card {
-    background-color: rgb(53, 100, 255);
+.buddy-container {
+    background-color: #39afeb;;
     height: 80px;
     width: 40%;
     padding: 20px;
-    border-radius: 15px;
+    border-radius: 10px;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
 }
+
+.buddy-details{
+    display: flex;
+    flex-direction: row;
+    width: 90%;
+}
+
+.buddy-details img{
+    width: 30%;
+}
+
+.buddy-details div{
+    margin-left: 5%;
+}
+
+.buddy-remove{
+    width: 7%;
+    height: 20px;
+    transition: background-color 1s ease;
+}
+
+.buddy-remove:hover{
+    background-color: #1874a1;
+    transition: background-color 1s ease;
+    width: 7%;
+    height: 20px;
+}
+
 
 .preview-container {
     display: flex;
@@ -673,13 +700,13 @@ table {
         width: 30%;
     }
 
-    .profile-details{
+    .profile-details {
         flex-direction: column;
         height: fit-content;
         gap: 10px;
     }
 
-    .profile-details img{
+    .profile-details img {
         width: 60%;
         align-self: center;
     }

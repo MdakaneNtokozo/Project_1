@@ -207,10 +207,10 @@ function Attraction() {
                                         <></>
                                     }
                                 </div>
-                                <p>{a.attractionName}</p>
-                                <p>{a.attractionAddress}</p>
-                                <p>Entrance fee: {currency.currencySymbol} {a.attractionEntranceFee}</p>
-                                <p>Time limited: {a.attractionTimeLimited == 1 ? "yes" : "no"} </p>
+                                <p className="card-title">{a.attractionName}</p>
+                                <p className="card-subtitle">{a.attractionAddress}</p>
+                                <p>{currency.currencySymbol} {a.attractionEntranceFee} entrance fee</p>
+                                <p>Is it time limited: {a.attractionTimeLimited == 1 ? "yes" : "no"} </p>
                                 <p>{a.attractionDescription}</p>
                             </div>
 
@@ -232,7 +232,7 @@ function Attraction() {
                             selectedAttractions.map((a, idx) => {
                                 var item = attrsList.find(i => i.attr.attractionId == a.attractionId)
                                 return <div key={idx}>
-                                    <p>{a.attractionName}</p>
+                                    <p className="card-title">{a.attractionName}</p>
                                     <label>Type of use for attraction expereince:</label>
                                     <select value={item != undefined ? item.useType : 0} onChange={(e) => setTimes(a, e.target.value, undefined)}>
                                         <option value={0}>How many times will you expereince this attraction</option>

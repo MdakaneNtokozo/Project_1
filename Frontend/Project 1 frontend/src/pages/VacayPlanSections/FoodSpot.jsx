@@ -221,11 +221,11 @@ function FoodSpots() {
                                         <></>
                                     }
                                 </div>
-                                <p>{f.foodSpotName}</p>
-                                <p>{f.accommodationAddress}</p>
-                                <p>Menu price: {currency.currencySymbol} {f.foodSpotMinMenuPrice} - {f.foodSpotMaxMenuPrice}</p>
-                                <p>Menu: {f.foodSpotMenuItems}</p>
+                                <p className="card-title">{f.foodSpotName}</p>
+                                <p className="card-subtitle">{f.foodSpotAddress}</p>
+                                <p>{currency.currencySymbol} {f.foodSpotMinMenuPrice} - {f.foodSpotMaxMenuPrice}</p>
                                 <p>{foodSpotTypes.find(type => type.foodSpotTypeId == f.foodSpotTypeId).foodSpotTypeName} </p>
+                                <p>Menu: {f.foodSpotMenuItems}</p>
                             </div>
 
                         }) :
@@ -246,7 +246,7 @@ function FoodSpots() {
                             selectedFoodSpots.map((s, idx) => {
                                 var item = spotsList.find(i => i.spot.foodSpotId == s.foodSpotId)
                                 return <div key={idx} >
-                                    <p>{s.foodSpotName}</p>
+                                    <p className="card-title">{s.foodSpotName}</p>
 
                                     <label>Type of food experience:</label>
                                     <select value={item != undefined ? item.useType : 0} onChange={(e) => setTimes(s, e.target.value, undefined)}>

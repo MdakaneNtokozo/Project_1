@@ -47,6 +47,33 @@ function VacayPlanPreview() {
         navigate(-5)
     }
 
+    const cancel = () => {
+        var check = confirm("Are you sure you want to cancel this vacay plan?")
+        if (check) {
+            setSelectedDestination(null)
+            setStartDate(null)
+            setEndDate(null)
+            setSelectedSpenderType(null)
+            setSelectedBuddies([])
+            setSelectedTransportations([])
+            setSelectedAccommodations([])
+            setSelectedFoodSpots([])
+            setSelectedAttractions([])
+            setTransList([])
+            setTransTotal(0)
+            setAccommList([])
+            setAccommTotal(0)
+            setSpotsList([])
+            setSpotsTotal(0)
+            setAttrsList([])
+            setAttrsTotal(0)
+            setVacayPlan(null)
+
+            alert("Vacay plan has been cancelled")
+            navigate('/home')
+        }
+    }
+
     const formatDate = (date) => {
         var date = new Date(date)
         if (date != undefined) {
@@ -126,7 +153,7 @@ function VacayPlanPreview() {
                 }
 
             })
-        }else{
+        } else {
 
             var api_call = api + "Destinations/updateVacayBudget?start=" + formatDate(startDate) + "&end=" + formatDate(endDate)
             fetch(api_call, {
@@ -182,9 +209,9 @@ function VacayPlanPreview() {
 
                 <div className="preview-lower-section">
                     <div className="preview-detail-side">
-                        <p>Vacation details</p>
+                        <p className="card-title">Vacation details</p>
 
-                        <p>Travel buddies:</p>
+                        <p className="card-title">Travel buddies:</p>
                         {selectedBuddies.length != 0 ?
                             <table>
                                 <tbody>
@@ -203,7 +230,7 @@ function VacayPlanPreview() {
                         }
                         <br />
 
-                        <p>Transportation:</p>
+                        <p className="card-title">Transportation:</p>
                         {selectedTransportation.length != 0 ?
 
                             <table>
@@ -229,7 +256,7 @@ function VacayPlanPreview() {
                         }
                         <br />
 
-                        <p>Selected accommodation:</p>
+                        <p className="card-title">Selected accommodation:</p>
                         {selectedAccommodations.length != 0 ?
                             <table>
                                 <tbody>
@@ -250,7 +277,7 @@ function VacayPlanPreview() {
                         }
                         <br />
 
-                        <p>Selected food spots:</p>
+                        <p className="card-title">Selected food spots:</p>
                         {selectedFoodSpots.length != 0 ?
                             <table>
                                 <tbody>
@@ -275,7 +302,7 @@ function VacayPlanPreview() {
                         }
                         <br />
 
-                        <p>Selected attractions:</p>
+                        <p className="card-title">Selected attractions:</p>
                         {selectedAttractions.length != 0 ?
                             <table>
                                 <tbody>
@@ -301,7 +328,7 @@ function VacayPlanPreview() {
                         <br />
 
                         <div style={{ display: "flex", flexDirection: "row", justifyContent: "space-between" }}>
-                            <p> </p>
+                            <button type="button" onClick={() => cancel()}>Cancel</button>
 
                             <button type="button" onClick={() => edit()}>Edit</button>
                         </div>
@@ -309,7 +336,7 @@ function VacayPlanPreview() {
 
                     <div className="preview-total-side">
                         <div>
-                            <p>Vacation Total</p>
+                            <p className="card-title">Vacation Total</p>
                             <table>
                                 <tbody>
                                     <tr>
