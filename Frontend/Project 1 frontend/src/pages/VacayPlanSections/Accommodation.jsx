@@ -24,6 +24,7 @@ function Accommodation() {
         setSelectedAccommodations,
         accommList, setAccommList,
         accommTotal, setAccommTotal,
+        selectedBuddies
     } = useContext(MyContext)
     const navigate = useNavigate()
     const [isLoading, setIsLoading] = useState(true);
@@ -114,7 +115,7 @@ function Accommodation() {
             alert("make sure that you filled in the details for the selected accommodations")
         } else {
 
-            var api_call = api + "Destinations/getAccomsTotal"
+            var api_call = api + "Destinations/getAccomsTotal?numOfPeople=" + (selectedBuddies.length + 1)
             fetch(api_call, {
                 method: "POST",
                 headers: {

@@ -22,7 +22,8 @@ function Transportation() {
         selectedTransportation,
         setSelectedTransportations,
         transList, setTransList,
-        transTotal, setTransTotal
+        transTotal, setTransTotal,
+        selectedBuddies
     } = useContext(MyContext)
     const [filter, setFilter] = useState(1)
     const navigate = useNavigate()
@@ -119,7 +120,7 @@ function Transportation() {
 
             if (inputEntered) {
                 //Total transportation
-                var api_call = api + "Destinations/getTransTotal?start=" + formatDate(startDate) + "&end=" + formatDate(endDate)
+                var api_call = api + "Destinations/getTransTotal?start=" + formatDate(startDate) + "&end=" + formatDate(endDate) + "&numOfPeople=" + (selectedBuddies.length + 1)
                 fetch(api_call, {
                     method: "POST",
                     headers: {

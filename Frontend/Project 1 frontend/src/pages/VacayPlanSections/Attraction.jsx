@@ -21,6 +21,7 @@ function Attraction() {
         setSelectedAttractions,
         attrsList, setAttrsList,
         attrsTotal, setAttrsTotal,
+        selectedBuddies
     } = useContext(MyContext)
     const navigate = useNavigate()
     const [isLoading, setIsLoading] = useState(true);
@@ -101,7 +102,7 @@ function Attraction() {
 
             if (inputEntered) {
                 //Total attractions
-                var api_call = api + "Destinations/getAttrsTotal?start=" + formatDate(startDate) + "&end=" + formatDate(endDate)
+                var api_call = api + "Destinations/getAttrsTotal?start=" + formatDate(startDate) + "&end=" + formatDate(endDate) + "&numOfPeople=" + (selectedBuddies.length + 1)
                 fetch(api_call, {
                     method: "POST",
                     headers: {

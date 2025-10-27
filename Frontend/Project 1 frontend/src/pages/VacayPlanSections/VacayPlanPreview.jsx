@@ -86,112 +86,120 @@ function VacayPlanPreview() {
     }
 
     const save = () => {
-        var sendList = []
-        accommList.forEach(i => {
-            var start = new Date(i.dates[0])
-            var end = new Date(i.dates[1])
-
-            var item = {
-                accomm: i.accomm,
-                dates: [start, end]
-            }
-
-            sendList.push(item)
-        });
-
-        const nullVacapPlan = {
-            vacationId: -1,
-            userId: -1,
-            planBudget: -1,
-            planCreatedDate: Date.now,
-            planModifiedDate: Date.now,
-            spenderTypeId: -1
-        }
-
-        var vacayList = {
-            plan: vacayPlan == null ? nullVacapPlan : vacayPlan,
-            user: user,
-            type: selectedSpenderType,
-            travelBuddies: selectedBuddies,
-            transSelected: transList,
-            accommSelected: sendList,
-            spotsSelected: spotsList,
-            attrSelected: attrsList
-        }
-
-        if (vacayPlan == null) {
-            var api_call = api + "Destinations/calVacayBudget?start=" + formatDate(startDate) + "&end=" + formatDate(endDate)
-            fetch(api_call, {
-                method: "POST",
-                headers: {
-                    "Authorization": "Bearer " + token,
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify(vacayList)
-            }).then(async res => {
-                if (res.ok) {
-                    setSelectedDestination(null)
-                    setStartDate(null)
-                    setEndDate(null)
-                    setSelectedSpenderType(null)
-                    setSelectedBuddies([])
-                    setSelectedTransportations([])
-                    setSelectedAccommodations([])
-                    setSelectedFoodSpots([])
-                    setSelectedAttractions([])
-                    setTransList([])
-                    setTransTotal([])
-                    setAccommList([])
-                    setAccommTotal([])
-                    setSpotsList([])
-                    setSpotsTotal([])
-                    setAttrsList([])
-                    setAttrsTotal([])
-                    alert("Vacay plan has been added.")
-
-                    navigate('/home')
-                }
-
-            })
+        if (transList.length == 0 &&
+            accommList.length == 0 &&
+            spotsList.length == 0 &&
+            attrsList.length == 0
+        ) {
+            alert("Make sure that at least one transportation, accommodation, food spot or attraction is selected.")
         } else {
 
-            var api_call = api + "Destinations/updateVacayBudget?start=" + formatDate(startDate) + "&end=" + formatDate(endDate)
-            fetch(api_call, {
-                method: "PUT",
-                headers: {
-                    "Authorization": "Bearer " + token,
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify(vacayList)
-            }).then(async res => {
-                if (res.ok) {
-                    setVacayPlan(null)
-                    setSelectedDestination(null)
-                    setStartDate(null)
-                    setEndDate(null)
-                    setSelectedSpenderType(null)
-                    setSelectedBuddies([])
-                    setSelectedTransportations([])
-                    setSelectedAccommodations([])
-                    setSelectedFoodSpots([])
-                    setSelectedAttractions([])
-                    setTransList([])
-                    setTransTotal([])
-                    setAccommList([])
-                    setAccommTotal([])
-                    setSpotsList([])
-                    setSpotsTotal([])
-                    setAttrsList([])
-                    setAttrsTotal([])
-                    alert("Vacay plan has been updated.")
+            var sendList = []
+            accommList.forEach(i => {
+                var start = new Date(i.dates[0])
+                var end = new Date(i.dates[1])
 
-                    navigate('/home')
+                var item = {
+                    accomm: i.accomm,
+                    dates: [start, end]
                 }
 
-            })
+                sendList.push(item)
+            });
+
+            const nullVacapPlan = {
+                vacationId: -1,
+                userId: -1,
+                planBudget: -1,
+                planCreatedDate: Date.now,
+                planModifiedDate: Date.now,
+                spenderTypeId: -1
+            }
+
+            var vacayList = {
+                plan: vacayPlan == null ? nullVacapPlan : vacayPlan,
+                user: user,
+                type: selectedSpenderType,
+                travelBuddies: selectedBuddies,
+                transSelected: transList,
+                accommSelected: sendList,
+                spotsSelected: spotsList,
+                attrSelected: attrsList
+            }
+
+            if (vacayPlan == null) {
+                var api_call = api + "Destinations/calVacayBudget?start=" + formatDate(startDate) + "&end=" + formatDate(endDate)
+                fetch(api_call, {
+                    method: "POST",
+                    headers: {
+                        "Authorization": "Bearer " + token,
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(vacayList)
+                }).then(async res => {
+                    if (res.ok) {
+                        setSelectedDestination(null)
+                        setStartDate(null)
+                        setEndDate(null)
+                        setSelectedSpenderType(null)
+                        setSelectedBuddies([])
+                        setSelectedTransportations([])
+                        setSelectedAccommodations([])
+                        setSelectedFoodSpots([])
+                        setSelectedAttractions([])
+                        setTransList([])
+                        setTransTotal([])
+                        setAccommList([])
+                        setAccommTotal([])
+                        setSpotsList([])
+                        setSpotsTotal([])
+                        setAttrsList([])
+                        setAttrsTotal([])
+                        alert("Vacay plan has been added.")
+
+                        navigate('/home')
+                    }
+
+                })
+            } else {
+
+                var api_call = api + "Destinations/updateVacayBudget?start=" + formatDate(startDate) + "&end=" + formatDate(endDate)
+                fetch(api_call, {
+                    method: "PUT",
+                    headers: {
+                        "Authorization": "Bearer " + token,
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(vacayList)
+                }).then(async res => {
+                    if (res.ok) {
+                        setVacayPlan(null)
+                        setSelectedDestination(null)
+                        setStartDate(null)
+                        setEndDate(null)
+                        setSelectedSpenderType(null)
+                        setSelectedBuddies([])
+                        setSelectedTransportations([])
+                        setSelectedAccommodations([])
+                        setSelectedFoodSpots([])
+                        setSelectedAttractions([])
+                        setTransList([])
+                        setTransTotal([])
+                        setAccommList([])
+                        setAccommTotal([])
+                        setSpotsList([])
+                        setSpotsTotal([])
+                        setAttrsList([])
+                        setAttrsTotal([])
+                        alert("Vacay plan has been updated.")
+
+                        navigate('/home')
+                    }
+
+                })
+            }
+
         }
-
-
     }
 
     return (

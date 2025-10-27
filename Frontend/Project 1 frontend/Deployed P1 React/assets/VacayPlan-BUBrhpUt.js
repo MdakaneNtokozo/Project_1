@@ -1,0 +1,1 @@
+import{a as e,m as t,n}from"./index-Dy5shDWX.js";import{r,t as i}from"./Header-BUxtEV5o.js";var a=t(n());function o(){return(0,a.jsxs)(a.Fragment,{children:[(0,a.jsx)(i,{}),(0,a.jsx)(`div`,{className:`container`,children:(0,a.jsx)(`form`,{className:`add-plan-form`,onSubmit:e=>{e.preventDefault()},children:(0,a.jsx)(e,{})})}),(0,a.jsx)(r,{})]})}var s=o;export{s as default};

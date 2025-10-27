@@ -22,7 +22,7 @@ function FoodSpots() {
         setSelectedFoodSpots,
         spotsList, setSpotsList,
         spotsTotal, setSpotsTotal,
-        transList
+        selectedBuddies
     } = useContext(MyContext)
     const navigate = useNavigate()
     const [isLoading, setIsLoading] = useState(true);
@@ -114,7 +114,7 @@ function FoodSpots() {
 
             if (inputEntered) {
                 //Total food spots
-                var api_call = api + "Destinations/getFoodSpotsTotal?start=" + formatDate(startDate) + "&end=" + formatDate(endDate)
+                var api_call = api + "Destinations/getFoodSpotsTotal?start=" + formatDate(startDate) + "&end=" + formatDate(endDate) + "&numOfPeople=" + (selectedBuddies.length + 1)
                 fetch(api_call, {
                     method: "POST",
                     headers: {

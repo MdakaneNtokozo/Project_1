@@ -3,8 +3,8 @@
   "WorkspaceRootPath": "C:\\Users\\Ntokozo\\Downloads\\Project_1\\API\\Project 1 API\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{AEC27EA4-B971-4839-989C-1748E9CE5B24}|Project 1 API\\Project 1 API.csproj|c:\\users\\ntokozo\\downloads\\project_1\\api\\project 1 api\\project 1 api\\controllers\\loginsignupcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{AEC27EA4-B971-4839-989C-1748E9CE5B24}|Project 1 API\\Project 1 API.csproj|solutionrelative:project 1 api\\controllers\\loginsignupcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{AEC27EA4-B971-4839-989C-1748E9CE5B24}|Project 1 API\\Project 1 API.csproj|c:\\users\\ntokozo\\downloads\\project_1\\api\\project 1 api\\project 1 api\\controllers\\destinationscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{AEC27EA4-B971-4839-989C-1748E9CE5B24}|Project 1 API\\Project 1 API.csproj|solutionrelative:project 1 api\\controllers\\destinationscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -23,14 +23,14 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "LoginSignupController.cs",
-              "DocumentMoniker": "C:\\Users\\Ntokozo\\Downloads\\Project_1\\API\\Project 1 API\\Project 1 API\\Controllers\\LoginSignupController.cs",
-              "RelativeDocumentMoniker": "Project 1 API\\Controllers\\LoginSignupController.cs",
-              "ToolTip": "C:\\Users\\Ntokozo\\Downloads\\Project_1\\API\\Project 1 API\\Project 1 API\\Controllers\\LoginSignupController.cs",
-              "RelativeToolTip": "Project 1 API\\Controllers\\LoginSignupController.cs",
-              "ViewState": "AgIAAIIAAAAAAAAAAAAAAJMAAAAAAAAAAAAAAA==",
+              "Title": "DestinationsController.cs",
+              "DocumentMoniker": "C:\\Users\\Ntokozo\\Downloads\\Project_1\\API\\Project 1 API\\Project 1 API\\Controllers\\DestinationsController.cs",
+              "RelativeDocumentMoniker": "Project 1 API\\Controllers\\DestinationsController.cs",
+              "ToolTip": "C:\\Users\\Ntokozo\\Downloads\\Project_1\\API\\Project 1 API\\Project 1 API\\Controllers\\DestinationsController.cs",
+              "RelativeToolTip": "Project 1 API\\Controllers\\DestinationsController.cs",
+              "ViewState": "AgIAAFIDAAAAAAAAAAAkwF0DAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-25T03:48:41.109Z",
+              "WhenOpened": "2025-10-27T09:07:45.924Z",
               "EditorCaption": ""
             }
           ]

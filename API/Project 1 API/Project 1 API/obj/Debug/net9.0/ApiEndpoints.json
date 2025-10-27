@@ -81,6 +81,11 @@
     "Order": 0,
     "Parameters": [
       {
+        "Name": "numOfPeople",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
         "Name": "list",
         "Type": "System.Collections.Generic.List\u00601[[Project_1_API.AccommDates, Project 1 API, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
         "IsRequired": true
@@ -125,6 +130,11 @@
       {
         "Name": "end",
         "Type": "System.DateTime",
+        "IsRequired": false
+      },
+      {
+        "Name": "numOfPeople",
+        "Type": "System.Int32",
         "IsRequired": false
       },
       {
@@ -234,6 +244,11 @@
       {
         "Name": "end",
         "Type": "System.DateTime",
+        "IsRequired": false
+      },
+      {
+        "Name": "numOfPeople",
+        "Type": "System.Int32",
         "IsRequired": false
       },
       {
@@ -395,6 +410,11 @@
       {
         "Name": "end",
         "Type": "System.DateTime",
+        "IsRequired": false
+      },
+      {
+        "Name": "numOfPeople",
+        "Type": "System.Int32",
         "IsRequired": false
       },
       {

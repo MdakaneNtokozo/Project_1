@@ -54,8 +54,6 @@ function Destination() {
 
     const findDestination = (e) => {
         var searchInput = e.target.value
-        console.log("searched input: " + searchInput)
-        // setSearchedDestiations("")
 
         if (searchInput != "") {
             var list = []
